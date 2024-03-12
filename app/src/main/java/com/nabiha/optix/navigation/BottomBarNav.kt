@@ -1,5 +1,6 @@
 package com.nabiha.optix.navigation
 
+import com.nabiha.common.utils.NavRoute
 import com.nabiha.optix.R
 
 sealed class BottomBarNav(
@@ -9,7 +10,7 @@ sealed class BottomBarNav(
     val iconNs : Int
 ) {
     object Home :BottomBarNav(
-        route = "home",
+        route = NavRoute.HomeScreenRoute,
         title = "Home",
         icon = R.drawable.home_icn,
         iconNs = R.drawable.home_icn_ns
@@ -21,8 +22,8 @@ sealed class BottomBarNav(
         iconNs = R.drawable.love_icn_ns
     )
     object Virtual :BottomBarNav(
-        route = "wishlist",
-        title = "Wishlist",
+        route = "virtual",
+        title = "Virtual\n" + "Try-On",
         icon = R.drawable.scan_icn,
         iconNs = R.drawable.scan_icn
     )
