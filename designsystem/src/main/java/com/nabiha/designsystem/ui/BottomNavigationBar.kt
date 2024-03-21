@@ -46,7 +46,7 @@ fun RowScope.BottomNavigationBar(
             .padding(top = if (route == "virtual") 0.dp else 18.dp)
             .clickable { navController.navigate(route) }
             .background(
-                color = if (route == "virtual") Color.Transparent else MaterialTheme.colorScheme.surface,
+                color = if (route == "virtual") Color.Transparent else Color(0xFFDBBF28),
             )) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -95,7 +95,7 @@ fun RowScope.BottomNavigationBar(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(top = 18.dp)
-                            .background(MaterialTheme.colorScheme.surface),
+                            .background(Color(0xFFDBBF28)),
                     ) {
 
                     }
@@ -111,7 +111,7 @@ fun RowScope.BottomNavigationBar(
                             modifier = Modifier
                                 .height(40.dp)
                                 .width(46.dp)
-                                .background(MaterialTheme.colorScheme.surface, CircleShape)
+                                .background(Color(0xFFDBBF28), CircleShape)
                         ) {
                             Icon(
                                 painter = painterResource(id = if (selected) iconSelected else iconUnselected),
