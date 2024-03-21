@@ -17,6 +17,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,7 +46,7 @@ fun RowScope.BottomNavigationBar(
             .padding(top = if (route == "virtual") 0.dp else 18.dp)
             .clickable { navController.navigate(route) }
             .background(
-                color = if (route == "virtual") Color.Transparent else Color.White,
+                color = if (route == "virtual") Color.Transparent else MaterialTheme.colorScheme.surface,
             )) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,7 +56,7 @@ fun RowScope.BottomNavigationBar(
 
             if (selected && route != "virtual") {
                 Divider(
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                     thickness = 3.dp,
                     modifier = Modifier
                         .width(48.dp)
@@ -75,25 +76,26 @@ fun RowScope.BottomNavigationBar(
                     Icon(
                         painter = painterResource(id = if (selected) iconSelected else iconUnselected),
                         contentDescription = "",
-                        modifier = Modifier.size(28.dp)
+                        modifier = Modifier.size(28.dp),
+                        tint = MaterialTheme.colorScheme.surfaceVariant
                     )
 
                     Text(
                         text = title,
                         fontSize = 8.sp,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 2.dp)
+                        modifier = Modifier.padding(top = 2.dp),
+                        color = MaterialTheme.colorScheme.surfaceVariant
                     )
                 }
             } else {
 
                 Box(modifier = Modifier.fillMaxSize()) {
-                    Card(
+                    Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(top = 18.dp),
-                        shape = RectangleShape,
-                        colors = CardDefaults.cardColors(Color.White)
+                            .padding(top = 18.dp)
+                            .background(MaterialTheme.colorScheme.surface),
                     ) {
 
                     }
@@ -105,16 +107,19 @@ fun RowScope.BottomNavigationBar(
                             .fillMaxSize()
                             .clickable { navController.navigate(route) }
                     ) {
-                        Card(
+                        Box(
                             modifier = Modifier
-                                .height(40.dp).width(46.dp),
-                            shape = CircleShape,
-                            colors = CardDefaults.cardColors(Color.White)
+                                .height(40.dp)
+                                .width(46.dp)
+                                .background(MaterialTheme.colorScheme.surface, CircleShape)
                         ) {
                             Icon(
                                 painter = painterResource(id = if (selected) iconSelected else iconUnselected),
                                 contentDescription = "",
-                                modifier = Modifier.fillMaxSize().padding(8.dp)
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(8.dp),
+                                tint = MaterialTheme.colorScheme.surfaceVariant
                             )
                         }
 
@@ -122,7 +127,8 @@ fun RowScope.BottomNavigationBar(
                             text = title,
                             fontSize = 8.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(top = 2.dp)
+                            modifier = Modifier.padding(top = 2.dp),
+                            color = MaterialTheme.colorScheme.surfaceVariant
                         )
                     }
 

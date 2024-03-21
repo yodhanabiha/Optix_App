@@ -14,8 +14,11 @@ object Versions {
     const val leakcanary = "2.9.1"
     const val gson = "2.9.1"
     const val jUnitExt = "1.1.4"
+    const val junit="4.13.2"
     const val espressoCore = "3.5.0"
     const val lifecycle = "2.5.1"
     const val runtimeCompose = "2.6.0-beta01"
     const val javapoet="1.13.0"
+    const val datastore="1.0.0"
+    const val accompanist = "0.35.0-alpha"
 }

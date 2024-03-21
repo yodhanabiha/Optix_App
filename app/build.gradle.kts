@@ -67,8 +67,15 @@ dependencies {
     androidLifeCycle()
     androidTests()
     coroutines()
+    datastore()
+    accompanist()
 
-    designsystem()
     common()
-    feautures()
+    data()
+    designsystem()
+    di()
+    domain()
+    features()
+    apiresponse()
+    entity()
 }

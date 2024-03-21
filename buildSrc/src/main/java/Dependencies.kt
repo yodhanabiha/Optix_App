@@ -47,8 +47,22 @@ object Dependencies {
     const val runtimeCompose =
         "androidx.lifecycle:lifecycle-runtime-compose:${Versions.runtimeCompose}"
     const val lifecycleService = "androidx.lifecycle:lifecycle-service:${Versions.lifecycle}"
+
+    const val dataStore = "androidx.datastore:datastore-preferences:${Versions.datastore}"
+
+    const val accompanistPager = "com.google.accompanist:accompanist-pager:${Versions.accompanist}"
+    const val accompanistSystemUiController = "com.google.accompanist:accompanist-systemuicontroller:${Versions.accompanist}"
+    const val accompanistPagerIndicator= "com.google.accompanist:accompanist-pager-indicators:${Versions.accompanist}"
 }
 
+fun DependencyHandler.accompanist(){
+    implementation(Dependencies.accompanistPager)
+    implementation(Dependencies.accompanistSystemUiController)
+    implementation(Dependencies.accompanistPagerIndicator)
+}
+fun DependencyHandler.datastore(){
+    implementation(Dependencies.dataStore)
+}
 fun DependencyHandler.coil() {
     implementation(Dependencies.coil)
 }
@@ -145,10 +159,7 @@ fun DependencyHandler.apiresponse() {
     implementation(project(":model:apiresponse"))
 }
 
-fun DependencyHandler.feautures() {
+fun DependencyHandler.features() {
     implementation(project(":features:homeFeatures"))
-}
-
-fun DependencyHandler.photoFeature() {
-    implementation(project(":feautures:photoFeature"))
+    implementation(project(":features:authFeatures"))
 }

@@ -22,6 +22,7 @@ dependencies {
     hilt()
     compose()
     leakcanary()
+    androidTests()
 //    entity()
     androidLifeCycle()
     androidTests()
