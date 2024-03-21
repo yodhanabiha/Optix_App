@@ -73,10 +73,10 @@ private fun HomeScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        contentPadding = PaddingValues(horizontal = 24.dp)
+        contentPadding = PaddingValues(horizontal = 16.dp)
     ) {
         item {
-            Column(modifier = Modifier.padding(top = 20.dp)) {
+            Column(modifier = Modifier.padding(top = 16.dp)) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -173,7 +173,7 @@ private fun HomeScreen() {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 8.dp)
-                            .height(172.dp)
+                            .height(200.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .shadow(12.dp, RoundedCornerShape(12.dp))
                     )
