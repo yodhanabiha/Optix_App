@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -165,18 +166,21 @@ private fun HomeScreen() {
                         2 -> R.drawable.carr_3
                         else -> throw IllegalArgumentException("Invalid page: $page")
                     }
-
-                    Image(
-                        painter = painterResource(id = drawableId),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                            .height(200.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                            .shadow(12.dp, RoundedCornerShape(12.dp))
-                    )
+                    Box(
+                        modifier = Modifier.padding(8.dp)
+                    ) {
+                        Image(
+                            painter = painterResource(id = drawableId),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp)
+                                .height(200.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .shadow(12.dp, RoundedCornerShape(12.dp))
+                        )
+                    }
                 }
 
                 Canvas(modifier = Modifier.width(width = 60.dp).align(Alignment.CenterHorizontally).padding(top = 16.dp)) {
