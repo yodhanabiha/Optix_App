@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
@@ -20,7 +22,8 @@ import androidx.navigation.compose.rememberNavController
 import com.nabiha.authfeatures.register.loginScreen
 import com.nabiha.common.utils.NavRoute
 import com.nabiha.designsystem.ui.BottomNavigationBar
-import com.nabiha.homefeatures.homeScreen
+import com.nabiha.homefeatures.detail.detailScreen
+import com.nabiha.homefeatures.home.homeScreen
 
 @Composable
 fun AppNavigation(
@@ -32,10 +35,11 @@ fun AppNavigation(
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier = modifier.padding(bottom = innerPadding.calculateBottomPadding())
+            modifier = modifier.padding(bottom = max(innerPadding.calculateBottomPadding()- 18.dp, 0.dp))
         ) {
             homeScreen(navController)
             loginScreen(navController)
+            detailScreen(navController, navController::popBackStack)
         }
     }
 }
