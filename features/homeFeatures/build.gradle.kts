@@ -16,14 +16,15 @@ android {
 }
 
 dependencies {
-    androidTests()
     room()
+    androidTests()
     retrofit()
     hilt()
     coroutines()
     compose()
     accompanist()
     androidLifeCycle()
+    coil()
 
 
     designsystem()

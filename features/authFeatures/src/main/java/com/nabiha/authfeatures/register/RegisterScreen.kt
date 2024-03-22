@@ -23,10 +23,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import com.nabiha.apiresponse.users.UserApiRegisterRequest
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun RegisterScreenRoute(
@@ -34,13 +31,14 @@ internal fun RegisterScreenRoute(
     navController: NavHostController,
 ) {
     val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
-    RegisterScreen(viewModel = viewModel, registerUiState = registerUiState)
+    RegisterScreen(viewModel = viewModel, registerUiState = registerUiState, navController=navController)
 }
 
 @Composable
 private fun RegisterScreen(
     viewModel: RegisterViewModel,
-    registerUiState: RegisterUiState
+    registerUiState: RegisterUiState,
+    navController: NavHostController
 ) {
 
 
@@ -121,17 +119,18 @@ private fun RegisterScreen(
                     )
 
                     Button(onClick = {
-                        viewModel.viewModelScope.launch {
-                            viewModel.fetchRegister(
-                                userReg = UserApiRegisterRequest(
-                                    email = email,
-                                    password = password,
-                                    name = name,
-                                    phone = phone,
-                                    role = "USER"
-                                )
-                            )
-                        }
+//                        viewModel.viewModelScope.launch {
+//                            viewModel.fetchRegister(
+//                                userReg = UserApiRegisterRequest(
+//                                    email = email,
+//                                    password = password,
+//                                    name = name,
+//                                    phone = phone,
+//                                    role = "USER"
+//                                )
+//                            )
+//                        }
+
                     }) {
                         Text(text = "Register User")
                     }

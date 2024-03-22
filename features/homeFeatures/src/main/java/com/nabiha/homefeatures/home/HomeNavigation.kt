@@ -1,6 +1,5 @@
-package com.nabiha.homefeatures
+package com.nabiha.homefeatures.home
 
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
