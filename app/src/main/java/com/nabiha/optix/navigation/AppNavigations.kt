@@ -29,7 +29,7 @@ import com.nabiha.homefeatures.home.homeScreen
 fun AppNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = NavRoute.HomeScreenRoute
+    startDestination: String = NavRoute.RegisterScreenRoute
 ) {
     Scaffold(bottomBar = { BottomBar(navController = navController) }) { innerPadding ->
         NavHost(
