@@ -59,8 +59,8 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
 
-    retrofit()
     room()
+    retrofit()
     hilt()
     compose()
     leakcanary()
