@@ -91,7 +91,7 @@ private fun RegisterScreen(
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Image(
-                        painter = painterResource(id = R.drawable.signup_pic),
+                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.signup_pic),
                         contentDescription = "Sign Up Picture",
                         modifier = Modifier
                             .size(300.dp)
@@ -103,7 +103,7 @@ private fun RegisterScreen(
                         Text(
                             text = "Please complete your personal information first!",
                             style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.padding(bottom = 8.dp),
+                            modifier = Modifier.padding(8.dp),
                             textAlign = TextAlign.Center
                         )
                         OutlinedTextField(
@@ -120,7 +120,7 @@ private fun RegisterScreen(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.person_icn),
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.person),
                                     contentDescription = "Username Icon",
                                     modifier = Modifier.size(26.dp)
                                 )
@@ -145,7 +145,7 @@ private fun RegisterScreen(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.mail_icn),
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
                                     contentDescription = "Email Icon",
                                     modifier = Modifier.padding(12.dp).size(26.dp)
                                 )
@@ -170,14 +170,14 @@ private fun RegisterScreen(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.lock_icn),
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
                                     contentDescription = "Password Icon",
                                     modifier = Modifier.padding(12.dp).size(26.dp)
                                 )
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.eye),
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
                                     contentDescription = "End Icon",
                                     modifier = Modifier.padding(12.dp).size(20.dp)
                                 )
@@ -204,14 +204,14 @@ private fun RegisterScreen(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.lock_icn),
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
                                     contentDescription = "Confirm Password Icon",
                                     modifier = Modifier.padding(12.dp).size(26.dp)
                                 )
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.eye),
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
                                     contentDescription = "End Icon",
                                     modifier = Modifier.padding(12.dp).size(20.dp)
                                 )
@@ -242,7 +242,7 @@ private fun RegisterScreen(
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 12.dp)
+                                .padding(vertical = 8.dp)
                                 .height(48.dp)
                         ) {
                             Text(
@@ -288,12 +288,12 @@ private fun RegisterScreen(
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 12.dp)
+                                .padding(vertical = 8.dp)
                                 .height(48.dp)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Image(
-                                    painter = painterResource(id = R.drawable.google_icn),
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.google),
                                     contentDescription = "Google Icon",
                                     modifier = Modifier.size(24.dp)
                                 )
@@ -309,15 +309,7 @@ private fun RegisterScreen(
 
                         Box(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                        }
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
+                                .fillMaxWidth(),
                             contentAlignment = Alignment.Center
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
