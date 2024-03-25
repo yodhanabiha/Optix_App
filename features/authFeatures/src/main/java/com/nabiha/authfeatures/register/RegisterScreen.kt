@@ -35,6 +35,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,6 +43,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.nabiha.authfeatures.R
 import com.nabiha.designsystem.theme.OptixTheme
+import java.time.format.TextStyle
 
 @Composable
 internal fun RegisterScreenRoute(
@@ -301,7 +303,7 @@ private fun RegisterScreen(
 
                                 Text(
                                     text = "Continue with Google",
-                                    fontSize = 15.sp,
+                                    style = MaterialTheme.typography.bodyMedium,
                                 )
                             }
                         }
@@ -312,14 +314,31 @@ private fun RegisterScreen(
                                 .padding(vertical = 8.dp),
                             contentAlignment = Alignment.Center
                         ) {
-                            ClickableText(
-                                text = AnnotatedString("Already have an account? Sign in"),
-                                onClick = {
-                                    // Handle navigation to sign in screen
-                                    navController.navigate("sign_in_route")
-                                },
-                                style = MaterialTheme.typography.bodyMedium
-                            )
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = "Already have an account? ",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                )
+                                ClickableText(
+                                    text = AnnotatedString("Sign in"),
+                                    onClick = { offset ->
+                                        // Handle click event
+                                        // You can navigate to sign-in screen or perform any action here
+                                    },
+                                    style = androidx.compose.ui.text.TextStyle(
+                                        fontSize = 15.sp,
+                                        color = Color(0xFFDBBF28),
+                                        textDecoration = TextDecoration.Underline
+                                    )
+                                )
+                            }
                         }
                     }
 
