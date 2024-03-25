@@ -262,7 +262,7 @@ private fun RegisterScreen(
                                         .weight(1f)
                                         .padding(bottom = 4.dp, end = 8.dp)
                                         .height(1.dp)
-                                        .background(color = Color.Black)
+                                        .background(color = MaterialTheme.colorScheme.surfaceVariant)
                                 )
 
                                 Text(
@@ -276,7 +276,7 @@ private fun RegisterScreen(
                                         .weight(1f)
                                         .padding(bottom = 4.dp, start = 8.dp)
                                         .height(1.dp)
-                                        .background(color = Color.Black)
+                                        .background(color = MaterialTheme.colorScheme.surfaceVariant)
                                 )
                             }
                         }
@@ -290,7 +290,6 @@ private fun RegisterScreen(
                                 .fillMaxWidth()
                                 .padding(vertical = 12.dp)
                                 .height(48.dp)
-                                .background(color = MaterialTheme.colorScheme.background)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Image(
