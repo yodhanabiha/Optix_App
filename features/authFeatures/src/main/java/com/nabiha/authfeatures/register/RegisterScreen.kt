@@ -24,23 +24,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.nabiha.apiresponse.users.UserApiRegisterRequest
 import com.nabiha.designsystem.theme.OptixTheme
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun RegisterScreenRoute(
-    viewModel: RegisterViewModel = hiltViewModel(),
+//    viewModel: RegisterViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
-    val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
-    RegisterScreen(viewModel = viewModel, registerUiState = registerUiState, navController=navController)
+//    val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
+    RegisterScreen(navController=navController)
 }
 
 @Composable
 private fun RegisterScreen(
-    viewModel: RegisterViewModel,
-    registerUiState: RegisterUiState,
+//    viewModel: RegisterViewModel,
+//    registerUiState: RegisterUiState,
     navController: NavHostController
 ) {
 
@@ -131,19 +134,19 @@ private fun RegisterScreen(
 //                                    phone = phone,
 //                                    role = "USER"
 //                                )
-//                            )
-//                        }
+//                          )
+                     //}
 
                     }) {
-                        Text(text = "Sign Up")
+                        Text(text = "Register User")
                     }
                 }
 
-                when (registerUiState) {
-                    is RegisterUiState.Error -> Text(text = registerUiState.message)
-                    RegisterUiState.Loading -> Text(text = "")
-                    is RegisterUiState.Success -> Text(text = registerUiState.data.email)
-                }
+//                when (registerUiState) {
+//                    is RegisterUiState.Error -> Text(text = registerUiState.message)
+//                    RegisterUiState.Loading -> Text(text = "")
+//                    is RegisterUiState.Success -> Text(text = registerUiState.data.email)
+//                }
             }
         }
     }
