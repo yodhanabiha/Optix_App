@@ -20,10 +20,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.nabiha.apiresponse.users.UserApiRegisterRequest
+import com.nabiha.designsystem.theme.OptixTheme
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun RegisterScreenRoute(
@@ -119,17 +125,17 @@ private fun RegisterScreen(
                     )
 
                     Button(onClick = {
-//                        viewModel.viewModelScope.launch {
-//                            viewModel.fetchRegister(
-//                                userReg = UserApiRegisterRequest(
-//                                    email = email,
-//                                    password = password,
-//                                    name = name,
-//                                    phone = phone,
-//                                    role = "USER"
-//                                )
-//                            )
-//                        }
+                        viewModel.viewModelScope.launch {
+                            viewModel.fetchRegister(
+                                userReg = UserApiRegisterRequest(
+                                    email = email,
+                                    password = password,
+                                    name = name,
+                                    phone = phone,
+                                    role = "USER"
+                                )
+                          )
+                     }
 
                     }) {
                         Text(text = "Register User")
@@ -141,13 +147,16 @@ private fun RegisterScreen(
                     RegisterUiState.Loading -> Text(text = "")
                     is RegisterUiState.Success -> Text(text = registerUiState.data.email)
                 }
-                
-
-
             }
         }
-
     }
+}
 
-
+@Composable
+@Preview
+private fun RegisterScreenPreview() {
+    val navController = rememberNavController()
+    OptixTheme {
+        RegisterScreenRoute(navController = navController)
+    }
 }
