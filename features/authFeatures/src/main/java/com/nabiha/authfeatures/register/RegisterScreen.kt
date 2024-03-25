@@ -1,14 +1,21 @@
 package com.nabiha.authfeatures.register
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -24,20 +31,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.nabiha.apiresponse.users.UserApiRegisterRequest
 import com.nabiha.authfeatures.R
 import com.nabiha.designsystem.theme.OptixTheme
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun RegisterScreenRoute(
@@ -73,97 +77,154 @@ private fun RegisterScreen(
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().background(color=MaterialTheme.colorScheme.background)
+        modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background)
     ) {
+
         item {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(32.dp),
+                    .padding(bottom = 32.dp, start = 32.dp, end = 32.dp, top = 0.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Column (modifier = Modifier.fillMaxSize()) {
-                    OutlinedTextField(
-                        value = userName,
-                        onValueChange = { userName = it },
-                        textStyle = MaterialTheme.typography.bodyLarge,
-                        placeholder = { Text(text = "Username") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.person_icn),
-                                contentDescription = "Username Icon",
-                                modifier = Modifier.padding(8.dp).size(24.dp)
-                            )
-                        },
-                        shape = RoundedCornerShape(20.dp),
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Image(
+                        painter = painterResource(id = R.drawable.signup_pic),
+                        contentDescription = "Sign Up Picture",
                         modifier = Modifier
-                            .padding(bottom = 12.dp)
-                            .fillMaxWidth(),
+                            .size(300.dp)
+                            .fillMaxWidth()
+                            .fillMaxHeight(),
+                             alignment = Alignment.Center
                     )
-                    OutlinedTextField(
-                        value = email,
-                        onValueChange = { email = it },
-                        textStyle = MaterialTheme.typography.bodyLarge,
-                        placeholder = { Text(text = "Email") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.mail_icn),
-                                contentDescription = "Username Icon",
-                                modifier = Modifier.padding(8.dp).size(24.dp)
-                            )
-                        },
-                        shape = RoundedCornerShape(20.dp),
-                        modifier = Modifier
-                            .padding(bottom = 12.dp)
-                            .fillMaxWidth(),
-                    )
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = { password = it },
-                        textStyle = MaterialTheme.typography.bodyLarge,
-                        placeholder = { Text(text = "Password") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.lock_icn),
-                                contentDescription = "Username Icon",
-                                modifier = Modifier.padding(8.dp).size(24.dp)
-                            )
-                        },
-                        visualTransformation = PasswordVisualTransformation(),
-                        shape = RoundedCornerShape(20.dp),
-                        modifier = Modifier
-                            .padding(bottom = 12.dp)
-                            .fillMaxWidth(),
-                    )
-                    OutlinedTextField(
-                        value = confirmPassword,
-                        onValueChange = { confirmPassword = it },
-                        textStyle = MaterialTheme.typography.bodyLarge,
-                        placeholder = { Text(text = "Confirm Password") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.lock_icn),
-                                contentDescription = "Username Icon",
-                                modifier = Modifier.padding(8.dp).size(24.dp)
-                            )
-                        },
-                        visualTransformation = PasswordVisualTransformation(),
-                        shape = RoundedCornerShape(20.dp),
-                        modifier = Modifier
-                            .padding(bottom = 12.dp)
-                            .fillMaxWidth(),
-                    )
+                    Column(modifier = Modifier.fillMaxSize()) {
+                        Text(
+                            text = "Please complete your personal information first!",
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.padding(bottom = 8.dp),
+                            textAlign = TextAlign.Center
+                        )
+                        OutlinedTextField(
+                            value = userName,
+                            onValueChange = { userName = it },
+                            textStyle = MaterialTheme.typography.bodyLarge,
+                            placeholder = {
+                                Text(
+                                    text = "Username",
+                                    fontSize = 14.sp,
+                                )
+                            },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.person_icn),
+                                    contentDescription = "Username Icon",
+                                    modifier = Modifier.size(26.dp)
+                                )
+                            },
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .padding(bottom = 12.dp)
+                                .fillMaxWidth()
+                                .height(53.dp),
+                        )
+                        OutlinedTextField(
+                            value = email,
+                            onValueChange = { email = it },
+                            textStyle = MaterialTheme.typography.bodyLarge,
+                            placeholder = {
+                                Text(
+                                    text = "Email",
+                                    fontSize = 14.sp,
+                                )
+                            },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.mail_icn),
+                                    contentDescription = "Email Icon",
+                                    modifier = Modifier.padding(12.dp).size(26.dp)
+                                )
+                            },
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .padding(bottom = 12.dp)
+                                .fillMaxWidth()
+                                .height(53.dp),
+                        )
+                        OutlinedTextField(
+                            value = password,
+                            onValueChange = { password = it },
+                            textStyle = MaterialTheme.typography.bodyLarge,
+                            placeholder = {
+                                Text(
+                                    text = "Password",
+                                    fontSize = 14.sp,
+                                )
+                            },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.lock_icn),
+                                    contentDescription = "Password Icon",
+                                    modifier = Modifier.padding(12.dp).size(26.dp)
+                                )
+                            },
+                            trailingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.eye),
+                                    contentDescription = "End Icon",
+                                    modifier = Modifier.padding(12.dp).size(20.dp)
+                                )
+                            },
 
-                    Button(onClick = {
-//                        viewModel.viewModelScope.launch {
+                            visualTransformation = PasswordVisualTransformation(),
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .padding(bottom = 12.dp)
+                                .fillMaxWidth()
+                                .height(53.dp),
+                        )
+                        OutlinedTextField(
+                            value = confirmPassword,
+                            onValueChange = { confirmPassword = it },
+                            textStyle = MaterialTheme.typography.bodyLarge,
+                            placeholder = {
+                                Text(
+                                    text = "Confirm Password",
+                                    fontSize = 14.sp,
+                                )
+                            },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.lock_icn),
+                                    contentDescription = "Confirm Password Icon",
+                                    modifier = Modifier.padding(12.dp).size(26.dp)
+                                )
+                            },
+                            trailingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.eye),
+                                    contentDescription = "End Icon",
+                                    modifier = Modifier.padding(12.dp).size(20.dp)
+                                )
+                            },
+                            visualTransformation = PasswordVisualTransformation(),
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .padding(bottom = 12.dp)
+                                .fillMaxWidth()
+                                .height(53.dp),
+                        )
+
+                        Button(
+                            onClick = {
+                                //                        viewModel.viewModelScope.launch {
 //                            viewModel.fetchRegister(
 //                                userReg = UserApiRegisterRequest(
 //                                    email = email,
@@ -173,28 +234,111 @@ private fun RegisterScreen(
 //                                    role = "USER"
 //                                )
 //                          )
-                     //}
+                                //}
+                                navController.navigate("destination_route")
+                            },
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 12.dp)
+                                .height(48.dp)
+                        ) {
+                            Text(
+                                text = "Sign Up",
+                                fontSize = 15.sp,
+                            )
+                        }
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    Modifier
+                                        .weight(1f)
+                                        .padding(bottom = 4.dp, end = 8.dp)
+                                        .height(1.dp)
+                                        .background(color = Color.Black)
+                                )
 
-                    }) {
-                        Text(text = "Sign Up")
+                                Text(
+                                    text = "Or",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.padding(bottom = 8.dp)
+                                )
+
+                                Box(
+                                    Modifier
+                                        .weight(1f)
+                                        .padding(bottom = 4.dp, start = 8.dp)
+                                        .height(1.dp)
+                                        .background(color = Color.Black)
+                                )
+                            }
+                        }
+
+                        Button(
+                            onClick = {
+                                navController.navigate("destination_route")
+                            },
+                            shape = RoundedCornerShape(16.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 12.dp)
+                                .height(48.dp)
+                                .background(color = MaterialTheme.colorScheme.background)
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.google_icn),
+                                    contentDescription = "Google Icon",
+                                    modifier = Modifier.size(24.dp)
+                                )
+
+                                Spacer(modifier = Modifier.width(8.dp))
+
+                                Text(
+                                    text = "Continue with Google",
+                                    fontSize = 15.sp,
+                                )
+                            }
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            ClickableText(
+                                text = AnnotatedString("Already have an account? Sign in"),
+                                onClick = {
+                                    // Handle navigation to sign in screen
+                                    navController.navigate("sign_in_route")
+                                },
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
                     }
-                }
 
 //                when (registerUiState) {
 //                    is RegisterUiState.Error -> Text(text = registerUiState.message)
 //                    RegisterUiState.Loading -> Text(text = "")
 //                    is RegisterUiState.Success -> Text(text = registerUiState.data.email)
 //                }
+                }
             }
         }
     }
 }
 
-@Composable
-@Preview
-private fun RegisterScreenPreview() {
-    val navController = rememberNavController()
-    OptixTheme {
-        RegisterScreenRoute(navController = navController)
+    @Composable
+    @Preview
+    private fun RegisterScreenPreview() {
+        val navController = rememberNavController()
+        OptixTheme {
+            RegisterScreenRoute(navController = navController)
+        }
     }
-}
