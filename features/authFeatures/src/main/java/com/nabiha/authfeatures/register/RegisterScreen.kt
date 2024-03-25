@@ -33,17 +33,17 @@ import kotlinx.coroutines.launch
 
 @Composable
 internal fun RegisterScreenRoute(
-    viewModel: RegisterViewModel = hiltViewModel(),
+//    viewModel: RegisterViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
-    val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
-    RegisterScreen(viewModel = viewModel, registerUiState = registerUiState, navController=navController)
+//    val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
+    RegisterScreen(navController=navController)
 }
 
 @Composable
 private fun RegisterScreen(
-    viewModel: RegisterViewModel,
-    registerUiState: RegisterUiState,
+//    viewModel: RegisterViewModel,
+//    registerUiState: RegisterUiState,
     navController: NavHostController
 ) {
 
@@ -125,28 +125,28 @@ private fun RegisterScreen(
                     )
 
                     Button(onClick = {
-                        viewModel.viewModelScope.launch {
-                            viewModel.fetchRegister(
-                                userReg = UserApiRegisterRequest(
-                                    email = email,
-                                    password = password,
-                                    name = name,
-                                    phone = phone,
-                                    role = "USER"
-                                )
-                          )
-                     }
+//                        viewModel.viewModelScope.launch {
+//                            viewModel.fetchRegister(
+//                                userReg = UserApiRegisterRequest(
+//                                    email = email,
+//                                    password = password,
+//                                    name = name,
+//                                    phone = phone,
+//                                    role = "USER"
+//                                )
+//                          )
+                     //}
 
                     }) {
                         Text(text = "Register User")
                     }
                 }
 
-                when (registerUiState) {
-                    is RegisterUiState.Error -> Text(text = registerUiState.message)
-                    RegisterUiState.Loading -> Text(text = "")
-                    is RegisterUiState.Success -> Text(text = registerUiState.data.email)
-                }
+//                when (registerUiState) {
+//                    is RegisterUiState.Error -> Text(text = registerUiState.message)
+//                    RegisterUiState.Loading -> Text(text = "")
+//                    is RegisterUiState.Success -> Text(text = registerUiState.data.email)
+//                }
             }
         }
     }

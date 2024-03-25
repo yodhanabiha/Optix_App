@@ -161,7 +161,7 @@ private fun HomeScreen(navController: NavHostController) {
                     fontWeight = FontWeight.SemiBold
                 )
 
-                HorizontalPager(state = pagerState) { page ->
+                HorizontalPager(state = pagerState, pageSpacing = 12.dp) { page ->
                     val drawableId = when (page) {
                         0 -> R.drawable.carr_1
                         1 -> R.drawable.carr_2
