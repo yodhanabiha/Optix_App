@@ -46,7 +46,7 @@ fun RowScope.BottomNavigationBar(
             .padding(top = if (route == "virtual") 0.dp else 18.dp)
             .clickable { navController.navigate(route) }
             .background(
-                color = if (route == "virtual") Color.Transparent else Color(0xFFDBBF28),
+                color = if (route == "virtual") Color.Transparent else MaterialTheme.colorScheme.primary,
             )) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -54,15 +54,15 @@ fun RowScope.BottomNavigationBar(
             modifier = Modifier.fillMaxSize()
         ) {
 
-            if (selected && route != "virtual") {
-                Divider(
-                    color = MaterialTheme.colorScheme.surfaceVariant,
-                    thickness = 3.dp,
-                    modifier = Modifier
-                        .width(48.dp)
-                        .align(Alignment.CenterHorizontally)
-                )
-            }
+//            if (selected && route != "virtual") {
+//                Divider(
+//                    color = MaterialTheme.colorScheme.surface,
+//                    thickness = 3.dp,
+//                    modifier = Modifier
+//                        .width(48.dp)
+//                        .align(Alignment.CenterHorizontally)
+//                )
+//            }
 
             if (route != "virtual") {
 
@@ -76,8 +76,8 @@ fun RowScope.BottomNavigationBar(
                     Icon(
                         painter = painterResource(id = if (selected) iconSelected else iconUnselected),
                         contentDescription = "",
-                        modifier = Modifier.size(28.dp),
-                        tint = MaterialTheme.colorScheme.surfaceVariant
+                        modifier = Modifier.size(24.dp),
+                        tint = MaterialTheme.colorScheme.surface
                     )
 
                     Text(
@@ -85,7 +85,7 @@ fun RowScope.BottomNavigationBar(
                         fontSize = 8.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 2.dp),
-                        color = MaterialTheme.colorScheme.surfaceVariant
+                        color = MaterialTheme.colorScheme.surface
                     )
                 }
             } else {
@@ -95,7 +95,7 @@ fun RowScope.BottomNavigationBar(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(top = 18.dp)
-                            .background(Color(0xFFDBBF28)),
+                            .background(MaterialTheme.colorScheme.primary),
                     ) {
 
                     }
@@ -111,7 +111,7 @@ fun RowScope.BottomNavigationBar(
                             modifier = Modifier
                                 .height(40.dp)
                                 .width(46.dp)
-                                .background(Color(0xFFDBBF28), CircleShape)
+                                .background(MaterialTheme.colorScheme.primary, CircleShape)
                         ) {
                             Icon(
                                 painter = painterResource(id = if (selected) iconSelected else iconUnselected),
@@ -119,7 +119,7 @@ fun RowScope.BottomNavigationBar(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .padding(8.dp),
-                                tint = MaterialTheme.colorScheme.surfaceVariant
+                                tint = MaterialTheme.colorScheme.surface
                             )
                         }
 
@@ -128,7 +128,7 @@ fun RowScope.BottomNavigationBar(
                             fontSize = 8.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(top = 2.dp),
-                            color = MaterialTheme.colorScheme.surfaceVariant
+                            color = MaterialTheme.colorScheme.surface
                         )
                     }
 
