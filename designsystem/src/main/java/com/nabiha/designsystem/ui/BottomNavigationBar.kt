@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -90,7 +91,7 @@ fun RowScope.BottomNavigationBar(
                 }
             } else {
 
-                Box(modifier = Modifier.fillMaxSize()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
@@ -102,15 +103,15 @@ fun RowScope.BottomNavigationBar(
 
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
+                        verticalArrangement = Arrangement.Top,
                         modifier = Modifier
                             .fillMaxSize()
                             .clickable { navController.navigate(route) }
                     ) {
                         Box(
                             modifier = Modifier
-                                .height(40.dp)
-                                .width(46.dp)
+                                .height(44.dp)
+                                .width(50.dp)
                                 .background(MaterialTheme.colorScheme.primary, CircleShape)
                         ) {
                             Icon(
@@ -118,7 +119,7 @@ fun RowScope.BottomNavigationBar(
                                 contentDescription = "",
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .padding(8.dp),
+                                    .padding(10.dp),
                                 tint = MaterialTheme.colorScheme.surface
                             )
                         }

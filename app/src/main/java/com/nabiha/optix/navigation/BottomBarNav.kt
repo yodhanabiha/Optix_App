@@ -23,7 +23,7 @@ sealed class BottomBarNav(
     )
     object Virtual :BottomBarNav(
         route = "virtual",
-        title = "Virtual\n" + "Try-On",
+        title = "Try-On",
         icon = R.drawable.scan_icn,
         iconNs = R.drawable.scan_icn
     )
