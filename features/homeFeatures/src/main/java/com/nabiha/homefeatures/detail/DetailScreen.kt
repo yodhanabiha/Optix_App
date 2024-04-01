@@ -5,6 +5,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -42,8 +43,10 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.component.ScaffoldTopAppbar
+import com.nabiha.designsystem.component.gridItems
 import com.nabiha.designsystem.theme.OptixTheme
 import com.nabiha.homefeatures.components.BottomDetail
+import com.nabiha.homefeatures.components.CardProductHome
 
 @Composable
 internal fun DetailScreenRoute(
@@ -227,7 +230,41 @@ private fun DetailScreen(navController: NavHostController, onBackBtnClick: () ->
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
+
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    thickness = 1.dp,
+                    Color.Black.copy(alpha = 0.1f)
+                )
             }
+            item {
+                Text(
+                    text = "Recommended",
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.padding(bottom = 16.dp, start = 16.dp)
+                )
+            }
+
+            gridItems(
+                10,
+                nColumns = 2,
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.padding(horizontal = 12.dp)
+            ) {
+                CardProductHome(
+                    title = "Purple Glasses",
+                    price = "Rp. 155.000",
+                    imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .height(205.dp)
+                        .clickable { navController.navigateToDetailScreen() },
+                    like = true
+                )
+            }
+
         }
     }
 }
