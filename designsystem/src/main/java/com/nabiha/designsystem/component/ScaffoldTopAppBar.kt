@@ -17,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
+import com.nabiha.designsystem.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +27,7 @@ fun ScaffoldTopAppbar(
     contentColor: Color = contentColorFor(containerColor),
     title:String,
     onNavigationIconClick:()->Unit,
-    navigationIcon: Painter = rememberVectorPainter(image = Icons.Outlined.ArrowBack),
+    navigationIcon: Painter = painterResource(id =  R.drawable.chevron_left),
     snackbarHost: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
