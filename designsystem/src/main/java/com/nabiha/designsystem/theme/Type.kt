@@ -67,6 +67,12 @@ val Typography = Typography(
         fontSize = 8.sp,
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
+    labelMedium = TextStyle(
+        fontFamily = PoppinsFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp,
+        platformStyle = PlatformTextStyle(includeFontPadding = false)
+    ),
     titleLarge = TextStyle(
         fontFamily = PoppinsFamily,
         fontWeight = FontWeight.Bold,
