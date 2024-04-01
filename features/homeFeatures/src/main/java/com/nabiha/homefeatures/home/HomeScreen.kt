@@ -107,11 +107,10 @@ private fun HomeScreen(navController: NavHostController) {
                     }) {
 
                         Icon(
-                            painter = painterResource(id = R.drawable.person),
+                            painter = painterResource(id = R.drawable.notification),
                             contentDescription = "Person icon",
                             modifier = Modifier
                                 .size(34.dp)
-                                .clip(CircleShape),
                         )
 
                     }
