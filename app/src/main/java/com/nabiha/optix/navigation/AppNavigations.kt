@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
@@ -29,7 +30,7 @@ import com.nabiha.homefeatures.home.homeScreen
 fun AppNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = NavRoute.RegisterScreenRoute
+    startDestination: String = NavRoute.HomeScreenRoute
 ) {
     Scaffold(bottomBar = { BottomBar(navController = navController) }) { innerPadding ->
         NavHost(
@@ -62,7 +63,7 @@ fun BottomBar(navController: NavHostController) {
 
     AnimatedVisibility(visible = routes.any { it == currentDestination?.route }) {
         NavigationBar(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(90.dp),
             containerColor = Color.Transparent
         ) {
             Row(

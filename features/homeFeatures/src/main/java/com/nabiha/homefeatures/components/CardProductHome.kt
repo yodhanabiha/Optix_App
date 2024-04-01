@@ -51,11 +51,12 @@ fun CardProductHome(
             modifier = Modifier
                 .height(123.dp)
                 .fillMaxWidth()
+                .padding(horizontal = 18.dp)
         ) {
             Image(
                 painter = rememberAsyncImagePainter(imageUrl),
                 contentDescription = "",
-                contentScale = ContentScale.FillHeight,
+                contentScale = ContentScale.Inside,
                 alignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize()
             )
@@ -63,7 +64,7 @@ fun CardProductHome(
         Row(
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                .padding(top = 8.dp, start = 16.dp, end = 16.dp)
         ) {
             Text(
                 text = title,
@@ -71,28 +72,23 @@ fun CardProductHome(
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 modifier = Modifier.weight(1f)
             )
-            Icon(
-                painter = painterResource(id = if (like) R.drawable.love_icn else R.drawable.love_icn_ns),
-                contentDescription = "",
-                tint = if (like) Color.Red else MaterialTheme.colorScheme.surfaceVariant,
-                modifier = Modifier.size(18.dp)
-            )
         }
 
         Row(
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 8.dp)
-                .border(
-                    BorderStroke(1.dp, Color(0xFF000000).copy(alpha = 0.2f)),
-                    RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
-                )
-                .background(color = MaterialTheme.colorScheme.primary)
+                .padding(top = 4.dp, bottom = 16.dp, end = 16.dp)
         ) {
             Text(
                 text = price,
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp).weight(1f)
+            )
+            Icon(
+                painter = painterResource(id = if (like) R.drawable.love_icn else R.drawable.love_icn_ns),
+                contentDescription = "",
+                tint = if (like) Color.Red else MaterialTheme.colorScheme.surfaceVariant,
+                modifier = Modifier.size(18.dp)
             )
         }
     }

@@ -5,7 +5,9 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,8 +52,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.nabiha.designsystem.R
+import com.nabiha.designsystem.component.gridItems
 import com.nabiha.designsystem.theme.OptixTheme
-import com.nabiha.designsystem.ui.COutlinedTextField
+import com.nabiha.designsystem.component.COutlinedTextField
 import com.nabiha.homefeatures.components.CardProductHome
 import com.nabiha.homefeatures.detail.navigateToDetailScreen
 import kotlinx.coroutines.delay
@@ -64,7 +67,10 @@ internal fun HomeScreenRoute(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
+    ExperimentalLayoutApi::class
+)
 @Composable
 private fun HomeScreen(navController: NavHostController) {
 
@@ -145,7 +151,7 @@ private fun HomeScreen(navController: NavHostController) {
         }
         item {
             val count = 3
-            val pagerState = rememberPagerState(initialPage = 1, pageCount = {count})
+            val pagerState = rememberPagerState(initialPage = 1, pageCount = { count })
 
             LaunchedEffect(Unit) {
                 while (true) {
@@ -182,7 +188,12 @@ private fun HomeScreen(navController: NavHostController) {
                     )
                 }
 
-                Canvas(modifier = Modifier.width(width = 60.dp).align(Alignment.CenterHorizontally).padding(top = 16.dp)) {
+                Canvas(
+                    modifier = Modifier
+                        .width(width = 60.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 16.dp)
+                ) {
                     val spacing = 8.dp.toPx()
                     val dotWidth = 8.dp.toPx()
                     val dotHeight = 8.dp.toPx()
@@ -211,20 +222,18 @@ private fun HomeScreen(navController: NavHostController) {
 
             }
         }
-        repeat(10){
-            item {
-                CardProductHome(
-                    title = "Purple Glasses",
-                    price = "Rp. 155.000",
-                    imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp)
-                        .height(205.dp)
-                        .clickable { navController.navigateToDetailScreen() },
-                    like = true
-                )
-            }
+
+        gridItems(10, nColumns = 2, horizontalArrangement = Arrangement.spacedBy(10.dp)){
+            CardProductHome(
+                title = "Purple Glasses",
+                price = "Rp. 155.000",
+                imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .height(205.dp)
+                    .clickable { navController.navigateToDetailScreen() },
+                like = true
+            )
         }
 
     }
@@ -258,6 +267,6 @@ private fun DrawScope.drawIndicator(
 @Preview
 private fun HomeScreenPrv() {
     OptixTheme {
-        HomeScreen(navController= rememberNavController())
+        HomeScreen(navController = rememberNavController())
     }
 }
