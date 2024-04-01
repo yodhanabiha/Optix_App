@@ -1,10 +1,13 @@
-package com.nabiha.homefeatures
+package com.nabiha.homefeatures.home
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,23 +50,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.nabiha.designsystem.R
+import com.nabiha.designsystem.component.gridItems
 import com.nabiha.designsystem.theme.OptixTheme
-import com.nabiha.designsystem.ui.COutlinedTextField
+import com.nabiha.designsystem.component.COutlinedTextField
+import com.nabiha.homefeatures.components.CardProductHome
+import com.nabiha.homefeatures.detail.navigateToDetailScreen
 import kotlinx.coroutines.delay
 
 @Composable
 internal fun HomeScreenRoute(
     navController: NavHostController
 ) {
-//    val albumUiState by viewModel.albumUiState.collectAsStateWithLifecycle()
-    HomeScreen()
+    HomeScreen(navController)
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
+    ExperimentalLayoutApi::class
+)
 @Composable
-private fun HomeScreen() {
+private fun HomeScreen(navController: NavHostController) {
 
     var search by remember {
         mutableStateOf("")
@@ -73,7 +82,7 @@ private fun HomeScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        contentPadding = PaddingValues(horizontal = 16.dp)
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 32.dp)
     ) {
         item {
             Column(modifier = Modifier.padding(top = 16.dp)) {
@@ -142,7 +151,7 @@ private fun HomeScreen() {
         }
         item {
             val count = 3
-            val pagerState = rememberPagerState(initialPage = 1, pageCount = {count})
+            val pagerState = rememberPagerState(initialPage = 1, pageCount = { count })
 
             LaunchedEffect(Unit) {
                 while (true) {
@@ -158,7 +167,7 @@ private fun HomeScreen() {
                     fontWeight = FontWeight.SemiBold
                 )
 
-                HorizontalPager(state = pagerState) { page ->
+                HorizontalPager(state = pagerState, pageSpacing = 12.dp) { page ->
                     val drawableId = when (page) {
                         0 -> R.drawable.carr_1
                         1 -> R.drawable.carr_2
@@ -179,7 +188,12 @@ private fun HomeScreen() {
                     )
                 }
 
-                Canvas(modifier = Modifier.width(width = 60.dp).align(Alignment.CenterHorizontally).padding(top = 16.dp)) {
+                Canvas(
+                    modifier = Modifier
+                        .width(width = 60.dp)
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 16.dp)
+                ) {
                     val spacing = 8.dp.toPx()
                     val dotWidth = 8.dp.toPx()
                     val dotHeight = 8.dp.toPx()
@@ -207,8 +221,21 @@ private fun HomeScreen() {
                 }
 
             }
-
         }
+
+        gridItems(10, nColumns = 2, horizontalArrangement = Arrangement.spacedBy(10.dp)){
+            CardProductHome(
+                title = "Purple Glasses",
+                price = "Rp. 155.000",
+                imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .height(205.dp)
+                    .clickable { navController.navigateToDetailScreen() },
+                like = true
+            )
+        }
+
     }
 
 }
@@ -240,6 +267,6 @@ private fun DrawScope.drawIndicator(
 @Preview
 private fun HomeScreenPrv() {
     OptixTheme {
-        HomeScreen()
+        HomeScreen(navController = rememberNavController())
     }
 }

@@ -6,7 +6,8 @@ plugins {
 apply<MainGradlePlugin>()
 
 android {
-    namespace = "com.nabiha.homefeatures"
+    namespace = "com.example.cartfeatures"
+
     buildFeatures {
         compose = true
     }
@@ -16,18 +17,18 @@ android {
 }
 
 dependencies {
+
     room()
-    androidTests()
     retrofit()
     hilt()
     coroutines()
     compose()
-    accompanist()
     androidLifeCycle()
-    coil()
-
+    androidTests()
 
     designsystem()
     common()
-    data()
+    domain()
+    entity()
+    apiresponse()
 }
