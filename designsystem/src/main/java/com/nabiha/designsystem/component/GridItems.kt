@@ -13,6 +13,7 @@ fun LazyListScope.gridItems(
     count: Int,
     nColumns: Int,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    modifier: Modifier = Modifier,
     itemContent: @Composable BoxScope.(Int) -> Unit,
 ) {
     gridItems(
@@ -20,6 +21,7 @@ fun LazyListScope.gridItems(
         nColumns = nColumns,
         horizontalArrangement = horizontalArrangement,
         itemContent = itemContent,
+        modifier = modifier
     )
 }
 
@@ -27,12 +29,13 @@ fun <T> LazyListScope.gridItems(
     data: List<T>,
     nColumns: Int,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    modifier: Modifier = Modifier,
     key: ((item: T) -> Any)? = null,
     itemContent: @Composable BoxScope.(T) -> Unit,
 ) {
     val rows = if (data.isEmpty()) 0 else 1 + (data.count() - 1) / nColumns
     items(rows) { rowIndex ->
-        Row(horizontalArrangement = horizontalArrangement) {
+        Row(horizontalArrangement = horizontalArrangement, modifier = modifier) {
             for (columnIndex in 0 until nColumns) {
                 val itemIndex = rowIndex * nColumns + columnIndex
                 if (itemIndex < data.count()) {

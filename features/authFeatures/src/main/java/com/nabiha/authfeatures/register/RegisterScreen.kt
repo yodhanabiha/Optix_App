@@ -77,6 +77,7 @@ private fun RegisterScreen(
     var confirmPassword by remember {
         mutableStateOf("")
     }
+    
 
     LazyColumn(
         modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background)
