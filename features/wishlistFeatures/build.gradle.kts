@@ -16,6 +16,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":features:homeFeatures"))
     room()
     androidTests()
     retrofit()
@@ -25,7 +26,6 @@ dependencies {
     accompanist()
     androidLifeCycle()
     coil()
-    features()
 
 
     designsystem()
