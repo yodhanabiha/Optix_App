@@ -16,7 +16,7 @@ sealed class BottomBarNav(
         iconNs = R.drawable.home_icn_ns
     )
     object Wishlist :BottomBarNav(
-        route = "wishlist",
+        route = NavRoute.WishlistScreenRoute,
         title = "Wishlist",
         icon = R.drawable.love_icn,
         iconNs = R.drawable.love_icn_ns

@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.wishlistfeatures.wishlistScreen.wishlistScreen
 import com.nabiha.authfeatures.register.loginScreen
 import com.nabiha.common.utils.NavRoute
 import com.nabiha.designsystem.ui.BottomNavigationBar
@@ -30,7 +31,7 @@ import com.nabiha.homefeatures.home.homeScreen
 fun AppNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = NavRoute.LoginScreenRoute
+    startDestination: String = NavRoute.HomeScreenRoute
 ) {
     Scaffold(bottomBar = { BottomBar(navController = navController) }) { innerPadding ->
         NavHost(
@@ -41,6 +42,7 @@ fun AppNavigation(
             homeScreen(navController)
             loginScreen(navController)
             detailScreen(navController, navController::popBackStack)
+            wishlistScreen(navController)
         }
     }
 }
