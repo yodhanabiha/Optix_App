@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -131,11 +132,13 @@ private fun RegisterScreen(
                                     modifier = Modifier.size(26.dp)
                                 )
                             },
-                            shape = RoundedCornerShape(16.dp),
+
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(53.dp),
+                                .height(53.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(color = Color.White),
 
                         )
                         OutlinedTextField(
@@ -163,7 +166,9 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(53.dp),
+                                .height(53.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(color = Color.White),
                         )
                         OutlinedTextField(
                             value = password,
@@ -193,15 +198,17 @@ private fun RegisterScreen(
                                     modifier = Modifier
                                         .padding(12.dp)
                                         .size(20.dp)
+
                                 )
                             },
 
                             visualTransformation = PasswordVisualTransformation(),
-                            shape = RoundedCornerShape(16.dp),
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(53.dp),
+                                .height(53.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(color = Color.White),
                         )
                         OutlinedTextField(
                             value = confirmPassword,
@@ -234,11 +241,12 @@ private fun RegisterScreen(
                                 )
                             },
                             visualTransformation = PasswordVisualTransformation(),
-                            shape = RoundedCornerShape(16.dp),
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(53.dp),
+                                .height(53.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(color = Color.White),
                         )
 
                         Button(
