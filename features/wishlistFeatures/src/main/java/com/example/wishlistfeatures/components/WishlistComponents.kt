@@ -23,6 +23,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,14 +44,15 @@ fun CardWishlist(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(115.dp)
+            .height(115.dp).padding(bottom = 16.dp)
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = imageUrl),
             contentDescription = "Gambar Product",
             modifier = Modifier
                 .size(115.dp)
-                .border(1.dp, Color.Black.copy(alpha = 0.1f), RoundedCornerShape(8.dp))
+                .border(1.dp, Color.Black.copy(alpha = 0.1f), RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.FillBounds
         )
         Column(
             modifier = Modifier
