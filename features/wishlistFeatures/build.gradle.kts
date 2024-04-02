@@ -25,6 +25,7 @@ dependencies {
     accompanist()
     androidLifeCycle()
     coil()
+    features()
 
 
     designsystem()
