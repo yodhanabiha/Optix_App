@@ -121,7 +121,7 @@ private fun LoginScreen(
                                     contentDescription = "Email Icon",
                                     modifier = Modifier
                                         .size(18.dp)
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+//                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
                                 )
                             },
                             modifier = Modifier
