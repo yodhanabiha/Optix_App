@@ -44,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.nabiha.authfeatures.R
 import com.nabiha.designsystem.theme.OptixTheme
 import java.time.format.TextStyle
 
@@ -346,7 +345,7 @@ private fun RegisterScreen(
                                 Text(
                                     text = "Already have an account? ",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.secondary,
+                                    color = MaterialTheme.colorScheme.surface,
                                 )
                                 ClickableText(
                                     text = AnnotatedString("Sign in"),
@@ -356,7 +355,7 @@ private fun RegisterScreen(
                                     },
                                     style = androidx.compose.ui.text.TextStyle(
                                         fontSize = 15.sp,
-                                        color = Color(0xFFDBBF28),
+                                        color = Color(0xFF7D5260),
                                         textDecoration = TextDecoration.Underline
                                     )
                                 )

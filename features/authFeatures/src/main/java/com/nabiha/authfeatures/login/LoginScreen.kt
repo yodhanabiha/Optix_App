@@ -72,7 +72,7 @@ private fun LoginScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(android.graphics.Color.parseColor("#314B4C")))  //background(color = MaterialTheme.colorScheme.background)
+            .background(color = MaterialTheme.colorScheme.primary) //background(color = MaterialTheme.colorScheme.background)
     ) {
         item {
             Box(
