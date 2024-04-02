@@ -95,10 +95,7 @@ private fun LoginScreen(
                         painter = painterResource(id = com.nabiha.designsystem.R.drawable.login_img),
                         contentDescription = "Sign In Picture",
                         modifier = Modifier
-                            .size(320.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .padding(top = 16.dp, start = 24.dp),
+                            .size(width = 400.dp, height = 250.dp)
                     )
                     Spacer(modifier = Modifier.height(24.dp))
                     Column(modifier = Modifier.fillMaxSize()) {
@@ -109,7 +106,7 @@ private fun LoginScreen(
                             placeholder = {
                                 Text(
                                     text = "Email",
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     color = Color(android.graphics.Color.parseColor("#838383"))
                                 )
                             },
@@ -138,7 +135,7 @@ private fun LoginScreen(
                             placeholder = {
                                 Text(
                                     text = "Password",
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                     color = Color(android.graphics.Color.parseColor("#838383"))
                                 )
                             },

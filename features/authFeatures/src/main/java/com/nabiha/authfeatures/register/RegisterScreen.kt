@@ -1,4 +1,4 @@
-package com.nabiha.authfeatures.register
+ package com.nabiha.authfeatures.register
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -96,13 +96,11 @@ private fun RegisterScreen(
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Image(
-                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.regis_img),
+                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.register_pic),
                         contentDescription = "Sign Up Picture",
                         modifier = Modifier
-                            .size(250.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .padding(top = 16.dp, start = 56.dp),
+                            .size(width = 450.dp, height = 250.dp)
+                            .padding(end = 24.dp),
                     )
                     Column(modifier = Modifier.fillMaxSize()) {
                         Text(
@@ -119,7 +117,7 @@ private fun RegisterScreen(
                             placeholder = {
                                 Text(
                                     text = "Username",
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                 )
                             },
                             singleLine = true,
@@ -149,7 +147,7 @@ private fun RegisterScreen(
                             placeholder = {
                                 Text(
                                     text = "Email",
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                 )
                             },
                             singleLine = true,
@@ -167,7 +165,7 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(48.dp)
+                                .height(53.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
                         )
@@ -178,7 +176,7 @@ private fun RegisterScreen(
                             placeholder = {
                                 Text(
                                     text = "Password",
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                 )
                             },
                             singleLine = true,
@@ -207,7 +205,7 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(48.dp)
+                                .height(53.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
                         )
@@ -218,7 +216,7 @@ private fun RegisterScreen(
                             placeholder = {
                                 Text(
                                     text = "Confirm Password",
-                                    fontSize = 14.sp,
+                                    fontSize = 12.sp,
                                 )
                             },
                             singleLine = true,
@@ -245,7 +243,7 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(48.dp)
+                                .height(53.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
                         )
@@ -269,7 +267,7 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
-                                .height(48.dp),
+                                .height(53.dp),
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
                         ) {
                             Text(

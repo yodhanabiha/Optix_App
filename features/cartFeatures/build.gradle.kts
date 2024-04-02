@@ -25,6 +25,7 @@ dependencies {
     compose()
     androidLifeCycle()
     androidTests()
+    coil()
 
     designsystem()
     common()

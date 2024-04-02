@@ -163,5 +163,6 @@ fun DependencyHandler.features() {
     implementation(project(":features:homeFeatures"))
     implementation(project(":features:authFeatures"))
     implementation(project(":features:wishlistFeatures"))
+    implementation(project(":features:cartFeatures"))
 }
 

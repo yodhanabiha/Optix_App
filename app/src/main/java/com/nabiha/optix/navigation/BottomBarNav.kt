@@ -28,7 +28,7 @@ sealed class BottomBarNav(
         iconNs = R.drawable.scan_icn
     )
     object Cart: BottomBarNav(
-        route = "cart",
+        route = NavRoute.CartScreenRoute,
         title = "Cart",
         icon = R.drawable.trolley_icn,
         iconNs = R.drawable.trolley_icn_ns

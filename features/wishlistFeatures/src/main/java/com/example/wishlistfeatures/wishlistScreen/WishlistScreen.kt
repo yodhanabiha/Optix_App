@@ -10,10 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.wishlistfeatures.components.CardWishlist
+import com.nabiha.designsystem.theme.OptixTheme
 import com.nabiha.homefeatures.detail.navigateToDetailScreen
 
 @Composable
@@ -50,5 +53,13 @@ private fun WishlistScreen(navController: NavHostController) {
                 navController.navigateToDetailScreen()
             }
         }
+    }
+}
+@Composable
+@Preview
+private fun WishlistScreenPrv() {
+    val navController = rememberNavController()
+    OptixTheme {
+        WishlistScreen(navController = navController)
     }
 }

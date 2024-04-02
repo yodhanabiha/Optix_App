@@ -58,7 +58,7 @@ val Typography = Typography(
     bodySmall = TextStyle(
         fontFamily = PoppinsFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 11.sp,
+        fontSize = 12.sp,
         platformStyle = PlatformTextStyle(includeFontPadding = false)
     ),
     labelSmall = TextStyle(

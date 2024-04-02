@@ -20,6 +20,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.cartfeatures.cartScreen.cartScreen
 import com.example.wishlistfeatures.wishlistScreen.wishlistScreen
 import com.nabiha.authfeatures.register.loginScreen
 import com.nabiha.common.utils.NavRoute
@@ -43,6 +44,7 @@ fun AppNavigation(
             loginScreen(navController)
             detailScreen(navController, navController::popBackStack)
             wishlistScreen(navController)
+            cartScreen(navController)
         }
     }
 }
