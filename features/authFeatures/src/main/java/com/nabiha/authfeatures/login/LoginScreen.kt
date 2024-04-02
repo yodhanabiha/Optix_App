@@ -120,8 +120,8 @@ private fun LoginScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
                                     contentDescription = "Email Icon",
                                     modifier = Modifier
+                                        .padding(12.dp)
                                         .size(18.dp)
-//                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
                                 )
                             },
                             modifier = Modifier
@@ -278,7 +278,7 @@ private fun LoginScreen(
                                 Spacer(modifier = Modifier.width(8.dp))
 
                                 Text(
-                                    text = "Continue with Google",
+                                    text = "Sign In with Google",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.surfaceVariant,
                                 )
@@ -292,12 +292,12 @@ private fun LoginScreen(
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
-                                    text = "Already have an account? ",
+                                    text = "New to OPTIX? ",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.surface,
                                 )
                                 ClickableText(
-                                    text = AnnotatedString("Sign in"),
+                                    text = AnnotatedString("Create Account"),
                                     onClick = { offset ->
                                         // Handle click event
                                         // You can navigate to sign-in screen or perform any action here
