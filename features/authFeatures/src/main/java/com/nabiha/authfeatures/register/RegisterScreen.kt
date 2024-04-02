@@ -96,13 +96,13 @@ private fun RegisterScreen(
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Image(
-                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.signup_pic),
+                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.regis_img),
                         contentDescription = "Sign Up Picture",
                         modifier = Modifier
-                            .size(300.dp)
+                            .size(250.dp)
                             .fillMaxWidth()
-                            .fillMaxHeight(),
-                             alignment = Alignment.Center
+                            .fillMaxHeight()
+                            .padding(top = 16.dp, start = 56.dp),
                     )
                     Column(modifier = Modifier.fillMaxSize()) {
                         Text(
@@ -128,7 +128,9 @@ private fun RegisterScreen(
                                 Icon(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.person),
                                     contentDescription = "Username Icon",
-                                    modifier = Modifier.size(26.dp)
+                                    modifier = Modifier
+                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .size(18.dp)
                                 )
                             },
 
@@ -157,8 +159,8 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
                                     contentDescription = "Email Icon",
                                     modifier = Modifier
-                                        .padding(12.dp)
-                                        .size(26.dp)
+                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .size(18.dp)
                                 )
                             },
                             shape = RoundedCornerShape(16.dp),
@@ -186,8 +188,8 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
                                     contentDescription = "Password Icon",
                                     modifier = Modifier
-                                        .padding(12.dp)
-                                        .size(26.dp)
+                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .size(18.dp)
                                 )
                             },
                             trailingIcon = {
@@ -195,7 +197,7 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
                                     contentDescription = "End Icon",
                                     modifier = Modifier
-                                        .padding(12.dp)
+                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
                                         .size(20.dp)
 
                                 )
@@ -226,8 +228,8 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
                                     contentDescription = "Confirm Password Icon",
                                     modifier = Modifier
-                                        .padding(12.dp)
-                                        .size(26.dp)
+                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .size(18.dp)
                                 )
                             },
                             trailingIcon = {
@@ -235,7 +237,7 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
                                     contentDescription = "End Icon",
                                     modifier = Modifier
-                                        .padding(12.dp)
+                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
                                         .size(20.dp)
                                 )
                             },
@@ -355,7 +357,7 @@ private fun RegisterScreen(
                                     },
                                     style = androidx.compose.ui.text.TextStyle(
                                         fontSize = 15.sp,
-                                        color = Color(0xFF7D5260),
+                                        color = MaterialTheme.colorScheme.secondary,
                                         textDecoration = TextDecoration.Underline
                                     )
                                 )

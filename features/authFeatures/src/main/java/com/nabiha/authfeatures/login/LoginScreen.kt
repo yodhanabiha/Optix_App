@@ -92,7 +92,7 @@ private fun LoginScreen(
                     Text(text = "Your Personal Virtual Try-On Glasses", fontSize = 16.sp, color = Color.White, modifier = Modifier.padding(top = 4.dp))
                     Spacer(modifier = Modifier.height(32.dp))
                     Image(
-                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.signin_pic),
+                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.login_img),
                         contentDescription = "Sign In Picture",
                         modifier = Modifier
                             .size(320.dp)
@@ -119,7 +119,9 @@ private fun LoginScreen(
                                 Icon(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
                                     contentDescription = "Email Icon",
-                                    modifier = Modifier.size(18.dp)
+                                    modifier = Modifier
+                                        .size(18.dp)
+                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
                                 )
                             },
                             modifier = Modifier
@@ -209,18 +211,18 @@ private fun LoginScreen(
                                 //}
                                 navController.navigate("destination_route")
                             },
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red), // Ubah warna tombol di sini
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
-                                .height(48.dp)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
 
                         ) {
                             Text(
                                 text = "Sign In",
                                 fontSize = 15.sp,
-                                modifier = Modifier
+                                color = MaterialTheme.colorScheme.surface
                             )
                         }
                         Box(
@@ -235,12 +237,13 @@ private fun LoginScreen(
                                         .weight(1f)
                                         .padding(bottom = 4.dp, end = 8.dp)
                                         .height(1.dp)
-                                        .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                                        .background(color = MaterialTheme.colorScheme.surface)
                                 )
 
                                 Text(
                                     text = "Or",
                                     style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.surface,
                                     modifier = Modifier.padding(bottom = 8.dp)
                                 )
 
@@ -249,7 +252,7 @@ private fun LoginScreen(
                                         .weight(1f)
                                         .padding(bottom = 4.dp, start = 8.dp)
                                         .height(1.dp)
-                                        .background(color = MaterialTheme.colorScheme.surfaceVariant)
+                                        .background(color = MaterialTheme.colorScheme.surface)
                                 )
                             }
                         }
@@ -262,7 +265,8 @@ private fun LoginScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
-                                .height(48.dp)
+                                .height(48.dp),
+                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Image(
@@ -276,6 +280,7 @@ private fun LoginScreen(
                                 Text(
                                     text = "Continue with Google",
                                     style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.surfaceVariant,
                                 )
                             }
                         }
@@ -289,6 +294,7 @@ private fun LoginScreen(
                                 Text(
                                     text = "Already have an account? ",
                                     style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.surface,
                                 )
                                 ClickableText(
                                     text = AnnotatedString("Sign in"),
@@ -298,7 +304,7 @@ private fun LoginScreen(
                                     },
                                     style = androidx.compose.ui.text.TextStyle(
                                         fontSize = 15.sp,
-                                        color = Color(android.graphics.Color.parseColor("#AC7C58")),
+                                        color = MaterialTheme.colorScheme.secondary,
                                         textDecoration = TextDecoration.Underline
                                     )
                                 )
