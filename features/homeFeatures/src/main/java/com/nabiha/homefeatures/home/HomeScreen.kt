@@ -68,8 +68,7 @@ internal fun HomeScreenRoute(
 
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
-    ExperimentalLayoutApi::class
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
 )
 @Composable
 private fun HomeScreen(navController: NavHostController) {
@@ -108,9 +107,9 @@ private fun HomeScreen(navController: NavHostController) {
 
                         Icon(
                             painter = painterResource(id = R.drawable.notification),
-                            contentDescription = "Person icon",
+                            contentDescription = "Bell icon",
                             modifier = Modifier
-                                .size(34.dp)
+                                .size(24.dp)
                         )
 
                     }

@@ -1,4 +1,4 @@
-package com.nabiha.authfeatures.register
+package com.nabiha.authfeatures.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,13 +17,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,9 +34,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -45,103 +49,59 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.nabiha.designsystem.theme.OptixTheme
-import java.time.format.TextStyle
 
 @Composable
-internal fun RegisterScreenRoute(
-//    viewModel: RegisterViewModel = hiltViewModel(),
+internal fun LoginScreenRoute(
     navController: NavHostController,
 ) {
-//    val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
-    RegisterScreen(navController=navController)
+    LoginScreen(navController=navController)
 }
 
 @Composable
-private fun RegisterScreen(
-//    viewModel: RegisterViewModel,
-//    registerUiState: RegisterUiState,
+private fun LoginScreen(
     navController: NavHostController
 ) {
-
-
-    var userName by remember {
-        mutableStateOf("")
-    }
-
     var email by remember {
         mutableStateOf("")
     }
-
     var password by remember {
         mutableStateOf("")
     }
-
-    var confirmPassword by remember {
-        mutableStateOf("")
+    var rememberMe by remember {
+        mutableStateOf(false)
     }
-    
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primary)
+            .background(color = MaterialTheme.colorScheme.primary) //background(color = MaterialTheme.colorScheme.background)
     ) {
-
         item {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 32.dp, start = 32.dp, end = 32.dp, top = 0.dp),
-                contentAlignment = Alignment.Center
+                    .padding(bottom = 32.dp, start = 16.dp, end = 16.dp, top = 24.dp),
+                    contentAlignment = Alignment.Center
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        Text(text = "Welcome to", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                        Text(text = " OPTIX ", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold )
+                        Text(text = "!", fontSize = 24.sp, color = Color.White, fontWeight = FontWeight.Bold )
+                    }
+                    Text(text = "Your Personal Virtual Try-On Glasses", fontSize = 16.sp, color = Color.White, modifier = Modifier.padding(top = 4.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
                     Image(
-                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.regis_img),
-                        contentDescription = "Sign Up Picture",
+                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.login_img),
+                        contentDescription = "Sign In Picture",
                         modifier = Modifier
-                            .size(250.dp)
+                            .size(320.dp)
                             .fillMaxWidth()
                             .fillMaxHeight()
-                            .padding(top = 16.dp, start = 56.dp),
+                            .padding(top = 16.dp, start = 24.dp),
                     )
+                    Spacer(modifier = Modifier.height(24.dp))
                     Column(modifier = Modifier.fillMaxSize()) {
-                        Text(
-                            text = "Please complete your personal information first!",
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.padding(8.dp),
-                            textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.surface
-                        )
-                        OutlinedTextField(
-                            value = userName,
-                            onValueChange = { userName = it },
-                            textStyle = MaterialTheme.typography.bodyLarge,
-                            placeholder = {
-                                Text(
-                                    text = "Username",
-                                    fontSize = 14.sp,
-                                )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.person),
-                                    contentDescription = "Username Icon",
-                                    modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
-                                        .size(18.dp)
-                                )
-                            },
-
-                            modifier = Modifier
-                                .padding(bottom = 12.dp)
-                                .fillMaxWidth()
-                                .height(48.dp)
-                                .clip(RoundedCornerShape(16.dp))
-                                .background(color = Color.White),
-
-                        )
                         OutlinedTextField(
                             value = email,
                             onValueChange = { email = it },
@@ -150,26 +110,26 @@ private fun RegisterScreen(
                                 Text(
                                     text = "Email",
                                     fontSize = 14.sp,
+                                    color = Color(android.graphics.Color.parseColor("#838383"))
                                 )
                             },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                             leadingIcon = {
                                 Icon(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
                                     contentDescription = "Email Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
                                         .size(18.dp)
+                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
                                 )
                             },
-                            shape = RoundedCornerShape(16.dp),
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(48.dp)
+                                .height(53.dp)
                                 .clip(RoundedCornerShape(16.dp))
-                                .background(color = Color.White),
+                                .background(color = Color.White)
                         )
                         OutlinedTextField(
                             value = password,
@@ -179,6 +139,7 @@ private fun RegisterScreen(
                                 Text(
                                     text = "Password",
                                     fontSize = 14.sp,
+                                    color = Color(android.graphics.Color.parseColor("#838383"))
                                 )
                             },
                             singleLine = true,
@@ -188,7 +149,7 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
                                     contentDescription = "Password Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .padding(12.dp)
                                         .size(18.dp)
                                 )
                             },
@@ -197,59 +158,44 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
                                     contentDescription = "End Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .padding(12.dp)
                                         .size(20.dp)
-
                                 )
                             },
 
                             visualTransformation = PasswordVisualTransformation(),
                             modifier = Modifier
-                                .padding(bottom = 12.dp)
                                 .fillMaxWidth()
                                 .height(48.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
                         )
-                        OutlinedTextField(
-                            value = confirmPassword,
-                            onValueChange = { confirmPassword = it },
-                            textStyle = MaterialTheme.typography.bodyLarge,
-                            placeholder = {
-                                Text(
-                                    text = "Confirm Password",
-                                    fontSize = 14.sp,
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 10.dp, top = 16.dp)) {
+                            Checkbox(
+                                colors = CheckboxDefaults.colors(
+                                    uncheckedColor = Color(android.graphics.Color.parseColor("#CCCACA")) ,
+                                    checkedColor = Color(android.graphics.Color.parseColor("#CCCACA")) ,
+                                ),
+                                checked = rememberMe,
+                                onCheckedChange = { rememberMe = it },
+                                modifier = Modifier.size(10.dp).scale(0.8f)
+                            )
+                            Text("Remember Me", fontSize = 13.sp, color = Color.White, modifier = Modifier.padding(start = 12.dp) )
+                            Spacer(modifier = Modifier.weight(1f))
+                            ClickableText(
+                                text = AnnotatedString("Create Account"),
+                                onClick = { offset ->
+                                    // Handle click event
+                                    // You can navigate to sign-in screen or perform any action here
+                                },
+                                style = androidx.compose.ui.text.TextStyle(
+                                    fontSize = 15.sp,
+                                    color = Color(android.graphics.Color.parseColor("#AC7C58")),
+                                    textDecoration = TextDecoration.Underline,
+                                    fontWeight = FontWeight.SemiBold,
                                 )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                            leadingIcon = {
-                                Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
-                                    contentDescription = "Confirm Password Icon",
-                                    modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
-                                        .size(18.dp)
-                                )
-                            },
-                            trailingIcon = {
-                                Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
-                                    contentDescription = "End Icon",
-                                    modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
-                                        .size(20.dp)
-                                )
-                            },
-                            visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier
-                                .padding(bottom = 12.dp)
-                                .fillMaxWidth()
-                                .height(48.dp)
-                                .clip(RoundedCornerShape(16.dp))
-                                .background(color = Color.White),
-                        )
-
+                            )
+                        }
                         Button(
                             onClick = {
                                 //                        viewModel.viewModelScope.launch {
@@ -271,9 +217,10 @@ private fun RegisterScreen(
                                 .padding(vertical = 8.dp)
                                 .height(48.dp),
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
+
                         ) {
                             Text(
-                                text = "Sign Up",
+                                text = "Sign In",
                                 fontSize = 15.sp,
                                 color = MaterialTheme.colorScheme.surface
                             )
@@ -296,8 +243,8 @@ private fun RegisterScreen(
                                 Text(
                                     text = "Or",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    modifier = Modifier.padding(bottom = 8.dp),
-                                    color = MaterialTheme.colorScheme.surface
+                                    color = MaterialTheme.colorScheme.surface,
+                                    modifier = Modifier.padding(bottom = 8.dp)
                                 )
 
                                 Box(
@@ -376,11 +323,11 @@ private fun RegisterScreen(
     }
 }
 
-    @Composable
-    @Preview
-    private fun RegisterScreenPreview() {
-        val navController = rememberNavController()
-        OptixTheme {
-            RegisterScreenRoute(navController = navController)
-        }
+@Composable
+@Preview
+private fun LoginScreenPreview() {
+    val navController = rememberNavController()
+    OptixTheme {
+        LoginScreenRoute(navController = navController)
     }
+}
