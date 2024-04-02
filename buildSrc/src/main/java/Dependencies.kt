@@ -164,3 +164,4 @@ fun DependencyHandler.features() {
     implementation(project(":features:authFeatures"))
     implementation(project(":features:wishlistFeatures"))
 }
+
