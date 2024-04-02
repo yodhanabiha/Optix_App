@@ -136,7 +136,7 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(53.dp)
+                                .height(48.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
 
@@ -166,7 +166,7 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(53.dp)
+                                .height(48.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
                         )
@@ -206,7 +206,7 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(53.dp)
+                                .height(48.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
                         )
@@ -244,7 +244,7 @@ private fun RegisterScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(53.dp)
+                                .height(48.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
                         )

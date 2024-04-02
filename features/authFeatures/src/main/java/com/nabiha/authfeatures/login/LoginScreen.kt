@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
@@ -33,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -78,14 +80,14 @@ private fun LoginScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 32.dp, start = 20.dp, end = 20.dp, top = 64.dp),
+                    .padding(bottom = 32.dp, start = 16.dp, end = 16.dp, top = 24.dp),
                     contentAlignment = Alignment.Center
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Row(modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "Welcome to", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                        Text(text = " OPTIX ", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold )
-                        Text(text = "!", fontSize = 20.sp, color = Color.White, fontWeight = FontWeight.Bold )
+                        Text(text = "Welcome to", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                        Text(text = " OPTIX ", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold )
+                        Text(text = "!", fontSize = 24.sp, color = Color.White, fontWeight = FontWeight.Bold )
                     }
                     Text(text = "Your Personal Virtual Try-On Glasses", fontSize = 16.sp, color = Color.White, modifier = Modifier.padding(top = 4.dp))
                     Spacer(modifier = Modifier.height(32.dp))
@@ -123,7 +125,7 @@ private fun LoginScreen(
                             modifier = Modifier
                                 .padding(bottom = 12.dp)
                                 .fillMaxWidth()
-                                .height(48.dp)
+                                .height(53.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White)
                         )
@@ -161,26 +163,36 @@ private fun LoginScreen(
 
                             visualTransformation = PasswordVisualTransformation(),
                             modifier = Modifier
-                                .padding(bottom = 12.dp)
                                 .fillMaxWidth()
                                 .height(48.dp)
                                 .clip(RoundedCornerShape(16.dp))
                                 .background(color = Color.White),
                         )
-                        Row(verticalAlignment = Alignment.CenterVertically) {
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 10.dp, top = 16.dp)) {
                             Checkbox(
                                 colors = CheckboxDefaults.colors(
                                     uncheckedColor = Color(android.graphics.Color.parseColor("#CCCACA")) ,
                                     checkedColor = Color(android.graphics.Color.parseColor("#CCCACA")) ,
                                 ),
                                 checked = rememberMe,
-                                onCheckedChange = { rememberMe = it }
+                                onCheckedChange = { rememberMe = it },
+                                modifier = Modifier.size(10.dp).scale(0.8f)
                             )
-                            Text("Remember Me")
+                            Text("Remember Me", fontSize = 13.sp, color = Color.White, modifier = Modifier.padding(start = 12.dp) )
                             Spacer(modifier = Modifier.weight(1f))
-                            TextButton(onClick = { /* Navigate to create account screen */ }) {
-                                Text("Create Account")
-                            }
+                            ClickableText(
+                                text = AnnotatedString("Create Account"),
+                                onClick = { offset ->
+                                    // Handle click event
+                                    // You can navigate to sign-in screen or perform any action here
+                                },
+                                style = androidx.compose.ui.text.TextStyle(
+                                    fontSize = 15.sp,
+                                    color = Color(android.graphics.Color.parseColor("#AC7C58")),
+                                    textDecoration = TextDecoration.Underline,
+                                    fontWeight = FontWeight.SemiBold,
+                                )
+                            )
                         }
                         Button(
                             onClick = {
@@ -197,15 +209,18 @@ private fun LoginScreen(
                                 //}
                                 navController.navigate("destination_route")
                             },
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red), // Ubah warna tombol di sini
                             shape = RoundedCornerShape(16.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
                                 .height(48.dp)
+
                         ) {
                             Text(
                                 text = "Sign In",
                                 fontSize = 15.sp,
+                                modifier = Modifier
                             )
                         }
                         Box(
@@ -283,7 +298,7 @@ private fun LoginScreen(
                                     },
                                     style = androidx.compose.ui.text.TextStyle(
                                         fontSize = 15.sp,
-                                        color = Color(0xFFDBBF28),
+                                        color = Color(android.graphics.Color.parseColor("#AC7C58")),
                                         textDecoration = TextDecoration.Underline
                                     )
                                 )
