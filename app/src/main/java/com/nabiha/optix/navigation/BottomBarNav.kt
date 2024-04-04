@@ -35,10 +35,10 @@ sealed class BottomBarNav(
     )
 
     object Setting: BottomBarNav(
-        route = "setting",
-        title = "Setting",
-        icon = R.drawable.setting_icn,
-        iconNs = R.drawable.setting_icn_ns
+        route = "profile",
+        title = "Profile",
+        icon = R.drawable.person_fill,
+        iconNs = R.drawable.person_icn_ns
     )
 
 }

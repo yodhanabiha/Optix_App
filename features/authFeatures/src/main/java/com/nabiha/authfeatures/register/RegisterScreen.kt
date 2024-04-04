@@ -266,7 +266,7 @@ private fun RegisterScreen(
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 16.dp)
+                                .padding(bottom = 16.dp)
                                 .height(37.dp),
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
                         ) {
