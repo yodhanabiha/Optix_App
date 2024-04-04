@@ -54,7 +54,7 @@ fun RowScope.BottomNavigationBar(
             verticalArrangement = Arrangement.Top,
             modifier = Modifier.fillMaxSize()
         ) {
-
+//
 //            if (selected && route != "virtual") {
 //                Divider(
 //                    color = MaterialTheme.colorScheme.surface,
