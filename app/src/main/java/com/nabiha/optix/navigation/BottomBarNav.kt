@@ -30,8 +30,8 @@ sealed class BottomBarNav(
     object Cart: BottomBarNav(
         route = NavRoute.CartScreenRoute,
         title = "Cart",
-        icon = R.drawable.trolley_icn,
-        iconNs = R.drawable.trolley_icn_ns
+        icon = R.drawable.cart_fill,
+        iconNs = R.drawable.cart_ns
     )
 
     object Setting: BottomBarNav(
