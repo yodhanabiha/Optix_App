@@ -27,6 +27,7 @@ import com.nabiha.common.utils.NavRoute
 import com.nabiha.designsystem.ui.BottomNavigationBar
 import com.nabiha.homefeatures.detail.detailScreen
 import com.nabiha.homefeatures.home.homeScreen
+import com.example.appinfofeatures.appInfoScreen
 
 @Composable
 fun AppNavigation(
@@ -45,6 +46,7 @@ fun AppNavigation(
             detailScreen(navController, navController::popBackStack)
             wishlistScreen(navController)
             cartScreen(navController)
+            appInfoScreen(navController)
         }
     }
 }

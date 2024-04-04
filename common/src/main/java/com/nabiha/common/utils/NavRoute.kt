@@ -7,4 +7,5 @@ object NavRoute {
     const val LoginScreenRoute = "loginScreenRoute"
     const val WishlistScreenRoute = "wishlistScreenRoute"
     const val CartScreenRoute = "cartScreenRoute"
+    const val AppInfoScreenRoute = "appInfoScreenRoute"
 }
