@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.nabiha.optix"
-    compileSdk = ProjectConfig.compileSdk
+    compileSdk = 34
 
     defaultConfig {
         applicationId = ProjectConfig.appId
@@ -57,6 +57,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation(project(":features:wishlistFeatures"))
+    implementation(project(":features:appInfoFeatures"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
 
