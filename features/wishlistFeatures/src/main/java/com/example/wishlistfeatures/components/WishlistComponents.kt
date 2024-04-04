@@ -2,6 +2,7 @@ package com.example.wishlistfeatures.components
 
 import android.icu.text.CaseMap.Title
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -51,8 +52,9 @@ fun CardWishlist(
             contentDescription = "Gambar Product",
             modifier = Modifier
                 .size(115.dp)
+                .background(Color.White, RoundedCornerShape(8.dp))
                 .border(1.dp, Color.Black.copy(alpha = 0.1f), RoundedCornerShape(8.dp)),
-            contentScale = ContentScale.FillBounds
+            contentScale = ContentScale.Inside
         )
         Column(
             modifier = Modifier
