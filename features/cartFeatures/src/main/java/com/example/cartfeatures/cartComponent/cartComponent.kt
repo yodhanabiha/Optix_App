@@ -78,7 +78,6 @@ fun CardCart(
                     text = price,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
-                    fontSize = 12.sp
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 Row(modifier = Modifier.padding(bottom = 46.dp)) {
@@ -139,6 +138,7 @@ fun CardCart(
         )
 
     }
+
 
 }
 @Preview
