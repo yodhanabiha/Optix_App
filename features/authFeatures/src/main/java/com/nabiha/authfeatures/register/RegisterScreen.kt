@@ -99,7 +99,7 @@ private fun RegisterScreen(
                         painter = painterResource(id = com.nabiha.designsystem.R.drawable.register_pic),
                         contentDescription = "Sign Up Picture",
                         modifier = Modifier
-                            .size(width = 450.dp, height = 250.dp)
+                            .size(width = 451.dp, height = 250.dp)
                             .padding(bottom = 16.dp, end = 24.dp),
                     )
                     Column(modifier = Modifier.fillMaxSize()) {
