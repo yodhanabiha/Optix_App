@@ -69,8 +69,7 @@ fun CardWishlist(
             Text(
                 text = price,
                 style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.Medium,
-                fontSize = 12.sp
+                fontWeight = FontWeight.Medium
             )
             Spacer(modifier = Modifier.weight(1f))
             Button(
@@ -82,9 +81,8 @@ fun CardWishlist(
             ) {
                 Text(
                     text = "Add to Cart",
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Medium,
-                    fontSize = 12.sp,
                     color = MaterialTheme.colorScheme.surface
                 )
             }
@@ -94,7 +92,7 @@ fun CardWishlist(
             painter = painterResource(id = R.drawable.love_icn),
             contentDescription = "Icon Love",
             tint = if (like) Color.Red else Color.Black,
-            modifier = Modifier. padding(top = 16.dp).size(20.dp)
+            modifier = Modifier. padding(top = 16.dp).size(18.dp)
         )
     }
 }
@@ -109,7 +107,7 @@ fun PreviewCard() {
             CardWishlist(
                 title = "Purple Glasses",
                 price = "Rp155.000",
-                imageUrl = "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/6/1/021c1d56-cca6-482a-91b5-e16aa4af4de2.jpg",
+                imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
                 like = true
             ) {
 

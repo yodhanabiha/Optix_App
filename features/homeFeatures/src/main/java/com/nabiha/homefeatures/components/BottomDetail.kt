@@ -19,8 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.nabiha.designsystem.R
+import com.nabiha.designsystem.theme.OptixTheme
 
 @Composable
 fun BottomDetail() {
@@ -33,13 +36,14 @@ fun BottomDetail() {
             OutlinedButton(
                 onClick = { /*TODO*/ },
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary),
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.sunglasses),
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 8.dp),
+                    modifier = Modifier.padding(end = 4.dp),
                     tint = MaterialTheme.colorScheme.secondary
                 )
                 Text(
@@ -58,7 +62,7 @@ fun BottomDetail() {
                 Icon(
                     painter = painterResource(id = R.drawable.cart_fill),
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 8.dp),
+                    modifier = Modifier.padding(end = 4.dp),
                     tint = MaterialTheme.colorScheme.surface
                 )
                 Text(
@@ -70,5 +74,16 @@ fun BottomDetail() {
 
         }
 
+    }
+}
+
+@Preview
+@Composable
+private fun BottomDetailPreview() {
+    val navController = rememberNavController()
+    OptixTheme {
+        BottomDetail(
+
+        )
     }
 }

@@ -32,7 +32,7 @@ private fun WishlistScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 16.dp)
+        contentPadding = PaddingValues(16.dp)
     )
     {
         item {
@@ -47,7 +47,7 @@ private fun WishlistScreen(navController: NavHostController) {
             CardWishlist(
                 title = "Purple Glasses",
                 price = "Rp155.000",
-                imageUrl = "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/6/1/021c1d56-cca6-482a-91b5-e16aa4af4de2.jpg",
+                imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
                 like = true
             ) {
                 navController.navigateToDetailScreen()

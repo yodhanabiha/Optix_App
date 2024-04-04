@@ -34,7 +34,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
-import com.nabiha.designsystem.theme.PoppinsFamily
 
 @Composable
 internal fun AppInfoScreenRoute(
@@ -50,7 +49,7 @@ private fun AppInfoScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 16.dp)
+        contentPadding = PaddingValues(16.dp)
     ) {
         item {
             Column {
@@ -76,13 +75,20 @@ private fun AppInfoScreen(navController: NavHostController) {
                         contentDescription = "Info Icon",
                         tint = MaterialTheme.colorScheme.surfaceVariant,
                         modifier = Modifier
-                            .height(45.dp)
+                            .height(40.dp)
                             .width(40.dp)
                             .padding(top = 5.dp)
                     )
                     Column(modifier = Modifier.padding(start = 16.dp)) {
-                        Text(text = "Version", style = MaterialTheme.typography.bodyLarge)
-                        Text(text = "2.0", fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.labelLarge)
+                        Text(
+                            text = "Version",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Text(
+                            text = "2.0",
+                            fontWeight = FontWeight.SemiBold,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                         Canvas(modifier = Modifier
                             .fillMaxWidth()
                             .height(2.dp)
@@ -104,21 +110,22 @@ private fun AppInfoScreen(navController: NavHostController) {
                         }
                         append(" untuk menciptakan pengalaman yang realistis dan personal bagi penggunanya. Dengan fitur-fitur inovatifnya, OPTIX membantu mengurangi ketidakpastian yang seringkali terkait dengan pembelian kacamata secara online, sehingga pengguna dapat memiliki keyakinan lebih dalam memilih produk yang sesuai dengan kebutuhan dan preferensi mereka.")
                     },
-                    fontSize = 18.sp,
-                    style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Justify, lineHeight = 24.sp),
-                    modifier = Modifier.padding(top = 20.dp)
+                    style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Justify, lineHeight = 24.sp),
+                    modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
                 )
-                Column(modifier = Modifier.padding(top = 20.dp)) {
+                Column(modifier = Modifier.padding(bottom = 16.dp)) {
                     Text(
                         text = "Developers",
-                        style = MaterialTheme.typography.titleLarge.copy(textAlign = TextAlign.Center),
+                        style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
                         fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
                     )
                     Canvas(modifier = Modifier
                         .fillMaxWidth()
                         .height(2.dp)
-                        .padding(top = 12.dp)) {
+                        .padding(bottom = 16.dp)) {
                         drawLine(
                             color = Color.Black.copy(alpha = 0.1f),
                             start = Offset(0f, 0f),
@@ -126,51 +133,51 @@ private fun AppInfoScreen(navController: NavHostController) {
                             strokeWidth = 4f
                         )
                     }
-                    Column(modifier = Modifier.padding(top = 24.dp)) {
+                    Column(modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)) {
                         Text(
                             text = "Muhammad Farid Adika",
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
+                            style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
                             text = "NIM. 2110511049",
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
+                            style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
-                    Column(modifier = Modifier.padding(top = 24.dp)) {
+                    Column(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(
                             text = "Afif Fakhri",
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
+                            style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
                             text = "NIM. 2110511063",
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
+                            style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
-                    Column(modifier = Modifier.padding(top = 24.dp)) {
+                    Column(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(
                             text = "Yodha Nabiha Rafif",
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
+                            style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
                             text = "NIM. 2110511075",
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
+                            style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
-                    Column(modifier = Modifier.padding(top = 24.dp)) {
+                    Column(modifier = Modifier.padding(bottom = 16.dp)) {
                         Text(
                             text = "Ichsan Maldini Hamid",
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
+                            style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
                             text = "NIM. 2110511076",
-                            style = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
+                            style = MaterialTheme.typography.bodyMedium.copy(textAlign = TextAlign.Center),
                             modifier = Modifier.fillMaxWidth()
                         )
                     }

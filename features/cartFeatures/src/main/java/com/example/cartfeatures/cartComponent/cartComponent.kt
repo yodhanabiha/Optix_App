@@ -33,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import com.example.cartfeatures.R
 import com.nabiha.designsystem.theme.OptixTheme
@@ -41,6 +42,7 @@ import com.nabiha.designsystem.theme.OptixTheme
 fun CardCart(
     title: String,
     price: String,
+    imageUrl: String,
     quantity: Int = 0,
     onIncrease: () -> Unit = {},
     onDecrease: () -> Unit = {}
@@ -55,7 +57,7 @@ fun CardCart(
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Image(
-                painter = painterResource(id = com.nabiha.designsystem.R.drawable.sample_pic),
+                painter = rememberAsyncImagePainter(model = imageUrl),
                 contentDescription = "Gambar Product",
                 modifier = Modifier
                     .size(115.dp)
@@ -95,7 +97,7 @@ fun CardCart(
                     ) {
                         Text(
                             text = "-",
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
                             color = MaterialTheme.colorScheme.surfaceVariant
                         )
@@ -103,7 +105,7 @@ fun CardCart(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "$itemCount",
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = MaterialTheme.typography.bodyLarge,
                         fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 8.dp)
@@ -148,6 +150,7 @@ fun PreviewCard() {
         CardCart(
             title = "Purple Glasses",
             price = "Rp155.000",
+            imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
             quantity = 1
         )
     }

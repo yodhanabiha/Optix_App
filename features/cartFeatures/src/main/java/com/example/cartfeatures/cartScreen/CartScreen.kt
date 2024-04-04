@@ -106,6 +106,7 @@ private fun CartScreen(navController: NavHostController) {
             CardCart(
                 title = "Purple Glasses",
                 price = "Rp155.000",
+                imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
                 quantity = 1
                 ) {
                 }

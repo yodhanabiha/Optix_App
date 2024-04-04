@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -105,7 +106,8 @@ private fun RegisterScreen(
                     Column(modifier = Modifier.fillMaxSize()) {
                         Text(
                             text = "Please complete your personal information first!",
-                            style = MaterialTheme.typography.titleLarge,
+                            style = MaterialTheme.typography.labelLarge,
+                            fontSize = 20.sp,
                             modifier = Modifier.padding(16.dp),
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.surface

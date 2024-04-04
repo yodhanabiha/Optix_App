@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -77,13 +78,13 @@ private fun DetailScreen(navController: NavHostController, onBackBtnClick: () ->
             item {
                 Column {
                     Image(
-                        painter = rememberAsyncImagePainter(model = "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/6/1/021c1d56-cca6-482a-91b5-e16aa4af4de2.jpg"),
+                        painter = rememberAsyncImagePainter(model = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg"),
                         contentDescription = "",
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth()
                             .height(272.dp)
-                            .background(Color.Gray),
+                            .background(Color.White),
                     )
                 }
             }
@@ -114,9 +115,11 @@ private fun DetailScreen(navController: NavHostController, onBackBtnClick: () ->
                                     )
                             ) {
                                 Image(
-                                    painter = rememberAsyncImagePainter(model = "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2021/6/1/021c1d56-cca6-482a-91b5-e16aa4af4de2.jpg"),
+                                    painter = rememberAsyncImagePainter(model = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg"),
                                     contentDescription = "",
-                                    modifier = Modifier.fillMaxSize()
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(Color.White)
                                 )
                             }
                         }
@@ -174,7 +177,8 @@ private fun DetailScreen(navController: NavHostController, onBackBtnClick: () ->
                 ) {
                     Text(
                         text = "Description",
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
                     )
                     Text(
@@ -242,7 +246,8 @@ private fun DetailScreen(navController: NavHostController, onBackBtnClick: () ->
             item {
                 Text(
                     text = "Recommended",
-                    style = MaterialTheme.typography.titleSmall,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.padding(bottom = 16.dp, start = 16.dp)
                 )
             }

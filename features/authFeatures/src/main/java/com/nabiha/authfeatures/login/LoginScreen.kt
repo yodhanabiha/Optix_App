@@ -184,6 +184,7 @@ private fun LoginScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(start = 10.dp, bottom = 32.dp)
                         ) {
+                            Spacer(modifier = Modifier.weight(1f))
                             Checkbox(
                                 colors = CheckboxDefaults.colors(
                                     uncheckedColor = MaterialTheme.colorScheme.surface,
@@ -195,24 +196,11 @@ private fun LoginScreen(
                             )
                             Text(
                                 "Remember Me",
-                                fontSize = 13.sp,
-                                color = Color.White,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.surface,
                                 modifier = Modifier.padding(start = 12.dp)
                             )
-                            Spacer(modifier = Modifier.weight(1f))
-                            ClickableText(
-                                text = AnnotatedString("Create Account"),
-                                onClick = { offset ->
-                                    // Handle click event
-                                    // You can navigate to sign-in screen or perform any action here
-                                },
-                                style = androidx.compose.ui.text.TextStyle(
-                                    fontSize = 15.sp,
-                                    color = Color(android.graphics.Color.parseColor("#AC7C58")),
-                                    textDecoration = TextDecoration.Underline,
-                                    fontWeight = FontWeight.SemiBold,
-                                )
-                            )
+
                         }
                         Button(
                             onClick = {
@@ -299,7 +287,7 @@ private fun LoginScreen(
 
                                 Text(
                                     text = "Sign In with Google",
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.surfaceVariant,
                                 )
                             }
