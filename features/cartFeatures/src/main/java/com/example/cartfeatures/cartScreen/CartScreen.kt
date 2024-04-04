@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.cartfeatures.cartComponent.CardCart
+import com.example.cartfeatures.cartComponent.CheckoutButton
 import com.nabiha.designsystem.component.ScaffoldTopAppbar
 import com.nabiha.designsystem.theme.OptixTheme
 
@@ -49,7 +50,7 @@ private fun CartScreen(navController: NavHostController) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 16.dp)
+        contentPadding = PaddingValues(16.dp)
     ) {
         item {
             Text(
@@ -109,6 +110,13 @@ private fun CartScreen(navController: NavHostController) {
                 ) {
                 }
             }
+        items (1
+        ) {
+            CheckoutButton(
+                items = "Rp.465.000",
+                discount = "-Rp.65.000",
+                total = "Rp.400.000" )
+        }
         }
     }
 

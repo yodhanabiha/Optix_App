@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -23,58 +24,97 @@ fun CheckoutButton(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(172.dp)
             .padding(bottom = 16.dp),
         color = MaterialTheme.colorScheme.background
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier
-                    .padding(start = 16.dp, end = 16.dp)
                     .fillMaxHeight()
                     .weight(1f)
             ) {
-                Text(
-                    text = items,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Text(
-                    text = discount,
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
-                )
-                Text(
-                    text = total,
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Row(modifier = Modifier.padding(bottom = 46.dp)) {
-                    Button(
-                        onClick = {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp, bottom = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Items",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
+                    )
+                    Text(
+                        text = items,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Discount",
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
+                    )
+                    Text(
+                        text = discount,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Normal,
+                    )
 
-                        },
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
-                        shape = RoundedCornerShape(8.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(100.dp)
+                }
+                Divider(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 6.dp),
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.12f))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Total",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
+                    )
+                    Text(
+                        text = total,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
+                    )
+                }
+                Spacer(modifier = Modifier.weight(1f))
+                Button(
+                    onClick = {
+
+                    },
+                    shape = RoundedCornerShape(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp)
+                        .height(37.dp),
+                    colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
                     ) {
                         Text(
                             text = "Checkout",
-                            fontSize = 15.sp,
+                            fontSize = 14.sp,
                             color = MaterialTheme.colorScheme.surface
                         )
 
                     }
 
-                }
             }
         }
     }
 }
+
 
 @Preview
 @Composable

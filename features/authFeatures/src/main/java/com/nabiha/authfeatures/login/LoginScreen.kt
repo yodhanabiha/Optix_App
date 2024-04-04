@@ -80,34 +80,47 @@ private fun LoginScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 32.dp, start = 16.dp, end = 16.dp, top = 24.dp),
-                    contentAlignment = Alignment.Center
+                    .padding(vertical = 16.dp, horizontal = 16.dp),
+                contentAlignment = Alignment.Center
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Row(modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "Welcome to", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
-                        Text(text = " OPTIX ", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold )
-                        Text(text = "!", fontSize = 24.sp, color = Color.White, fontWeight = FontWeight.Bold )
+                        Text(
+                            text = "Welcome to",
+                            style = MaterialTheme.typography.titleLarge,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.surface
+                        )
+                        Text(
+                            text = " OPTIX ! ",
+                            style = MaterialTheme.typography.titleLarge,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.surface
+                        )
                     }
-                    Text(text = "Your Personal Virtual Try-On Glasses", fontSize = 16.sp, color = Color.White, modifier = Modifier.padding(top = 4.dp))
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Text(
+                        text = "Your Personal Virtual Try-On Glasses",
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.surface
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
                     Image(
                         painter = painterResource(id = com.nabiha.designsystem.R.drawable.login_img),
                         contentDescription = "Sign In Picture",
                         modifier = Modifier
                             .size(width = 400.dp, height = 250.dp)
+                            .padding(bottom = 16.dp)
                     )
-                    Spacer(modifier = Modifier.height(24.dp))
                     Column(modifier = Modifier.fillMaxSize()) {
                         OutlinedTextField(
                             value = email,
                             onValueChange = { email = it },
-                            textStyle = MaterialTheme.typography.bodyLarge,
+                            textStyle = MaterialTheme.typography.bodySmall,
                             placeholder = {
                                 Text(
                                     text = "Email",
                                     fontSize = 12.sp,
-                                    color = Color(android.graphics.Color.parseColor("#838383"))
                                 )
                             },
                             singleLine = true,
@@ -117,16 +130,16 @@ private fun LoginScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
                                     contentDescription = "Email Icon",
                                     modifier = Modifier
-                                        .padding(12.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
                                         .size(18.dp)
                                 )
                             },
                             modifier = Modifier
-                                .padding(bottom = 12.dp)
+                                .padding(bottom = 16.dp)
                                 .fillMaxWidth()
-                                .height(53.dp)
-                                .clip(RoundedCornerShape(16.dp))
-                                .background(color = Color.White)
+                                .height(48.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .background(color = Color.White),
                         )
                         OutlinedTextField(
                             value = password,
@@ -136,7 +149,6 @@ private fun LoginScreen(
                                 Text(
                                     text = "Password",
                                     fontSize = 12.sp,
-                                    color = Color(android.graphics.Color.parseColor("#838383"))
                                 )
                             },
                             singleLine = true,
@@ -146,7 +158,7 @@ private fun LoginScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
                                     contentDescription = "Password Icon",
                                     modifier = Modifier
-                                        .padding(12.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
                                         .size(18.dp)
                                 )
                             },
@@ -155,29 +167,38 @@ private fun LoginScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
                                     contentDescription = "End Icon",
                                     modifier = Modifier
-                                        .padding(12.dp)
-                                        .size(20.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .size(18.dp)
                                 )
                             },
 
                             visualTransformation = PasswordVisualTransformation(),
                             modifier = Modifier
+                                .padding(bottom = 16.dp)
                                 .fillMaxWidth()
-                                .height(48.dp)
-                                .clip(RoundedCornerShape(16.dp))
+                                .height(53.dp)
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(color = Color.White),
                         )
-                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 10.dp, top = 16.dp)) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(start = 10.dp, bottom = 32.dp)
+                        ) {
                             Checkbox(
                                 colors = CheckboxDefaults.colors(
-                                    uncheckedColor = Color(android.graphics.Color.parseColor("#CCCACA")) ,
-                                    checkedColor = Color(android.graphics.Color.parseColor("#CCCACA")) ,
+                                    uncheckedColor = MaterialTheme.colorScheme.surface,
+                                    checkedColor = MaterialTheme.colorScheme.secondary
                                 ),
                                 checked = rememberMe,
                                 onCheckedChange = { rememberMe = it },
                                 modifier = Modifier.size(10.dp).scale(0.8f)
                             )
-                            Text("Remember Me", fontSize = 13.sp, color = Color.White, modifier = Modifier.padding(start = 12.dp) )
+                            Text(
+                                "Remember Me",
+                                fontSize = 13.sp,
+                                color = Color.White,
+                                modifier = Modifier.padding(start = 12.dp)
+                            )
                             Spacer(modifier = Modifier.weight(1f))
                             ClickableText(
                                 text = AnnotatedString("Create Account"),
@@ -208,22 +229,24 @@ private fun LoginScreen(
                                 //}
                                 navController.navigate("destination_route")
                             },
-                            shape = RoundedCornerShape(16.dp),
+                            shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                                .height(48.dp),
-                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
+                                .padding(bottom = 16.dp)
+                                .height(37.dp),
+                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
 
                         ) {
                             Text(
                                 text = "Sign In",
-                                fontSize = 15.sp,
+                                style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.surface
                             )
                         }
                         Box(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Row(
@@ -240,8 +263,8 @@ private fun LoginScreen(
                                 Text(
                                     text = "Or",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.surface,
-                                    modifier = Modifier.padding(bottom = 8.dp)
+                                    modifier = Modifier.padding(bottom = 8.dp),
+                                    color = MaterialTheme.colorScheme.surface
                                 )
 
                                 Box(
@@ -258,11 +281,11 @@ private fun LoginScreen(
                             onClick = {
                                 navController.navigate("destination_route")
                             },
-                            shape = RoundedCornerShape(16.dp),
+                            shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                                .height(48.dp),
+                                .padding(bottom = 16.dp)
+                                .height(37.dp),
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -299,8 +322,7 @@ private fun LoginScreen(
                                         // Handle click event
                                         // You can navigate to sign-in screen or perform any action here
                                     },
-                                    style = androidx.compose.ui.text.TextStyle(
-                                        fontSize = 15.sp,
+                                    style = MaterialTheme.typography.labelMedium.copy(
                                         color = MaterialTheme.colorScheme.secondary,
                                         textDecoration = TextDecoration.Underline
                                     )

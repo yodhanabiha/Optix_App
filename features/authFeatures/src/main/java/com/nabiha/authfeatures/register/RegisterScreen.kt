@@ -91,7 +91,7 @@ private fun RegisterScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(bottom = 32.dp, start = 32.dp, end = 32.dp, top = 0.dp),
+                    .padding(vertical = 16.dp, horizontal = 16.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
@@ -100,24 +100,24 @@ private fun RegisterScreen(
                         contentDescription = "Sign Up Picture",
                         modifier = Modifier
                             .size(width = 450.dp, height = 250.dp)
-                            .padding(end = 24.dp),
+                            .padding(bottom = 16.dp, end = 24.dp),
                     )
                     Column(modifier = Modifier.fillMaxSize()) {
                         Text(
                             text = "Please complete your personal information first!",
                             style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier.padding(16.dp),
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.surface
                         )
                         OutlinedTextField(
                             value = userName,
                             onValueChange = { userName = it },
-                            textStyle = MaterialTheme.typography.bodyLarge,
+                            textStyle = MaterialTheme.typography.bodySmall,
                             placeholder = {
                                 Text(
                                     text = "Username",
-                                    fontSize = 12.sp,
+                                    fontSize = 12.sp
                                 )
                             },
                             singleLine = true,
@@ -127,16 +127,16 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.person),
                                     contentDescription = "Username Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
                                         .size(18.dp)
                                 )
                             },
 
                             modifier = Modifier
-                                .padding(bottom = 12.dp)
+                                .padding(bottom = 16.dp)
                                 .fillMaxWidth()
                                 .height(48.dp)
-                                .clip(RoundedCornerShape(16.dp))
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(color = Color.White),
 
                         )
@@ -157,16 +157,16 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
                                     contentDescription = "Email Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
                                         .size(18.dp)
                                 )
                             },
-                            shape = RoundedCornerShape(16.dp),
+                            shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
-                                .padding(bottom = 12.dp)
+                                .padding(bottom = 16.dp)
                                 .fillMaxWidth()
                                 .height(53.dp)
-                                .clip(RoundedCornerShape(16.dp))
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(color = Color.White),
                         )
                         OutlinedTextField(
@@ -186,7 +186,7 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
                                     contentDescription = "Password Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
                                         .size(18.dp)
                                 )
                             },
@@ -195,18 +195,18 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
                                     contentDescription = "End Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
-                                        .size(20.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .size(18.dp)
 
                                 )
                             },
 
                             visualTransformation = PasswordVisualTransformation(),
                             modifier = Modifier
-                                .padding(bottom = 12.dp)
+                                .padding(bottom = 16.dp)
                                 .fillMaxWidth()
                                 .height(53.dp)
-                                .clip(RoundedCornerShape(16.dp))
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(color = Color.White),
                         )
                         OutlinedTextField(
@@ -226,7 +226,7 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
                                     contentDescription = "Confirm Password Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
                                         .size(18.dp)
                                 )
                             },
@@ -235,16 +235,16 @@ private fun RegisterScreen(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
                                     contentDescription = "End Icon",
                                     modifier = Modifier
-                                        .padding(start = 12.dp, end = 12.dp, bottom = 8.dp, top = 8.dp)
+                                        .padding(vertical = 12.dp, horizontal = 8.dp)
                                         .size(20.dp)
                                 )
                             },
                             visualTransformation = PasswordVisualTransformation(),
                             modifier = Modifier
-                                .padding(bottom = 12.dp)
+                                .padding(bottom = 32.dp)
                                 .fillMaxWidth()
                                 .height(53.dp)
-                                .clip(RoundedCornerShape(16.dp))
+                                .clip(RoundedCornerShape(12.dp))
                                 .background(color = Color.White),
                         )
 
@@ -263,21 +263,23 @@ private fun RegisterScreen(
                                 //}
                                 navController.navigate("destination_route")
                             },
-                            shape = RoundedCornerShape(16.dp),
+                            shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                                .height(53.dp),
-                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
+                                .padding(vertical = 16.dp)
+                                .height(37.dp),
+                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
                         ) {
                             Text(
                                 text = "Sign Up",
-                                fontSize = 15.sp,
+                                style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.surface
                             )
                         }
                         Box(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Row(
@@ -312,11 +314,11 @@ private fun RegisterScreen(
                             onClick = {
                                 navController.navigate("destination_route")
                             },
-                            shape = RoundedCornerShape(16.dp),
+                            shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                                .height(48.dp),
+                                .padding(bottom = 16.dp)
+                                .height(37.dp),
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -330,7 +332,7 @@ private fun RegisterScreen(
 
                                 Text(
                                     text = "Continue with Google",
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.surfaceVariant,
                                 )
                             }
@@ -344,7 +346,7 @@ private fun RegisterScreen(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
                                     text = "Already have an account? ",
-                                    style = MaterialTheme.typography.bodyMedium,
+                                    style =  MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.surface,
                                 )
                                 ClickableText(
@@ -353,8 +355,7 @@ private fun RegisterScreen(
                                         // Handle click event
                                         // You can navigate to sign-in screen or perform any action here
                                     },
-                                    style = androidx.compose.ui.text.TextStyle(
-                                        fontSize = 15.sp,
+                                    style = MaterialTheme.typography.labelMedium.copy(
                                         color = MaterialTheme.colorScheme.secondary,
                                         textDecoration = TextDecoration.Underline
                                     )
