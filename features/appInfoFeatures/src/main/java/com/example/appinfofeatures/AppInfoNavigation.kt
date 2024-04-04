@@ -14,8 +14,9 @@ fun NavController.navigateToAppInfoScreen(){
 
 fun NavGraphBuilder.appInfoScreen(
     navController: NavHostController,
+    onBackBtnClick:()->Unit
 ) {
     composable(route = appInfoRoute) {
-        AppInfoScreenRoute(navController = navController)
+        AppInfoScreenRoute(navController, onBackBtnClick)
     }
 }

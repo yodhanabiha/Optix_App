@@ -28,6 +28,7 @@ import com.nabiha.designsystem.ui.BottomNavigationBar
 import com.nabiha.homefeatures.detail.detailScreen
 import com.nabiha.homefeatures.home.homeScreen
 import com.example.appinfofeatures.appInfoScreen
+import com.example.profilefeatures.profileScreen
 
 @Composable
 fun AppNavigation(
@@ -46,7 +47,8 @@ fun AppNavigation(
             detailScreen(navController, navController::popBackStack)
             wishlistScreen(navController)
             cartScreen(navController)
-            appInfoScreen(navController)
+            appInfoScreen(navController, navController::popBackStack)
+            profileScreen(navController)
         }
     }
 }
@@ -58,7 +60,7 @@ fun BottomBar(navController: NavHostController) {
         BottomBarNav.Wishlist,
         BottomBarNav.Virtual,
         BottomBarNav.Cart,
-        BottomBarNav.Setting
+        BottomBarNav.Profile
     )
     val routes = screens.map {
         it.route
@@ -88,7 +90,6 @@ fun BottomBar(navController: NavHostController) {
         }
 
     }
-
 
 }
 

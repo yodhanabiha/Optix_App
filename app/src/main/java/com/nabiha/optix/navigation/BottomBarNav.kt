@@ -34,8 +34,8 @@ sealed class BottomBarNav(
         iconNs = R.drawable.cart_ns
     )
 
-    object Setting: BottomBarNav(
-        route = "profile",
+    object Profile: BottomBarNav(
+        route = NavRoute.ProfileScreenRoute,
         title = "Profile",
         icon = R.drawable.person_fill,
         iconNs = R.drawable.person_icn_ns

@@ -60,7 +60,7 @@ internal fun DetailScreenRoute(
 @Composable
 private fun DetailScreen(navController: NavHostController, onBackBtnClick: () -> Unit) {
     ScaffoldTopAppbar(
-        title = "Detail Product",
+        title = "Product Detail",
         onNavigationIconClick = onBackBtnClick,
         bottomBar = { BottomDetail() }
     ) {

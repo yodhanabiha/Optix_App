@@ -32,6 +32,7 @@
             <option value="$PROJECT_DIR$/features/authFeatures" />
             <option value="$PROJECT_DIR$/features/cartFeatures" />
             <option value="$PROJECT_DIR$/features/homeFeatures" />
+            <option value="$PROJECT_DIR$/features/profileFeatures" />
             <option value="$PROJECT_DIR$/features/wishlistFeatures" />
             <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/model/apiresponse" />
