@@ -47,7 +47,8 @@ fun BottomDetail() {
                     tint = MaterialTheme.colorScheme.secondary
                 )
                 Text(
-                    text = "Vitual Try-On",
+                    text = "Try-On",
+                    softWrap = false,
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.secondary
                 )
