@@ -48,20 +48,19 @@ fun CardProductHome(
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, Color(0xFF000000).copy(alpha = 0.2f)),
     ) {
-        Box(
+
+        Image(
+            painter = rememberAsyncImagePainter(imageUrl),
+            contentDescription = "",
+            contentScale = ContentScale.Inside,
+            alignment = Alignment.Center,
             modifier = Modifier
-                .height(123.dp)
+                .background(Color.White)
                 .fillMaxWidth()
                 .padding(horizontal = 18.dp)
-        ) {
-            Image(
-                painter = rememberAsyncImagePainter(imageUrl),
-                contentDescription = "",
-                contentScale = ContentScale.Inside,
-                alignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
-            )
-        }
+                .height(123.dp)
+        )
+
         Row(
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier
                 .fillMaxWidth()
@@ -84,7 +83,9 @@ fun CardProductHome(
                 text = price,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(horizontal = 16.dp).weight(1f)
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .weight(1f)
             )
             Icon(
                 painter = painterResource(id = if (like) R.drawable.love_icn else R.drawable.love_icn_ns),

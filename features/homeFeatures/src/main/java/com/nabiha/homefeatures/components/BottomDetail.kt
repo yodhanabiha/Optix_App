@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -43,7 +44,7 @@ fun BottomDetail() {
                 Icon(
                     painter = painterResource(id = R.drawable.sunglasses),
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 4.dp),
+                    modifier = Modifier.padding(end = 4.dp).size(15.dp),
                     tint = MaterialTheme.colorScheme.secondary
                 )
                 Text(
@@ -63,7 +64,7 @@ fun BottomDetail() {
                 Icon(
                     painter = painterResource(id = R.drawable.cart_fill),
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 4.dp),
+                    modifier = Modifier.padding(end = 4.dp).size(15.dp),
                     tint = MaterialTheme.colorScheme.surface
                 )
                 Text(
