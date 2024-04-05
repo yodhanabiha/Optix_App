@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.nabiha.authfeatures.login.navigateToLoginScreen
 import com.nabiha.designsystem.theme.OptixTheme
 import java.time.format.TextStyle
 
@@ -263,7 +264,7 @@ private fun RegisterScreen(
 //                                )
 //                          )
                                 //}
-                                navController.navigate("destination_route")
+                                navController.navigateToLoginScreen()
                             },
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
@@ -354,8 +355,7 @@ private fun RegisterScreen(
                                 ClickableText(
                                     text = AnnotatedString("Sign in"),
                                     onClick = { offset ->
-                                        // Handle click event
-                                        // You can navigate to sign-in screen or perform any action here
+                                        navController.navigateToLoginScreen()
                                     },
                                     style = MaterialTheme.typography.labelMedium.copy(
                                         color = MaterialTheme.colorScheme.secondary,
