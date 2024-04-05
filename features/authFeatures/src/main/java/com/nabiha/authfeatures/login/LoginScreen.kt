@@ -108,8 +108,8 @@ private fun LoginScreen(
                         painter = painterResource(id = com.nabiha.designsystem.R.drawable.login_img),
                         contentDescription = "Sign In Picture",
                         modifier = Modifier
-                            .size(width = 400.dp, height = 250.dp)
-                            .padding(bottom = 16.dp)
+                            .size(width = 340.dp, height = 246.dp)
+                            .padding(start = 24.dp, bottom = 32.dp, top = 32.dp)
                     )
                     Column(modifier = Modifier.fillMaxSize()) {
                         OutlinedTextField(
@@ -233,7 +233,7 @@ private fun LoginScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp),
+                                .padding(bottom = 16.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Row(

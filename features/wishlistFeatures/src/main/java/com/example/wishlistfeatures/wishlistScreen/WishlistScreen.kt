@@ -37,7 +37,7 @@ private fun WishlistScreen(navController: NavHostController) {
     {
         item {
             Text(
-                text = "Wishlist",
+                text = "My Wishlist",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(bottom = 16.dp)
