@@ -24,6 +24,7 @@ dependencies {
     androidLifeCycle()
     androidTests()
     implementation(project(":features:appInfoFeatures"))
+    implementation(project(":features:authFeatures"))
 
     designsystem()
     common()
