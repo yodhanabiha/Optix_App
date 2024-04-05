@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.appinfofeatures.navigateToAppInfoScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
 
@@ -222,7 +223,8 @@ private fun ProfileScreen(navController: NavHostController) {
             Row (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
+                    .clickable { navController.navigateToAppInfoScreen() },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
@@ -231,6 +233,7 @@ private fun ProfileScreen(navController: NavHostController) {
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(16.dp)
+
                 )
                 Text(
                     text = "App Info",

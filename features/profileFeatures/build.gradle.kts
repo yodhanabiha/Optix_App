@@ -6,7 +6,7 @@ plugins {
 apply<MainGradlePlugin>()
 
 android {
-    namespace = "com.nabiha.profilefeatures"
+    namespace = "com.example.profilefeatures"
     buildFeatures {
         compose = true
     }
@@ -23,6 +23,7 @@ dependencies {
     compose()
     androidLifeCycle()
     androidTests()
+    implementation(project(":features:appInfoFeatures"))
 
     designsystem()
     common()

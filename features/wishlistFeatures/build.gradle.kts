@@ -6,7 +6,7 @@ plugins {
 apply<MainGradlePlugin>()
 
 android {
-    namespace = "com.nabiha.wishlistfeatures"
+    namespace = "com.example.wishlistfeatures"
     buildFeatures {
         compose = true
     }
