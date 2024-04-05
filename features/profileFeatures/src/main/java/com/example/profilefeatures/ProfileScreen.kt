@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.appinfofeatures.navigateToAppInfoScreen
+import com.nabiha.authfeatures.login.navigateToLoginScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
 
@@ -258,7 +259,8 @@ private fun ProfileScreen(navController: NavHostController) {
             Row (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
+                    .clickable { navController.navigateToLoginScreen() },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
