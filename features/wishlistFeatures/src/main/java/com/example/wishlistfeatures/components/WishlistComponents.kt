@@ -66,12 +66,14 @@ fun CardWishlist(
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
+                color = MaterialTheme.colorScheme.surfaceVariant
             )
             Text(
                 text = price,
                 style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.Medium
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.surfaceVariant
             )
             Spacer(modifier = Modifier.weight(1f))
             Button(
