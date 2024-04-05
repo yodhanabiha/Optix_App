@@ -22,13 +22,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cartfeatures.cartScreen.cartScreen
 import com.example.wishlistfeatures.wishlistScreen.wishlistScreen
-import com.nabiha.authfeatures.register.loginScreen
 import com.nabiha.common.utils.NavRoute
 import com.nabiha.designsystem.ui.BottomNavigationBar
 import com.nabiha.homefeatures.detail.detailScreen
 import com.nabiha.homefeatures.home.homeScreen
 import com.example.appinfofeatures.appInfoScreen
 import com.example.profilefeatures.profileScreen
+import com.nabiha.authfeatures.login.loginScreen
+import com.nabiha.authfeatures.register.registerScreen
 
 @Composable
 fun AppNavigation(
@@ -44,6 +45,7 @@ fun AppNavigation(
         ) {
             homeScreen(navController)
             loginScreen(navController)
+            registerScreen(navController)
             detailScreen(navController, navController::popBackStack)
             wishlistScreen(navController)
             cartScreen(navController)

@@ -12,7 +12,7 @@ fun NavController.navigateToRegisterScreen(){
     navigate(registerRoute)
 }
 
-fun NavGraphBuilder.loginScreen(
+fun NavGraphBuilder.registerScreen(
     navController: NavHostController,
 ) {
     composable(route = registerRoute) {

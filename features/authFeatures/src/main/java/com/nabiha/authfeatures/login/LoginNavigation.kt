@@ -8,7 +8,7 @@ import com.nabiha.common.utils.NavRoute
 
 const val loginRoute = NavRoute.LoginScreenRoute
 
-fun NavController.navigateToRegisterScreen(){
+fun NavController.navigateToLoginScreen(){
     navigate(loginRoute)
 }
 
