@@ -2,6 +2,7 @@ package com.example.appinfofeatures
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -57,7 +58,8 @@ private fun AppInfoScreen(navController: NavHostController, onBackBtnClick: () -
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background)
+                .clickable { navController.navigateToAppInfoScreen()},
             contentPadding = PaddingValues(top = 72.dp, bottom = 32.dp, start = 16.dp, end = 16.dp)
         ) {
             item {
