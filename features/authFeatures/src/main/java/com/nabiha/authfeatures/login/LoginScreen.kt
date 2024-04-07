@@ -92,7 +92,7 @@ private fun LoginScreen(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primary) //background(color = MaterialTheme.colorScheme.background)
+            .background(color = MaterialTheme.colorScheme.primary)
     ) {
         item {
             Box(
@@ -235,7 +235,7 @@ private fun LoginScreen(
 
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(start = 10.dp, bottom = 32.dp)
+                            modifier = Modifier.padding(start = 10.dp, top= 16.dp, bottom = 32.dp)
                         ) {
                             Spacer(modifier = Modifier.weight(1f))
                             Checkbox(
