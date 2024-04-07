@@ -65,7 +65,6 @@ private fun RegisterScreen(
     navController: NavHostController
 ) {
 
-
     var userName by remember {
         mutableStateOf("")
     }
@@ -101,7 +100,7 @@ private fun RegisterScreen(
                         painter = painterResource(id = com.nabiha.designsystem.R.drawable.register_pic),
                         contentDescription = "Sign Up Picture",
                         modifier = Modifier
-                            .size(width = 451.dp, height = 250.dp)
+                            .size(width = 451.dp, height = 270.dp)
                             .padding(bottom = 16.dp, end = 24.dp),
                     )
                     Column(modifier = Modifier.fillMaxSize()) {
@@ -282,7 +281,7 @@ private fun RegisterScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = 8.dp),
+                                .padding(bottom = 16.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Row(

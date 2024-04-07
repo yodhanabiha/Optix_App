@@ -45,7 +45,7 @@ fun CardWishlist(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(115.dp).padding(bottom = 16.dp)
+            .height(131.dp).padding(bottom = 16.dp)
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = imageUrl),
