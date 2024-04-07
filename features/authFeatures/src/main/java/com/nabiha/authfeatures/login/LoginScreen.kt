@@ -2,6 +2,7 @@ package com.nabiha.authfeatures.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -56,6 +58,14 @@ internal fun LoginScreenRoute(
     LoginScreen(navController=navController)
 }
 
+private fun isValidEmail(email: String): Boolean {
+    val emailRegex = Regex("^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$")
+    return email.matches(emailRegex)
+}
+private fun isValidPassword(password: String): Boolean {
+    return password.length >= 8
+}
+
 @Composable
 private fun LoginScreen(
     navController: NavHostController
@@ -63,10 +73,19 @@ private fun LoginScreen(
     var email by remember {
         mutableStateOf("")
     }
+    var emailError by remember {
+        mutableStateOf("")
+    }
     var password by remember {
         mutableStateOf("")
     }
+    var passwordError by remember {
+        mutableStateOf("")
+    }
     var rememberMe by remember {
+        mutableStateOf(false)
+    }
+    var passwordVisibility by remember {
         mutableStateOf(false)
     }
 
@@ -114,7 +133,10 @@ private fun LoginScreen(
                     Column(modifier = Modifier.fillMaxSize()) {
                         OutlinedTextField(
                             value = email,
-                            onValueChange = { email = it },
+                            onValueChange = {
+                                email = it
+                                emailError = if (isValidEmail(it)) "" else "Invalid email format!"
+                            },
                             textStyle = MaterialTheme.typography.bodySmall,
                             placeholder = {
                                 Text(
@@ -134,15 +156,28 @@ private fun LoginScreen(
                                 )
                             },
                             modifier = Modifier
-                                .padding(bottom = 16.dp)
                                 .fillMaxWidth()
                                 .height(48.dp)
                                 .clip(RoundedCornerShape(12.dp))
                                 .background(color = Color.White),
                         )
+                        if (emailError.isNotEmpty()) {
+                            Text(
+                                text = emailError,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.error,
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.padding(start= 16.dp)
+                            )
+                        }
                         OutlinedTextField(
                             value = password,
-                            onValueChange = { password = it },
+                            onValueChange = {
+                                password = it
+                                if (isValidPassword(it)) {
+                                    passwordError = ""
+                                }
+                            },
                             textStyle = MaterialTheme.typography.bodyLarge,
                             placeholder = {
                                 Text(
@@ -154,7 +189,7 @@ private fun LoginScreen(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock_fill),
                                     contentDescription = "Password Icon",
                                     modifier = Modifier
                                         .padding(vertical = 12.dp, horizontal = 8.dp)
@@ -163,22 +198,41 @@ private fun LoginScreen(
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
-                                    contentDescription = "End Icon",
+                                    painter = painterResource(
+                                        id = if (passwordVisibility) {
+                                            com.nabiha.designsystem.R.drawable.eye
+                                        } else {
+                                            com.nabiha.designsystem.R.drawable.eye_slash
+                                        }
+                                    ),
+                                    contentDescription = "Toggle Password Visibility",
                                     modifier = Modifier
                                         .padding(vertical = 12.dp, horizontal = 8.dp)
                                         .size(18.dp)
+                                        .clickable { passwordVisibility = !passwordVisibility }
                                 )
                             },
-
-                            visualTransformation = PasswordVisualTransformation(),
+                            visualTransformation = if (passwordVisibility) VisualTransformation.None
+                            else {
+                                PasswordVisualTransformation()
+                            },
                             modifier = Modifier
-                                .padding(bottom = 16.dp)
+                                .padding(top = 16.dp)
                                 .fillMaxWidth()
                                 .height(53.dp)
                                 .clip(RoundedCornerShape(12.dp))
                                 .background(color = Color.White),
                         )
+                        if (passwordError.isNotEmpty()) {
+                            Text(
+                                text = passwordError,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.error,
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.padding(start = 16.dp)
+                            )
+                        }
+
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(start = 10.dp, bottom = 32.dp)
@@ -203,18 +257,18 @@ private fun LoginScreen(
                         }
                         Button(
                             onClick = {
-                                //                        viewModel.viewModelScope.launch {
-//                            viewModel.fetchRegister(
-//                                userReg = UserApiRegisterRequest(
-//                                    email = email,
-//                                    password = password,
-//                                    name = name,
-//                                    phone = phone,
-//                                    role = "USER"
-//                                )
-//                          )
-                                //}
-                                navController.navigateToHomeScreen()
+                                if (email.isEmpty() || password.isEmpty()) {
+                                    emailError = if (email.isEmpty()) "Email cannot be empty!" else ""
+                                    passwordError = if (password.isEmpty()) "Password cannot be empty!" else ""
+                                } else if (!isValidEmail(email)) {
+                                    emailError = "Invalid email format!"
+                                } else if (!isValidPassword(password)) {
+                                    passwordError = "Password must be at least 8 characters long!"
+                                } else {
+                                    emailError = ""
+                                    passwordError = ""
+                                    navController.navigateToHomeScreen()
+                                }
                             },
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
