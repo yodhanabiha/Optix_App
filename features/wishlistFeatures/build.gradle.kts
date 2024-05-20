@@ -25,7 +25,7 @@ dependencies {
     accompanist()
     androidLifeCycle()
     coil()
-
+    implementation(project(":features:homeFeatures"))
 
     designsystem()
     common()

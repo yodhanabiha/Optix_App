@@ -3,6 +3,7 @@ package com.example.cartfeatures.cartComponent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -45,14 +46,17 @@ fun CardCart(
     imageUrl: String,
     quantity: Int = 0,
     onIncrease: () -> Unit = {},
+    onClick: () -> Unit,
     onDecrease: () -> Unit = {}
+
 ) {
     var itemCount by remember { mutableStateOf(quantity) }
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
-            .padding(bottom = 16.dp),
+            .padding(bottom = 16.dp)
+            .clickable { onClick.invoke() },
         color = MaterialTheme.colorScheme.background
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -152,7 +156,8 @@ fun PreviewCard() {
             title = "Purple Glasses",
             price = "Rp155.000",
             imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
-            quantity = 1
+            quantity = 1,
+            onClick = {}
         )
     }
 }

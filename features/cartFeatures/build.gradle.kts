@@ -26,6 +26,7 @@ dependencies {
     androidLifeCycle()
     androidTests()
     coil()
+    implementation(project(":features:homeFeatures"))
 
     designsystem()
     common()

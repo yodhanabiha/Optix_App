@@ -53,7 +53,7 @@ private fun AppInfoScreen(navController: NavHostController, onBackBtnClick: () -
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.background)
                 .clickable { navController.navigateToAppInfoScreen()},
-            contentPadding = PaddingValues(top = 72.dp, bottom = 32.dp, start = 16.dp, end = 16.dp)
+            contentPadding = PaddingValues(top = 72.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
         ) {
             item {
                     Row {
