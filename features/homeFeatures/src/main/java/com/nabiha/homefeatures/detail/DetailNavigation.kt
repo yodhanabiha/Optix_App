@@ -8,10 +8,6 @@ import com.nabiha.common.utils.NavRoute
 
 const val detailRoute = NavRoute.DetailScreenRoute
 
-fun NavController.navigateToDetailScreen() {
-    navigate(detailRoute)
-}
-
 fun NavGraphBuilder.detailScreen(
     navController: NavHostController,
     onBackBtnClick:()->Unit

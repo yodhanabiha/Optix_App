@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,11 +19,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -46,32 +43,57 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import com.nabiha.common.utils.navigateToDetailScreen
+import com.nabiha.common.utils.navigateToLoginScreen
 import com.nabiha.designsystem.R
-import com.nabiha.designsystem.component.gridItems
-import com.nabiha.designsystem.theme.OptixTheme
 import com.nabiha.designsystem.component.COutlinedTextField
+import com.nabiha.designsystem.component.gridItems
+import com.nabiha.designsystem.ui.NetworkErrorMessage
 import com.nabiha.homefeatures.components.CardProductHome
-import com.nabiha.homefeatures.detail.navigateToDetailScreen
 import kotlinx.coroutines.delay
 
 @Composable
 internal fun HomeScreenRoute(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
-    HomeScreen(navController)
+    LaunchedEffect(viewModel) {
+        if (!viewModel.checkToken()){
+            navController.navigateToLoginScreen()
+        }
+    }
+
+    val homeUiState by viewModel.homeUiState.collectAsStateWithLifecycle()
+    val username by viewModel.username.collectAsStateWithLifecycle()
+
+    when (homeUiState){
+        is HomeUiState.Error -> NetworkErrorMessage(message = (homeUiState as HomeUiState.Error).message) {
+
+        }
+        HomeUiState.Loading -> null
+        is HomeUiState.Success -> HomeScreen(navController, username,
+            homeUiState as HomeUiState.Success
+        )
+    }
+
 }
 
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class
+    ExperimentalFoundationApi::class
 )
 @Composable
-private fun HomeScreen(navController: NavHostController) {
+private fun HomeScreen(
+    navController: NavHostController,
+    username: String,
+    homeUiState: HomeUiState.Success
+) {
 
     var search by remember {
         mutableStateOf("")
@@ -92,7 +114,7 @@ private fun HomeScreen(navController: NavHostController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Hi, Apipoy!",
+                        text = "Hi, $username!",
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.weight(1f)
                     )
@@ -141,6 +163,8 @@ private fun HomeScreen(navController: NavHostController) {
                         .height(36.dp)
                         .fillMaxWidth(),
                     fontSize = 10.sp,
+                    borderColor = Color.Black.copy(0.2f),
+                    focusedBorderColor = Color.Black,
                     placeholderText = "Search"
                 )
 
@@ -260,11 +284,3 @@ private fun DrawScope.drawIndicator(
     drawPath(path = path, color = Color(0xFFD9D9D9))
 }
 
-
-@Composable
-@Preview
-private fun HomeScreenPrv() {
-    OptixTheme {
-        HomeScreen(navController = rememberNavController())
-    }
-}

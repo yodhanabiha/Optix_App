@@ -8,10 +8,6 @@ import com.nabiha.common.utils.NavRoute
 
 const val homeRoute = NavRoute.HomeScreenRoute
 
-fun NavController.navigateToHomeScreen() {
-    navigate(homeRoute)
-}
-
 fun NavGraphBuilder.homeScreen(
     navController: NavHostController,
 ) {

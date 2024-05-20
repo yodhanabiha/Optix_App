@@ -17,7 +17,7 @@ class RegisterViewModel @Inject constructor(
     private val userUseCase: UsersUseCase
 ): ViewModel(){
 
-    private val _registerUiState = MutableStateFlow<RegisterUiState>(RegisterUiState.Loading)
+    private var _registerUiState = MutableStateFlow<RegisterUiState>(RegisterUiState.Neutral)
     val registerUiState get() = _registerUiState.asStateFlow()
 
     fun fetchRegister(userReg: UserApiRegisterRequest){
@@ -25,7 +25,7 @@ class RegisterViewModel @Inject constructor(
             userUseCase.register(userReg).collect{response->
                 when(response){
                     is Result.Error -> _registerUiState.value =
-                        RegisterUiState.Error(response.message)
+                        RegisterUiState.Error(response.errorMessage)
                     is Result.Loading -> _registerUiState.value = RegisterUiState.Loading
                     is Result.Success -> _registerUiState.value =
                         RegisterUiState.Success(response.data)
@@ -35,11 +35,15 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    fun resetRegisterUiState() {
+        _registerUiState.value = RegisterUiState.Neutral
+    }
 
 }
 
 sealed interface RegisterUiState{
     object Loading : RegisterUiState
+    object Neutral : RegisterUiState
     data class Success(val data: UserEntity): RegisterUiState
     data class Error(val message:String) : RegisterUiState
 }

@@ -1,5 +1,6 @@
 package com.nabiha.data.apiservice
 
+import com.nabiha.apiresponse.products.ProductsApiResponse
 import com.nabiha.apiresponse.users.UserApiLoginRequest
 import com.nabiha.apiresponse.users.UserApiLoginResponse
 import com.nabiha.apiresponse.users.UserApiRegisterRequest
@@ -40,4 +41,10 @@ interface ApiService {
         @Path("id") id: Long,
         @Body data: UserApiUpdateRequest
     ):Response<UserApiResponse>
+
+
+    @GET("/products")
+    suspend fun fetchProducts(
+        @HeaderMap headers : Map<String, String>
+    ):Response<ProductsApiResponse>
 }

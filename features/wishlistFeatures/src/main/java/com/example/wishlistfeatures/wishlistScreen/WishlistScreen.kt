@@ -16,8 +16,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.wishlistfeatures.components.CardWishlist
+import com.nabiha.common.utils.navigateToDetailScreen
 import com.nabiha.designsystem.theme.OptixTheme
-import com.nabiha.homefeatures.detail.navigateToDetailScreen
 
 @Composable
 internal fun WishlistScreenRoute(

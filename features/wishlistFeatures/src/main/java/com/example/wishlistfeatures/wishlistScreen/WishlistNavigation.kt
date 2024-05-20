@@ -8,10 +8,6 @@ import com.nabiha.common.utils.NavRoute
 
 const val WishlistRoute = NavRoute.WishlistScreenRoute
 
-fun NavController.navigateToWishlistScreen() {
-    navigate(WishlistRoute)
-}
-
 fun NavGraphBuilder.wishlistScreen(
     navController: NavHostController
 ) {

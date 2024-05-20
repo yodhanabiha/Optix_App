@@ -30,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.appinfofeatures.navigateToAppInfoScreen
-import com.nabiha.authfeatures.login.navigateToLoginScreen
+import com.nabiha.common.utils.navigateToAppInfoScreen
+import com.nabiha.common.utils.navigateToLoginScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
 

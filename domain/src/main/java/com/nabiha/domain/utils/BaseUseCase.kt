@@ -16,3 +16,8 @@ interface ApiUseCaseUsers<ID,Register,Login,Update,Entity, EntityLogin> : UseCas
     suspend fun login(params: Login): Flow<Result<EntityLogin>>
     suspend fun update(params:ID, data: Update): Flow<Result<Entity>>
 }
+
+interface ApiUseCaseProduct<Entity> : UseCase {
+    suspend fun products(): Flow<Result<List<Entity>>>
+
+}

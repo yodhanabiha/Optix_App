@@ -12,4 +12,5 @@ android {
 dependencies {
     room()
     hilt()
+    entity()
 }

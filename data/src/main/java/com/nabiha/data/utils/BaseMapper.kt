@@ -12,7 +12,7 @@ fun<R,E> mapFromApiResponse(result: Flow<Result<R>>, mapper: Mapper<R, E>): Flow
     return result.map {
         when(it){
             is Result.Success-> Result.Success(mapper.mapFromApiResponse(it.data))
-            is Result.Error-> Result.Error(it.message,it.code)
+            is Result.Error-> Result.Error(it.errorMessage,it.code)
             is Result.Loading -> Result.Loading(it.loading)
         }
     }

@@ -8,10 +8,6 @@ import com.nabiha.common.utils.NavRoute
 
 const val registerRoute = NavRoute.RegisterScreenRoute
 
-fun NavController.navigateToRegisterScreen(){
-    navigate(registerRoute)
-}
-
 fun NavGraphBuilder.registerScreen(
     navController: NavHostController,
 ) {

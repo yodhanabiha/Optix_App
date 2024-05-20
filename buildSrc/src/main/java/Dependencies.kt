@@ -168,3 +168,4 @@ fun DependencyHandler.features() {
     implementation(project(":features:appInfoFeatures"))
 }
 
+

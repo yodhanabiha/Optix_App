@@ -1,7 +1,9 @@
 package com.nabiha.authfeatures.login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,11 +22,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,31 +38,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.nabiha.authfeatures.register.navigateToRegisterScreen
-import com.nabiha.designsystem.theme.OptixTheme
-import com.nabiha.homefeatures.home.navigateToHomeScreen
+import com.nabiha.apiresponse.users.UserApiLoginRequest
+import com.nabiha.authfeatures.components.AuthTextField
+import com.nabiha.common.utils.navigateToHomeScreen
+import com.nabiha.common.utils.navigateToRegisterScreen
+import com.nabiha.designsystem.component.COutlinedTextField
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun LoginScreenRoute(
-    navController: NavHostController,
+    viewModel: LoginViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
-    LoginScreen(navController=navController)
+    val loginUiState by viewModel.loginUiState.collectAsStateWithLifecycle()
+    LoginScreen(navController = navController, viewModel, loginUiState)
 }
 
 @Composable
 private fun LoginScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: LoginViewModel,
+    loginUiState: LoginUiState
 ) {
     var email by remember {
         mutableStateOf("")
@@ -70,10 +84,39 @@ private fun LoginScreen(
         mutableStateOf(false)
     }
 
+    var isLoading by remember {
+        mutableStateOf(false)
+    }
+
+    var showPassword by remember {
+        mutableStateOf(false)
+    }
+
+    val context = LocalContext.current
+
+    LaunchedEffect(loginUiState) {
+        when (loginUiState) {
+            is LoginUiState.Success -> {
+                Toast.makeText(context, "Login Success!", Toast.LENGTH_SHORT).show()
+                navController.navigateToHomeScreen()
+                viewModel.resetRegisterUiState()
+            }
+
+            is LoginUiState.Error -> {
+                Toast.makeText(context, loginUiState.message, Toast.LENGTH_LONG).show()
+                isLoading = false
+                viewModel.resetRegisterUiState()
+            }
+
+            LoginUiState.Loading -> isLoading = true
+            LoginUiState.Neutral -> isLoading = false
+        }
+    }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primary) //background(color = MaterialTheme.colorScheme.background)
+            .background(color = MaterialTheme.colorScheme.primary)
     ) {
         item {
             Box(
@@ -112,73 +155,54 @@ private fun LoginScreen(
                             .padding(start = 24.dp, bottom = 32.dp, top = 32.dp)
                     )
                     Column(modifier = Modifier.fillMaxSize()) {
-                        OutlinedTextField(
+                        AuthTextField(
                             value = email,
                             onValueChange = { email = it },
-                            textStyle = MaterialTheme.typography.bodySmall,
-                            placeholder = {
-                                Text(
-                                    text = "Email",
-                                    fontSize = 12.sp,
-                                )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            placeholderText = "Email",
+                            modifier = Modifier.padding(bottom = 16.dp),
                             leadingIcon = {
                                 Icon(
                                     painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
                                     contentDescription = "Email Icon",
+                                    tint = Color.Black,
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(horizontal = 12.dp)
                                         .size(18.dp)
                                 )
-                            },
-                            modifier = Modifier
-                                .padding(bottom = 16.dp)
-                                .fillMaxWidth()
-                                .height(48.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(color = Color.White),
-                        )
-                        OutlinedTextField(
+                            })
+
+                        AuthTextField(
                             value = password,
                             onValueChange = { password = it },
-                            textStyle = MaterialTheme.typography.bodyLarge,
-                            placeholder = {
-                                Text(
-                                    text = "Password",
-                                    fontSize = 12.sp,
-                                )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            placeholderText = "Password",
+                            visualTransformation = if (showPassword) VisualTransformation.None  else PasswordVisualTransformation(),
+                            modifier = Modifier.padding(bottom = 16.dp),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
-                                    contentDescription = "Password Icon",
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock_fill),
+                                    contentDescription = "PW Icon",
+                                    tint = Color.Black,
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(horizontal = 12.dp)
                                         .size(18.dp)
                                 )
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
+                                    painter = if (showPassword) painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash) else painterResource(
+                                        id = com.nabiha.designsystem.R.drawable.eye_slash
+                                    ),
                                     contentDescription = "End Icon",
+                                    tint = Color(0xFF515151),
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(horizontal = 12.dp)
                                         .size(18.dp)
+                                        .clickable {
+                                            showPassword = !showPassword
+                                        }
                                 )
-                            },
+                            })
 
-                            visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier
-                                .padding(bottom = 16.dp)
-                                .fillMaxWidth()
-                                .height(53.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(color = Color.White),
-                        )
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(start = 10.dp, bottom = 32.dp)
@@ -191,7 +215,9 @@ private fun LoginScreen(
                                 ),
                                 checked = rememberMe,
                                 onCheckedChange = { rememberMe = it },
-                                modifier = Modifier.size(10.dp).scale(0.8f)
+                                modifier = Modifier
+                                    .size(10.dp)
+                                    .scale(0.8f)
                             )
                             Text(
                                 "Remember Me",
@@ -203,32 +229,38 @@ private fun LoginScreen(
                         }
                         Button(
                             onClick = {
-                                //                        viewModel.viewModelScope.launch {
-//                            viewModel.fetchRegister(
-//                                userReg = UserApiRegisterRequest(
-//                                    email = email,
-//                                    password = password,
-//                                    name = name,
-//                                    phone = phone,
-//                                    role = "USER"
-//                                )
-//                          )
-                                //}
-                                navController.navigateToHomeScreen()
+                                viewModel.viewModelScope.launch {
+                                    viewModel.fetchRegister(
+                                        UserApiLoginRequest(
+                                            email = email,
+                                            password = password,
+                                        )
+                                    )
+                                }
+
                             },
                             shape = RoundedCornerShape(12.dp),
+                            enabled = !isLoading,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp)
                                 .height(37.dp),
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
-
                         ) {
                             Text(
                                 text = "Sign In",
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.surface
                             )
+                            if (isLoading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .padding(start = 12.dp)
+                                        .size(16.dp),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    trackColor = MaterialTheme.colorScheme.surfaceVariant
+                                )
+                            }
                         }
                         Box(
                             modifier = Modifier
@@ -316,23 +348,8 @@ private fun LoginScreen(
                             }
                         }
                     }
-
-//                when (registerUiState) {
-//                    is RegisterUiState.Error -> Text(text = registerUiState.message)
-//                    RegisterUiState.Loading -> Text(text = "")
-//                    is RegisterUiState.Success -> Text(text = registerUiState.data.email)
-//                }
                 }
             }
         }
-    }
-}
-
-@Composable
-@Preview
-private fun LoginScreenPreview() {
-    val navController = rememberNavController()
-    OptixTheme {
-        LoginScreenRoute(navController = navController)
     }
 }

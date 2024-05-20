@@ -23,11 +23,11 @@ dependencies {
     compose()
     androidLifeCycle()
     androidTests()
-    implementation(project(":features:homeFeatures"))
 
     designsystem()
     common()
     domain()
     entity()
     apiresponse()
+    data()
 }

@@ -7,11 +7,6 @@ import androidx.navigation.compose.composable
 import com.nabiha.common.utils.NavRoute
 
 const val loginRoute = NavRoute.LoginScreenRoute
-
-fun NavController.navigateToLoginScreen(){
-    navigate(loginRoute)
-}
-
 fun NavGraphBuilder.loginScreen(
     navController: NavHostController,
 ) {

@@ -26,8 +26,11 @@ dependencies {
     androidLifeCycle()
     coil()
 
-
     designsystem()
     common()
+    domain()
+    entity()
+    apiresponse()
     data()
+
 }

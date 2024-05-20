@@ -4,7 +4,7 @@ import com.nabiha.apiresponse.users.UserApiLoginRequest
 import com.nabiha.apiresponse.users.UserApiRegisterRequest
 import com.nabiha.apiresponse.users.UserApiUpdateRequest
 import com.nabiha.data.apiservice.ApiService
-import com.nabiha.data.datastore.DatastoreManager
+import com.nabiha.data.datastore.PreferenceDatastore
 import com.nabiha.data.mapper.user.UserLoginMapper
 import com.nabiha.data.mapper.user.UserMapper
 import com.nabiha.data.utils.NetworkBoundResource
@@ -21,11 +21,12 @@ class UserRepoImpl @Inject constructor(
     private val apiService: ApiService,
     private val networkBoundResources: NetworkBoundResource,
     private val userMapper: UserMapper,
-    private val userLoginMapper: UserLoginMapper
+    private val userLoginMapper: UserLoginMapper,
+    private val preferenceDatastore: PreferenceDatastore
 ) : UserRepository {
 
     override suspend fun fetchUserProfile(): Flow<Result<UserEntity>> {
-        val token = DatastoreManager.getPreferenceDatastore().getToken().first()
+        val token = preferenceDatastore.getToken().first()
         return mapFromApiResponse(
             result = networkBoundResources.downloadData {
                 apiService.fetchProfile(
@@ -56,7 +57,7 @@ class UserRepoImpl @Inject constructor(
         params: Long,
         data: UserApiUpdateRequest
     ): Flow<Result<UserEntity>> {
-        val token = DatastoreManager.getPreferenceDatastore().getToken().first()
+        val token = preferenceDatastore.getToken().first()
         return mapFromApiResponse(
             result = networkBoundResources.downloadData {
                 apiService.fetchUpdaterUser(

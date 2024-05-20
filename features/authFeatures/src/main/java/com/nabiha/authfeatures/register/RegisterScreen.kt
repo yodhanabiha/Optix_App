@@ -1,12 +1,13 @@
- package com.nabiha.authfeatures.register
+package com.nabiha.authfeatures.register
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,14 +18,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.materialIcon
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,37 +35,43 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.nabiha.authfeatures.login.navigateToLoginScreen
-import com.nabiha.designsystem.theme.OptixTheme
-import java.time.format.TextStyle
+import com.nabiha.apiresponse.users.UserApiRegisterRequest
+import com.nabiha.authfeatures.components.AuthTextField
+import com.nabiha.common.utils.navigateToLoginScreen
+import com.nabiha.designsystem.R
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun RegisterScreenRoute(
-//    viewModel: RegisterViewModel = hiltViewModel(),
+    viewModel: RegisterViewModel = hiltViewModel(),
     navController: NavHostController,
 ) {
-//    val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
-    RegisterScreen(navController=navController)
+    val registerUiState by viewModel.registerUiState.collectAsStateWithLifecycle()
+    RegisterScreen(viewModel, registerUiState, navController)
 }
 
 @Composable
 private fun RegisterScreen(
-//    viewModel: RegisterViewModel,
-//    registerUiState: RegisterUiState,
+    viewModel: RegisterViewModel,
+    registerUiState: RegisterUiState,
     navController: NavHostController
 ) {
+
+    val context = LocalContext.current
 
     var userName by remember {
         mutableStateOf("")
@@ -80,7 +88,38 @@ private fun RegisterScreen(
     var confirmPassword by remember {
         mutableStateOf("")
     }
-    
+
+    var isLoading by remember {
+        mutableStateOf(false)
+    }
+
+    var showPassword by remember {
+        mutableStateOf(false)
+    }
+
+    var showConfirmPassword by remember {
+        mutableStateOf(false)
+    }
+
+    LaunchedEffect(registerUiState) {
+        when (registerUiState) {
+            is RegisterUiState.Success -> {
+                Toast.makeText(context, "Register Success!", Toast.LENGTH_SHORT).show()
+                navController.navigateToLoginScreen()
+                viewModel.resetRegisterUiState()
+            }
+
+            is RegisterUiState.Error -> {
+                Toast.makeText(context, registerUiState.message, Toast.LENGTH_SHORT).show()
+                isLoading = false
+                viewModel.resetRegisterUiState()
+            }
+
+            RegisterUiState.Loading -> isLoading = true
+            RegisterUiState.Neutral -> isLoading = false
+        }
+    }
+
 
     LazyColumn(
         modifier = Modifier
@@ -97,7 +136,7 @@ private fun RegisterScreen(
             ) {
                 Column(modifier = Modifier.fillMaxSize()) {
                     Image(
-                        painter = painterResource(id = com.nabiha.designsystem.R.drawable.register_pic),
+                        painter = painterResource(id = R.drawable.register_pic),
                         contentDescription = "Sign Up Picture",
                         modifier = Modifier
                             .size(width = 451.dp, height = 270.dp)
@@ -112,160 +151,122 @@ private fun RegisterScreen(
                             textAlign = TextAlign.Center,
                             color = MaterialTheme.colorScheme.surface
                         )
-                        OutlinedTextField(
+                        AuthTextField(
                             value = userName,
                             onValueChange = { userName = it },
-                            textStyle = MaterialTheme.typography.bodySmall,
-                            placeholder = {
-                                Text(
-                                    text = "Username",
-                                    fontSize = 12.sp
-                                )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                            placeholderText = "Username",
+                            modifier = Modifier.padding(bottom = 16.dp),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.person),
-                                    contentDescription = "Username Icon",
+                                    painter = painterResource(id = R.drawable.person),
+                                    contentDescription = "",
+                                    tint = Color.Black,
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(horizontal = 12.dp)
                                         .size(18.dp)
                                 )
-                            },
+                            })
 
-                            modifier = Modifier
-                                .padding(bottom = 16.dp)
-                                .fillMaxWidth()
-                                .height(48.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(color = Color.White),
-
-                        )
-                        OutlinedTextField(
+                        AuthTextField(
                             value = email,
                             onValueChange = { email = it },
-                            textStyle = MaterialTheme.typography.bodyLarge,
-                            placeholder = {
-                                Text(
-                                    text = "Email",
-                                    fontSize = 12.sp,
-                                )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                            placeholderText = "Email",
+                            modifier = Modifier.padding(bottom = 16.dp),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.envelope),
+                                    painter = painterResource(id = R.drawable.envelope),
                                     contentDescription = "Email Icon",
+                                    tint = Color.Black,
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(horizontal = 12.dp)
                                         .size(18.dp)
                                 )
-                            },
-                            shape = RoundedCornerShape(12.dp),
-                            modifier = Modifier
-                                .padding(bottom = 16.dp)
-                                .fillMaxWidth()
-                                .height(53.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(color = Color.White),
-                        )
-                        OutlinedTextField(
+                            })
+
+                        AuthTextField(
                             value = password,
                             onValueChange = { password = it },
-                            textStyle = MaterialTheme.typography.bodyLarge,
-                            placeholder = {
-                                Text(
-                                    text = "Password",
-                                    fontSize = 12.sp,
-                                )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            placeholderText = "Password",
+                            visualTransformation = if (showPassword) VisualTransformation.None  else PasswordVisualTransformation(),
+                            modifier = Modifier.padding(bottom = 16.dp),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
-                                    contentDescription = "Password Icon",
+                                    painter = painterResource(id = R.drawable.lock_fill),
+                                    contentDescription = "PW Icon",
+                                    tint = Color.Black,
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(horizontal = 12.dp)
                                         .size(18.dp)
                                 )
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
+                                    painter = if (showPassword) painterResource(id = R.drawable.eye_slash) else painterResource(
+                                        id = R.drawable.eye_slash
+                                    ),
                                     contentDescription = "End Icon",
+                                    tint = Color(0xFF515151),
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(horizontal = 12.dp)
                                         .size(18.dp)
-
+                                        .clickable {
+                                            showPassword = !showPassword
+                                        }
                                 )
-                            },
-
-                            visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier
-                                .padding(bottom = 16.dp)
-                                .fillMaxWidth()
-                                .height(53.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(color = Color.White),
-                        )
-                        OutlinedTextField(
+                            })
+                        AuthTextField(
                             value = confirmPassword,
                             onValueChange = { confirmPassword = it },
-                            textStyle = MaterialTheme.typography.bodyLarge,
-                            placeholder = {
-                                Text(
-                                    text = "Confirm Password",
-                                    fontSize = 12.sp,
-                                )
-                            },
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                            placeholderText = "Password",
+                            visualTransformation = if (showConfirmPassword) VisualTransformation.None  else PasswordVisualTransformation(),
+                            modifier = Modifier.padding(bottom = 16.dp),
                             leadingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.lock),
-                                    contentDescription = "Confirm Password Icon",
+                                    painter = painterResource(id = R.drawable.lock_fill),
+                                    contentDescription = "PW Icon",
+                                    tint = Color.Black,
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
+                                        .padding(horizontal = 12.dp)
                                         .size(18.dp)
                                 )
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash),
+                                    painter = if (showConfirmPassword) painterResource(id = R.drawable.eye_slash) else painterResource(
+                                        id = R.drawable.eye_slash
+                                    ),
                                     contentDescription = "End Icon",
+                                    tint = Color(0xFF515151),
                                     modifier = Modifier
-                                        .padding(vertical = 12.dp, horizontal = 8.dp)
-                                        .size(20.dp)
+                                        .padding(horizontal = 12.dp)
+                                        .size(18.dp)
+                                        .clickable {
+                                            showConfirmPassword = !showPassword
+                                        }
                                 )
-                            },
-                            visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier
-                                .padding(bottom = 32.dp)
-                                .fillMaxWidth()
-                                .height(53.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(color = Color.White),
-                        )
+                            })
 
                         Button(
                             onClick = {
-                                //                        viewModel.viewModelScope.launch {
-//                            viewModel.fetchRegister(
-//                                userReg = UserApiRegisterRequest(
-//                                    email = email,
-//                                    password = password,
-//                                    name = name,
-//                                    phone = phone,
-//                                    role = "USER"
-//                                )
-//                          )
-                                //}
-                                navController.navigateToLoginScreen()
+                                if (password == confirmPassword){
+                                    viewModel.viewModelScope.launch {
+                                        viewModel.fetchRegister(
+                                            userReg = UserApiRegisterRequest(
+                                                email = email,
+                                                password = password,
+                                                name = userName,
+                                                phone = "0",
+                                                role = "USER"
+                                            )
+                                        )
+                                    }
+                                }else{
+                                    Toast.makeText(context, "Password don't match", Toast.LENGTH_SHORT).show()
+                                }
+
                             },
                             shape = RoundedCornerShape(12.dp),
+                            enabled = !isLoading,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp)
@@ -277,6 +278,13 @@ private fun RegisterScreen(
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.surface
                             )
+                            if (isLoading) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.padding(start = 12.dp).size(16.dp),
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    trackColor = MaterialTheme.colorScheme.surfaceVariant
+                                )
+                            }
                         }
                         Box(
                             modifier = Modifier
@@ -325,7 +333,7 @@ private fun RegisterScreen(
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Image(
-                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.google),
+                                    painter = painterResource(id = R.drawable.google),
                                     contentDescription = "Google Icon",
                                     modifier = Modifier.size(24.dp)
                                 )
@@ -348,7 +356,7 @@ private fun RegisterScreen(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
                                     text = "Already have an account? ",
-                                    style =  MaterialTheme.typography.bodyMedium,
+                                    style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.surface,
                                 )
                                 ClickableText(
@@ -365,22 +373,10 @@ private fun RegisterScreen(
                         }
                     }
 
-//                when (registerUiState) {
-//                    is RegisterUiState.Error -> Text(text = registerUiState.message)
-//                    RegisterUiState.Loading -> Text(text = "")
-//                    is RegisterUiState.Success -> Text(text = registerUiState.data.email)
-//                }
+
                 }
             }
         }
     }
 }
 
-    @Composable
-    @Preview
-    private fun RegisterScreenPreview() {
-        val navController = rememberNavController()
-        OptixTheme {
-            RegisterScreenRoute(navController = navController)
-        }
-    }

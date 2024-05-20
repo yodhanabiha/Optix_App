@@ -28,24 +28,27 @@ class NetworkBoundResource @Inject constructor(){
                 if (response.isSuccessful){
                     response.body()?.let {
                         emit(Result.Success(data = it))
-                    }?: emit(Result.Error(message = "Unknown error occurred", code = 0))
+                    }?: emit(Result.Error(errorMessage = "Unknown error occurred", code = 0))
                 }else{
-                    emit(Result.Error(message = parserErrorBody(response.errorBody()), code = response.code()))
+                    emit(Result.Error(errorMessage = parserErrorBody(response.errorBody()), code = response.code()))
                 }
             }.catch { error->
                 Timber.e(error.localizedMessage)
                 emit(Result.Loading(false))
                 delay(5)
-                emit(Result.Error(message = message(error), code = code(error)))
+                emit(Result.Error(errorMessage = message(error), code = code(error)))
             }
         }
     }
     private fun parserErrorBody(response: ResponseBody?):String{
         return response?.let {
-            val errorMessage = JsonParser.parseString(it.string()).asJsonObject["message"].asString
-            errorMessage.ifEmpty { "Whoops! Something went wrong. Please try again." }
-            errorMessage
-        }?:"Whoops! Unknown error occurred. Please try again"
+            val jsonObject = JsonParser.parseString(it.string()).asJsonObject
+            val errors = jsonObject["errors"].asJsonArray
+            val errorMessages = errors.joinToString(separator = "\n") { errorElement ->
+                errorElement.asJsonObject["errorMessage"].asString
+            }
+            errorMessages.ifEmpty { "Whoops! Something went wrong. Please try again." }
+        } ?: "Whoops! Unknown error occurred. Please try again"
     }
     private fun message(throwable: Throwable?):String{
         when (throwable) {

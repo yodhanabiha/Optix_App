@@ -35,7 +35,7 @@ import com.nabiha.authfeatures.register.registerScreen
 fun AppNavigation(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    startDestination: String = NavRoute.LoginScreenRoute
+    startDestination: String = NavRoute.HomeScreenRoute
 ) {
     Scaffold(bottomBar = { BottomBar(navController = navController) }) { innerPadding ->
         NavHost(

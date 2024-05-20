@@ -8,10 +8,6 @@ import com.nabiha.common.utils.NavRoute
 
 const val profileRoute = NavRoute.ProfileScreenRoute
 
-fun NavController.navigateToProfileScreen() {
-    navigate(profileRoute)
-}
-
 fun NavGraphBuilder.profileScreen(
     navController: NavHostController,
 ) {

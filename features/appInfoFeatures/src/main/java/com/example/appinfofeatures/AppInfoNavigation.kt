@@ -8,10 +8,6 @@ import com.nabiha.common.utils.NavRoute
 
 const val appInfoRoute = NavRoute.AppInfoScreenRoute
 
-fun NavController.navigateToAppInfoScreen(){
-    navigate(appInfoRoute)
-}
-
 fun NavGraphBuilder.appInfoScreen(
     navController: NavHostController,
     onBackBtnClick:()->Unit

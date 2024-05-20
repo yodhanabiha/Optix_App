@@ -1,6 +1,6 @@
 object Versions {
     const val compose = "1.4.3"
-    const val composeMaterial3 = "1.1.1"
+    const val composeMaterial3 = "1.2.0-rc01"
     const val composeNavigation = "2.5.3"
     const val composeCompiler = "1.4.6"
     const val hilt = "2.38.1"

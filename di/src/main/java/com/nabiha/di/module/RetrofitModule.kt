@@ -22,7 +22,7 @@ object RetrofitModule {
         factory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://172.23.2.83:8080/")
+            .baseUrl("http://100.97.75.94:8080/")
             .client(okHttpClient)
             .addConverterFactory(factory)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
