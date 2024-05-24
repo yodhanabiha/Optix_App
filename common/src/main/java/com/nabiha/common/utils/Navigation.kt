@@ -19,8 +19,8 @@ fun NavController.navigateToProfileScreen() {
     navigate(profileRoute)
 }
 
-fun NavController.navigateToDetailScreen() {
-    navigate(detailRoute)
+fun NavController.navigateToDetailScreen(idProduct: Long) {
+    navigate("detailScreenRoute/$idProduct")
 }
 fun NavController.navigateToCartScreen() {
     navigate(cartRoute)

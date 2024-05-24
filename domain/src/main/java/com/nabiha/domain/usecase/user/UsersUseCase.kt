@@ -1,10 +1,9 @@
-package com.nabiha.domain.usecase
+package com.nabiha.domain.usecase.user
 
 import com.nabiha.apiresponse.users.UserApiLoginRequest
 import com.nabiha.apiresponse.users.UserApiRegisterRequest
 import com.nabiha.apiresponse.users.UserApiUpdateRequest
 import com.nabiha.domain.repository.UserRepository
-import com.nabiha.domain.utils.ApiUseCaseUsers
 import com.nabiha.domain.utils.Result
 import com.nabiha.entity.UserEntity
 import com.nabiha.entity.UserEntityLogin

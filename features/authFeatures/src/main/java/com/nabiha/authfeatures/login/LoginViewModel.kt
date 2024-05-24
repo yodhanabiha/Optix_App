@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nabiha.apiresponse.users.UserApiLoginRequest
 import com.nabiha.data.datastore.PreferenceDatastore
-import com.nabiha.domain.usecase.UsersUseCase
+import com.nabiha.domain.usecase.user.UsersUseCase
 import com.nabiha.domain.utils.Result
 import com.nabiha.entity.UserEntityLogin
 import dagger.hilt.android.lifecycle.HiltViewModel

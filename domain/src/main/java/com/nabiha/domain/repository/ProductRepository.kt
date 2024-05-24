@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
     suspend fun fetchAllProducts(): Flow<Result<List<ProductEntity>>>
+
+    suspend fun fetchProduct(id: Long): Flow<Result<ProductEntity>>
 }

@@ -33,9 +33,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.cartfeatures.cartComponent.CardCart
 import com.example.cartfeatures.cartComponent.CheckoutButton
+import com.nabiha.common.utils.navigateToDetailScreen
 import com.nabiha.designsystem.component.ScaffoldTopAppbar
 import com.nabiha.designsystem.theme.OptixTheme
-import com.nabiha.homefeatures.detail.navigateToDetailScreen
 
 @Composable
 internal fun CartScreenRoute(
@@ -102,15 +102,15 @@ private fun CartScreen(navController: NavHostController) {
             }
             }
 
-        items(10) {
-            CardCart(
-                title = "Purple Glasses",
-                price = "Rp155.000",
-                imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
-                quantity = 1,
-                onClick = { navController.navigateToDetailScreen() }
-            )
-        }
+//        items(10) {
+//            CardCart(
+//                title = "Purple Glasses",
+//                price = "Rp155.000",
+//                imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
+//                quantity = 1,
+//                onClick = { navController.navigateToDetailScreen() }
+//            )
+//        }
 
         items (1
         ) {

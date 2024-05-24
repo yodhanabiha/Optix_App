@@ -47,16 +47,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.nabiha.common.utils.formatPrice
 import com.nabiha.common.utils.navigateToDetailScreen
 import com.nabiha.common.utils.navigateToLoginScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.component.COutlinedTextField
 import com.nabiha.designsystem.component.gridItems
 import com.nabiha.designsystem.ui.NetworkErrorMessage
+import com.nabiha.entity.UserEntity
 import com.nabiha.homefeatures.components.CardProductHome
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @Composable
 internal fun HomeScreenRoute(
@@ -64,22 +68,28 @@ internal fun HomeScreenRoute(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     LaunchedEffect(viewModel) {
-        if (!viewModel.checkToken()){
+        if (!viewModel.checkToken()) {
             navController.navigateToLoginScreen()
         }
     }
 
     val homeUiState by viewModel.homeUiState.collectAsStateWithLifecycle()
-    val username by viewModel.username.collectAsStateWithLifecycle()
+    val user by viewModel.user.collectAsStateWithLifecycle()
 
-    when (homeUiState){
+    when (homeUiState) {
         is HomeUiState.Error -> NetworkErrorMessage(message = (homeUiState as HomeUiState.Error).message) {
 
         }
+
         HomeUiState.Loading -> null
-        is HomeUiState.Success -> HomeScreen(navController, username,
-            homeUiState as HomeUiState.Success
-        )
+        is HomeUiState.Success -> {
+            HomeScreen(
+                navController, user,
+                homeUiState as HomeUiState.Success,
+                viewModel
+            )
+        }
+
     }
 
 }
@@ -91,8 +101,9 @@ internal fun HomeScreenRoute(
 @Composable
 private fun HomeScreen(
     navController: NavHostController,
-    username: String,
-    homeUiState: HomeUiState.Success
+    user: UserEntity,
+    homeUiState: HomeUiState.Success,
+    viewModel: HomeViewModel
 ) {
 
     var search by remember {
@@ -114,7 +125,7 @@ private fun HomeScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Hi, $username!",
+                        text = "Hi, ${user.name}!",
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.weight(1f)
                     )
@@ -245,21 +256,41 @@ private fun HomeScreen(
             }
         }
 
-        gridItems(10, nColumns = 2, horizontalArrangement = Arrangement.spacedBy(10.dp)){
+        gridItems(
+            homeUiState.data,
+            nColumns = 2,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) { product ->
+            val userLike = product.likes.find { it.user_id == user.id }
+            var likeStatus by remember { mutableStateOf(userLike != null) }
+            var likeId by remember { mutableStateOf(userLike?.id) }
+            if (likeId == 62L) {
+                Timber.e("LIKE ID: $likeId")
+            }
+
             CardProductHome(
-                title = "Purple Glasses",
-                price = "Rp. 155.000",
-                imageUrl = "https://i.pinimg.com/564x/a5/67/92/a567923a663362b33af3f9741db8ec93.jpg",
+                title = product.title,
+                price = "Rp${formatPrice(product.price)}",
+                imageUrl = "http://100.97.75.94:8080${product.imageurl}",
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .height(205.dp)
-                    .clickable { navController.navigateToDetailScreen() },
-                like = true
+                    .clickable { navController.navigateToDetailScreen(product.id) },
+                like = likeStatus,
+                likeClikable = {
+                    viewModel.viewModelScope.launch {
+                        if (likeStatus && likeId != null) {
+                            viewModel.unLikeProduct(likeId!!)
+                            likeId = null
+                        } else if (!likeStatus) {
+                            viewModel.likeProduct(product.id, onResult = { likeId = it })
+                        }
+                        likeStatus = !likeStatus
+                    }
+                }
             )
         }
-
     }
-
 }
 
 @OptIn(ExperimentalFoundationApi::class)

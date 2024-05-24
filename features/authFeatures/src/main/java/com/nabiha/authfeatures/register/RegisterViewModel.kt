@@ -3,7 +3,7 @@ package com.nabiha.authfeatures.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nabiha.apiresponse.users.UserApiRegisterRequest
-import com.nabiha.domain.usecase.UsersUseCase
+import com.nabiha.domain.usecase.user.UsersUseCase
 import com.nabiha.domain.utils.Result
 import com.nabiha.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
