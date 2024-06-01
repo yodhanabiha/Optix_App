@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.nabiha.apiresponse.likes.LikeApiRequest
 import com.nabiha.data.datastore.PreferenceDatastore
 import com.nabiha.domain.usecase.product.ProductUseCase
-import com.nabiha.domain.usecase.whistlist.WhistListUseCase
+import com.nabiha.domain.usecase.wishlist.WishListUseCase
 import com.nabiha.domain.utils.Result
 import com.nabiha.entity.ProductEntity
 import com.nabiha.entity.UserEntity
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val preferenceDatastore: PreferenceDatastore,
     private val productUseCase: ProductUseCase,
-    private val whistListUseCase: WhistListUseCase
+    private val wishListUseCase: WishListUseCase
 ) : ViewModel() {
 
     private var _detailUiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
@@ -77,7 +77,7 @@ class DetailViewModel @Inject constructor(
     fun likeProduct(productId: Long, onResult: (Long?) -> Unit) {
         val request = LikeApiRequest(productId, user.value.id)
         viewModelScope.launch {
-            whistListUseCase.likeProduct(request).collect { response ->
+            wishListUseCase.likeProduct(request).collect { response ->
                 when (response) {
                     is Result.Error -> {
                         Timber.e(response.errorMessage)
@@ -94,7 +94,7 @@ class DetailViewModel @Inject constructor(
 
     fun unLikeProduct(likeId: Long) {
         viewModelScope.launch {
-            whistListUseCase.unLikeProduct(likeId).collect {}
+            wishListUseCase.unLikeProduct(likeId).collect {}
         }
     }
 }

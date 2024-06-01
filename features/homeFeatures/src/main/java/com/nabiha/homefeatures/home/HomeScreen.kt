@@ -49,6 +49,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.formatPrice
 import com.nabiha.common.utils.navigateToDetailScreen
 import com.nabiha.common.utils.navigateToLoginScreen
@@ -81,7 +82,8 @@ internal fun HomeScreenRoute(
 
         }
 
-        HomeUiState.Loading -> null
+        HomeUiState.Loading -> {}
+
         is HomeUiState.Success -> {
             HomeScreen(
                 navController, user,
@@ -89,7 +91,6 @@ internal fun HomeScreenRoute(
                 viewModel
             )
         }
-
     }
 
 }
@@ -261,7 +262,7 @@ private fun HomeScreen(
             nColumns = 2,
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) { product ->
-            val userLike = product.likes.find { it.user_id == user.id }
+            val userLike = product.likes.find { it.user.id == user.id }
             var likeStatus by remember { mutableStateOf(userLike != null) }
             var likeId by remember { mutableStateOf(userLike?.id) }
             if (likeId == 62L) {
@@ -271,7 +272,7 @@ private fun HomeScreen(
             CardProductHome(
                 title = product.title,
                 price = "Rp${formatPrice(product.price)}",
-                imageUrl = "http://100.97.75.94:8080${product.imageurl}",
+                imageUrl = UrlApiService.default + product.imageurl,
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .height(205.dp)

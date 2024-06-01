@@ -1,17 +1,16 @@
-package com.nabiha.domain.usecase.whistlist
+package com.nabiha.domain.usecase.wishlist
 
 import com.nabiha.apiresponse.likes.LikeApiRequest
-import com.nabiha.domain.repository.ProductRepository
-import com.nabiha.domain.repository.WhistListRepository
+import com.nabiha.domain.repository.WishListRepository
 import com.nabiha.domain.utils.Result
 import com.nabiha.entity.LikeEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class WhistListUseCase @Inject constructor(
-    private val repository: WhistListRepository
-):ApiUseCaseWhistList {
-    override suspend fun whistList(): Flow<Result<List<LikeEntity>>> {
+class WishListUseCase @Inject constructor(
+    private val repository: WishListRepository
+):ApiUseCaseWishList {
+    override suspend fun wishList(): Flow<Result<List<LikeEntity>>> {
         return repository.fetchWhistList()
     }
 

@@ -32,4 +32,5 @@ dependencies {
     domain()
     entity()
     apiresponse()
+    data()
 }

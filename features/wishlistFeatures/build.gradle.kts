@@ -29,5 +29,8 @@ dependencies {
 
     designsystem()
     common()
+    domain()
+    entity()
+    apiresponse()
     data()
 }

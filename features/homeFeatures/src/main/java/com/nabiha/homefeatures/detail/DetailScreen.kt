@@ -44,6 +44,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.formatPrice
 import com.nabiha.common.utils.navigateToDetailScreen
 import com.nabiha.designsystem.R
@@ -56,7 +57,6 @@ import com.nabiha.homefeatures.components.BottomDetail
 import com.nabiha.homefeatures.components.CardProductHome
 import kotlinx.coroutines.launch
 import timber.log.Timber
-
 
 @Composable
 internal fun DetailScreenRoute(
@@ -100,7 +100,7 @@ private fun DetailScreen(
 ) {
 
     val userLikeDetail = detailUiState.likes.find {
-        it.user_id == user.id
+        it.user.id == user.id
     }
 
     var likeStatus by remember {
@@ -166,7 +166,7 @@ private fun DetailScreen(
                                     )
                             ) {
                                 Image(
-                                    painter = rememberAsyncImagePainter(model = "http://100.97.75.94:8080${detailUiState.imageurl}"),
+                                    painter = rememberAsyncImagePainter(model = UrlApiService.default + detailUiState.imageurl),
                                     contentDescription = "",
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -341,7 +341,7 @@ private fun DetailScreen(
                     ) { product ->
 
                         val userLike = product.likes.find {
-                            it.user_id == user.id
+                            it.user.id == user.id
                         }
                         var likeStatusGrid by remember { mutableStateOf(userLike != null) }
                         var likeId by remember { mutableStateOf(userLike?.id) }

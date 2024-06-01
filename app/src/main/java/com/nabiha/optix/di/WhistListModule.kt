@@ -1,7 +1,7 @@
 package com.nabiha.optix.di
 
-import com.nabiha.data.repoiml.WhistListRepoImpl
-import com.nabiha.domain.repository.WhistListRepository
+import com.nabiha.data.repoiml.WishListRepoImpl
+import com.nabiha.domain.repository.WishListRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -11,5 +11,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 interface WhistListModule {
     @Binds
-    fun bindWhistListRepository(whistListRepoImpl: WhistListRepoImpl): WhistListRepository
+    fun bindWhistListRepository(whistListRepoImpl: WishListRepoImpl): WishListRepository
 }

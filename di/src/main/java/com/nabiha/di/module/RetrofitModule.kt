@@ -3,6 +3,7 @@ package com.nabiha.di.module
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.nabiha.di.qulifer.AppBaseUrl
+import com.nabiha.di.util.UrlApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +23,7 @@ object RetrofitModule {
         factory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://100.97.75.94:8080/")
+            .baseUrl(UrlApiService.default)
             .client(okHttpClient)
             .addConverterFactory(factory)
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

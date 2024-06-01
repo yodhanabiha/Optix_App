@@ -1,5 +1,9 @@
 package com.nabiha.data.apiservice
 
+import com.nabiha.apiresponse.carts.CartApiDelResponse
+import com.nabiha.apiresponse.carts.CartApiRequest
+import com.nabiha.apiresponse.carts.CartApiResponse
+import com.nabiha.apiresponse.carts.CartsApiResponse
 import com.nabiha.apiresponse.likes.LikeApiRequest
 import com.nabiha.apiresponse.likes.LikeApiResponse
 import com.nabiha.apiresponse.likes.LikesApiResponse
@@ -76,4 +80,28 @@ interface ApiService {
         @HeaderMap headers : Map<String, String>,
         @Path("id") id: Long
     ): Response<UnlikeApiResponse>
+
+    @GET("carts/{id}")
+    suspend fun fetchCart(
+        @HeaderMap headers: Map<String, String>,
+        @Path("id") id: Long
+    ): Response<CartApiResponse>
+
+    @DELETE("carts/{id}")
+    suspend fun deleteCart(
+        @HeaderMap headers: Map<String, String>,
+        @Path("id") id: Long
+    ): Response<CartApiDelResponse>
+
+    @GET("carts/{id}")
+    suspend fun fetchCarts(
+        @HeaderMap headers: Map<String, String>
+    ):Response<CartsApiResponse>
+
+    @POST("carts/{id}")
+    suspend fun createCarts(
+        @HeaderMap headers: Map<String, String>,
+        @Body request: CartApiRequest
+    ): Response<CartApiResponse>
+
 }
