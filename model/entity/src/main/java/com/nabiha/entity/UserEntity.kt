@@ -6,7 +6,8 @@ data class UserEntity (
     val password: String = "",
     val name: String = "",
     val phone: String = "",
-    val role: String = ""
+    val imageurl: String = "",
+    val role: String = "",
 )
 
 data class UserEntityLogin (

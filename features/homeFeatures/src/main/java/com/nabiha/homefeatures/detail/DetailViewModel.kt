@@ -2,8 +2,10 @@ package com.nabiha.homefeatures.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nabiha.apiresponse.carts.CartApiRequest
 import com.nabiha.apiresponse.likes.LikeApiRequest
 import com.nabiha.data.datastore.PreferenceDatastore
+import com.nabiha.domain.usecase.cart.CartUseCase
 import com.nabiha.domain.usecase.product.ProductUseCase
 import com.nabiha.domain.usecase.wishlist.WishListUseCase
 import com.nabiha.domain.utils.Result
@@ -20,7 +22,8 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val preferenceDatastore: PreferenceDatastore,
     private val productUseCase: ProductUseCase,
-    private val wishListUseCase: WishListUseCase
+    private val wishListUseCase: WishListUseCase,
+    private val cartUseCase: CartUseCase
 ) : ViewModel() {
 
     private var _detailUiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
@@ -74,6 +77,12 @@ class DetailViewModel @Inject constructor(
         }
     }
 
+    fun addCart(request: CartApiRequest) {
+        viewModelScope.launch {
+            cartUseCase.createCart(request).collect {}
+        }
+    }
+
     fun likeProduct(productId: Long, onResult: (Long?) -> Unit) {
         val request = LikeApiRequest(productId, user.value.id)
         viewModelScope.launch {
@@ -83,6 +92,7 @@ class DetailViewModel @Inject constructor(
                         Timber.e(response.errorMessage)
                         onResult(null)
                     }
+
                     is Result.Loading -> {}
                     is Result.Success -> {
                         onResult(response.data.id)

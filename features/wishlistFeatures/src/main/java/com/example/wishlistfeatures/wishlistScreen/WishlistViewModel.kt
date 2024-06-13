@@ -2,8 +2,10 @@ package com.example.wishlistfeatures.wishlistScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nabiha.apiresponse.carts.CartApiRequest
 import com.nabiha.apiresponse.likes.LikeApiRequest
 import com.nabiha.data.datastore.PreferenceDatastore
+import com.nabiha.domain.usecase.cart.CartUseCase
 import com.nabiha.domain.usecase.wishlist.WishListUseCase
 import com.nabiha.domain.utils.Result
 import com.nabiha.entity.LikeEntity
@@ -19,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class WishlistViewModel @Inject constructor(
     private val preferenceDatastore: PreferenceDatastore,
-    private val wishListUseCase: WishListUseCase
+    private val wishListUseCase: WishListUseCase,
+    private val cartUseCase: CartUseCase
 ) : ViewModel() {
 
     private var _wishListUiState = MutableStateFlow<WishListUiState>(WishListUiState.Loading)
@@ -27,6 +30,12 @@ class WishlistViewModel @Inject constructor(
 
     init {
         fetchWishList()
+    }
+
+    fun addCart(request: CartApiRequest) {
+        viewModelScope.launch {
+            cartUseCase.createCart(request).collect {}
+        }
     }
 
     private fun fetchWishList() {

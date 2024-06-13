@@ -46,6 +46,19 @@ class CartRepoImpl @Inject constructor(
         )
     }
 
+    override suspend fun updateCart(id: Long, request: CartApiRequest): Flow<Result<CartEntity>> {
+        val token = preferenceDatastore.getToken().first()
+        return mapFromApiResponse(
+            result = networkBoundResources.downloadData {
+                apiService.updateCart(
+                    headers = mapOf("Authorization" to "Bearer $token"),
+                    id = id,
+                    request = request
+                )
+            }, cartMapper
+        )
+    }
+
     override suspend fun createCart(request: CartApiRequest): Flow<Result<CartEntity>> {
         val token = preferenceDatastore.getToken().first()
         return mapFromApiResponse(

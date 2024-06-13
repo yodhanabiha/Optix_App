@@ -44,8 +44,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
+import com.nabiha.apiresponse.carts.CartApiRequest
 import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.formatPrice
+import com.nabiha.common.utils.navigateToCartScreen
 import com.nabiha.common.utils.navigateToDetailScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.component.ScaffoldTopAppbar
@@ -56,6 +58,7 @@ import com.nabiha.entity.UserEntity
 import com.nabiha.homefeatures.components.BottomDetail
 import com.nabiha.homefeatures.components.CardProductHome
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import timber.log.Timber
 
 @Composable
@@ -113,7 +116,19 @@ private fun DetailScreen(
     ScaffoldTopAppbar(
         title = "Product Detail",
         onNavigationIconClick = onBackBtnClick,
-        bottomBar = { BottomDetail() }
+        bottomBar = { BottomDetail(
+            onCartBtn = {
+                viewModel.viewModelScope.launch {
+                    viewModel.addCart(CartApiRequest(
+                        productId = detailUiState.id,
+                        userId = user.id,
+                        total = 1,
+                        selected = false
+                    ))
+                }
+                navController.navigateToCartScreen()
+            }
+        ) }
     ) {
         val modifier = Modifier.padding(it)
 

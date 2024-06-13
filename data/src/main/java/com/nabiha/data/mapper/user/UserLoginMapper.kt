@@ -16,7 +16,8 @@ class UserLoginMapper @Inject constructor() : Mapper<UserApiLoginResponse, UserE
                 password = user.password,
                 name = user.name,
                 phone = user.phone,
-                role = user.role
+                role = user.role,
+                imageurl = user.imageurl ?: ""
             )
             UserEntityLogin(userE, type.results.token.accessToken)
         } else {

@@ -23,8 +23,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.wishlistfeatures.components.CardWishlist
+import com.nabiha.apiresponse.carts.CartApiRequest
 import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.formatPrice
+import com.nabiha.common.utils.navigateToCartScreen
 import com.nabiha.common.utils.navigateToDetailScreen
 import com.nabiha.designsystem.theme.OptixTheme
 import kotlinx.coroutines.launch
@@ -76,7 +78,15 @@ private fun WishlistScreen(
                         like = likeStatus,
                         onClick = {navController.navigateToDetailScreen(wish.product.id) },
                         button = {
-
+                            viewModel.viewModelScope.launch {
+                                viewModel.addCart(CartApiRequest(
+                                    productId = wish.product.id,
+                                    userId = wish.user.id,
+                                    selected = false,
+                                    total = 1,
+                                ))
+                                navController.navigateToCartScreen()
+                            }
                         },
                         likeClick={
                             viewModel.viewModelScope.launch {

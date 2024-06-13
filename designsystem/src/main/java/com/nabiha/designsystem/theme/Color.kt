@@ -13,3 +13,5 @@ val Pink40 = Color(0xFF7D5260)
 val WhiteBg = Color(0xFFF5F5F5)
 val gold = Color(0xFFDBBF28)
 val GreenLumut = Color(0xFF314B4C)
+
+val HitamPrim = Color(0xFF262626)

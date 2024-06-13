@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,23 +29,33 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
+import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.navigateToAppInfoScreen
 import com.nabiha.common.utils.navigateToLoginScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
+import com.nabiha.entity.UserEntity
 
 @Composable
 internal fun ProfileScreenRoute(
     navController: NavHostController,
+    viewModel: ProfileViewModel = hiltViewModel()
 ) {
-    ProfileScreen(navController,)
+    val profileState by viewModel.profileState.collectAsStateWithLifecycle()
+    when (profileState) {
+        is ProfileState.Error -> {}
+        ProfileState.Loading -> {}
+        is ProfileState.Success -> ProfileScreen(navController, (profileState as ProfileState.Success).data)
+    }
 }
 
 @Composable
-private fun ProfileScreen(navController: NavHostController) {
-
+private fun ProfileScreen(navController: NavHostController, profileState: UserEntity) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -68,7 +79,7 @@ private fun ProfileScreen(navController: NavHostController) {
 
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.profile_pic),
+                    painter = rememberAsyncImagePainter(UrlApiService.default+profileState.imageurl),
                     contentDescription = "Gambar Product",
                     modifier = Modifier
                         .size(115.dp)
@@ -78,7 +89,7 @@ private fun ProfileScreen(navController: NavHostController) {
 
                     )
                 Text(
-                    text = "Apipoy",
+                    text = profileState.name,
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier
                         .padding(top = 16.dp, bottom = 4.dp),
@@ -86,7 +97,7 @@ private fun ProfileScreen(navController: NavHostController) {
                     color = MaterialTheme.colorScheme.surfaceVariant
                 )
                 Text(
-                    text = "+628123456789",
+                    text = profileState.phone,
                     style = MaterialTheme.typography.labelMedium,
                     fontSize = 16.sp,
                     modifier = Modifier.padding(bottom = 16.dp),
@@ -98,7 +109,7 @@ private fun ProfileScreen(navController: NavHostController) {
 
         item {
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
@@ -106,7 +117,7 @@ private fun ProfileScreen(navController: NavHostController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.person_icn_ns),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(16.dp)
@@ -120,7 +131,7 @@ private fun ProfileScreen(navController: NavHostController) {
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(18.dp)
@@ -128,10 +139,10 @@ private fun ProfileScreen(navController: NavHostController) {
             }
             Divider(
                 modifier = Modifier
-                    .padding(top= 4.dp, bottom = 16.dp)
+                    .padding(top = 4.dp, bottom = 16.dp)
             )
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
@@ -139,7 +150,7 @@ private fun ProfileScreen(navController: NavHostController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.lock),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(16.dp)
@@ -153,7 +164,7 @@ private fun ProfileScreen(navController: NavHostController) {
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(18.dp)
@@ -161,10 +172,10 @@ private fun ProfileScreen(navController: NavHostController) {
             }
             Divider(
                 modifier = Modifier
-                    .padding(top= 4.dp, bottom = 16.dp)
+                    .padding(top = 4.dp, bottom = 16.dp)
             )
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
@@ -172,7 +183,7 @@ private fun ProfileScreen(navController: NavHostController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.receipt),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(16.dp)
@@ -186,7 +197,7 @@ private fun ProfileScreen(navController: NavHostController) {
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(18.dp)
@@ -194,10 +205,10 @@ private fun ProfileScreen(navController: NavHostController) {
             }
             Divider(
                 modifier = Modifier
-                    .padding(top= 4.dp, bottom = 16.dp)
+                    .padding(top = 4.dp, bottom = 16.dp)
             )
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
@@ -205,7 +216,7 @@ private fun ProfileScreen(navController: NavHostController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.question_circle),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(16.dp)
@@ -219,7 +230,7 @@ private fun ProfileScreen(navController: NavHostController) {
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(18.dp)
@@ -227,10 +238,10 @@ private fun ProfileScreen(navController: NavHostController) {
             }
             Divider(
                 modifier = Modifier
-                    .padding(top= 4.dp, bottom = 16.dp)
+                    .padding(top = 4.dp, bottom = 16.dp)
             )
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
@@ -239,7 +250,7 @@ private fun ProfileScreen(navController: NavHostController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.info_circle),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(16.dp)
@@ -254,7 +265,7 @@ private fun ProfileScreen(navController: NavHostController) {
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(18.dp),
@@ -262,10 +273,10 @@ private fun ProfileScreen(navController: NavHostController) {
             }
             Divider(
                 modifier = Modifier
-                    .padding(top= 4.dp, bottom = 16.dp)
+                    .padding(top = 4.dp, bottom = 16.dp)
             )
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
@@ -274,7 +285,7 @@ private fun ProfileScreen(navController: NavHostController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.power),
-                    contentDescription ="profile",
+                    contentDescription = "profile",
                     tint = MaterialTheme.colorScheme.tertiary,
                     modifier = Modifier
                         .padding(end = 16.dp)
@@ -289,17 +300,17 @@ private fun ProfileScreen(navController: NavHostController) {
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.arrow),
-                    contentDescription ="profile" ,
+                    contentDescription = "profile",
                     tint = MaterialTheme.colorScheme.tertiary,
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(18.dp),
 
-                )
+                    )
             }
             Divider(
                 modifier = Modifier
-                    .padding(top= 4.dp, bottom = 16.dp)
+                    .padding(top = 4.dp, bottom = 16.dp)
             )
 
         }

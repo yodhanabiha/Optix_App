@@ -27,15 +27,24 @@ import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
 
 @Composable
-fun BottomDetail() {
-    OutlinedCard(modifier = Modifier.fillMaxWidth(), shape = RectangleShape, border = BorderStroke(1.dp, Color.Black.copy(alpha = 0.2f))) {
+fun BottomDetail(
+    onTryOnBtn : () -> Unit = {},
+    onCartBtn : () -> Unit = {}
+) {
+    OutlinedCard(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RectangleShape,
+        border = BorderStroke(1.dp, Color.Black.copy(alpha = 0.2f)),
+
+
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
             OutlinedButton(
-                onClick = { /*TODO*/ },
+                onClick = { onTryOnBtn.invoke() },
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.secondary),
                 modifier = Modifier
                     .weight(1f),
@@ -44,7 +53,9 @@ fun BottomDetail() {
                 Icon(
                     painter = painterResource(id = R.drawable.sunglasses),
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 4.dp).size(15.dp),
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .size(15.dp),
                     tint = MaterialTheme.colorScheme.secondary
                 )
                 Text(
@@ -56,7 +67,7 @@ fun BottomDetail() {
             }
             Spacer(modifier = Modifier.width(16.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { onCartBtn.invoke() },
                 colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary),
                 modifier = Modifier.weight(1f),
                 shape = RoundedCornerShape(12.dp)
@@ -64,7 +75,9 @@ fun BottomDetail() {
                 Icon(
                     painter = painterResource(id = R.drawable.cart_fill),
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 4.dp).size(15.dp),
+                    modifier = Modifier
+                        .padding(end = 4.dp)
+                        .size(15.dp),
                     tint = MaterialTheme.colorScheme.surface
                 )
                 Text(

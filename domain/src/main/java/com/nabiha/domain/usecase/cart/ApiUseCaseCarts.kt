@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface ApiUseCaseCarts: UseCase{
     suspend fun fetchAllCarts(): Flow<Result<List<CartEntity>>>
     suspend fun fetchCart(id: Long): Flow<Result<CartEntity>>
+    suspend fun updateCart(id: Long, request: CartApiRequest): Flow<Result<CartEntity>>
     suspend fun createCart(request: CartApiRequest): Flow<Result<CartEntity>>
     suspend fun deleteCart(id: Long): Flow<Result<String>>
 }

@@ -18,6 +18,10 @@ class CartUseCase @Inject constructor(
         return repository.fetchCart(id)
     }
 
+    override suspend fun updateCart(id: Long, request: CartApiRequest): Flow<Result<CartEntity>> {
+        return repository.updateCart(id, request)
+    }
+
     override suspend fun createCart(request: CartApiRequest): Flow<Result<CartEntity>> {
         return repository.createCart(request)
     }

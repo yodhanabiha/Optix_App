@@ -22,18 +22,25 @@ fun NavController.navigateToProfileScreen() {
 fun NavController.navigateToDetailScreen(idProduct: Long) {
     navigate("detailScreenRoute/$idProduct")
 }
+
 fun NavController.navigateToCartScreen() {
-    navigate(cartRoute)
+    navigate(cartRoute) {
+        popUpTo(cartRoute) { inclusive = true }
+    }
 }
+
 fun NavController.navigateToHomeScreen() {
     navigate(homeRoute)
 }
-fun NavController.navigateToLoginScreen(){
+
+fun NavController.navigateToLoginScreen() {
     navigate(loginRoute)
 }
-fun NavController.navigateToRegisterScreen(){
+
+fun NavController.navigateToRegisterScreen() {
     navigate(registerRoute)
 }
-fun NavController.navigateToAppInfoScreen(){
+
+fun NavController.navigateToAppInfoScreen() {
     navigate(appInfoRoute)
 }

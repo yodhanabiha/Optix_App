@@ -18,25 +18,21 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
-import com.example.cartfeatures.R
 import com.nabiha.designsystem.theme.OptixTheme
 
 @Composable
@@ -50,7 +46,6 @@ fun CardCart(
     onDecrease: () -> Unit = {}
 
 ) {
-    var itemCount by remember { mutableStateOf(quantity) }
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -67,7 +62,7 @@ fun CardCart(
                     .size(115.dp)
                     .background(Color.White, RoundedCornerShape(8.dp))
                     .border(1.dp, Color.Black.copy(alpha = 0.1f), RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Inside
+                contentScale = ContentScale.Fit
             )
             Column(
                 modifier = Modifier
@@ -89,12 +84,7 @@ fun CardCart(
                 Spacer(modifier = Modifier.weight(1f))
                 Row(modifier = Modifier.padding(bottom = 46.dp)) {
                     Button(
-                        onClick = {
-                            if (itemCount > 0) {
-                                itemCount--
-                                onDecrease()
-                            }
-                        },
+                        onClick = { onDecrease.invoke() },
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface),
                         contentPadding = PaddingValues(8.dp),
                         shape = RoundedCornerShape(8.dp),
@@ -109,7 +99,7 @@ fun CardCart(
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "$itemCount",
+                        text = "$quantity",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -117,10 +107,7 @@ fun CardCart(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
-                        onClick = {
-                            itemCount++
-                            onIncrease()
-                        },
+                        onClick = { onIncrease.invoke() },
                         colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface),
                         contentPadding = PaddingValues(8.dp),
                         shape = RoundedCornerShape(8.dp),
@@ -148,6 +135,7 @@ fun CardCart(
 
 
 }
+
 @Preview
 @Composable
 fun PreviewCard() {

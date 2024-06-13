@@ -6,5 +6,6 @@ data class UserResult(
     val password: String,
     val name: String,
     val phone: String,
-    val role: String
+    val role: String,
+    val imageurl: String?
 )

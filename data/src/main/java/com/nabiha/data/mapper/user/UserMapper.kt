@@ -17,7 +17,8 @@ class UserMapper @Inject constructor() : Mapper<UserApiResponse, UserEntity> {
                 password = user.password,
                 name = user.name,
                 phone = user.phone,
-                role = user.role
+                role = user.role,
+                imageurl = user.imageurl ?: ""
             )
         } else {
             UserEntity()

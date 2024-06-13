@@ -87,18 +87,25 @@ interface ApiService {
         @Path("id") id: Long
     ): Response<CartApiResponse>
 
+    @PUT("carts/{id}")
+    suspend fun updateCart(
+        @HeaderMap headers: Map<String, String>,
+        @Path("id") id: Long,
+        @Body request: CartApiRequest
+    ): Response<CartApiResponse>
+
     @DELETE("carts/{id}")
     suspend fun deleteCart(
         @HeaderMap headers: Map<String, String>,
         @Path("id") id: Long
     ): Response<CartApiDelResponse>
 
-    @GET("carts/{id}")
+    @GET("carts")
     suspend fun fetchCarts(
         @HeaderMap headers: Map<String, String>
     ):Response<CartsApiResponse>
 
-    @POST("carts/{id}")
+    @POST("carts")
     suspend fun createCarts(
         @HeaderMap headers: Map<String, String>,
         @Body request: CartApiRequest
