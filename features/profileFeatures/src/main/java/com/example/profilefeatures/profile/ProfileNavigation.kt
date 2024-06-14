@@ -1,6 +1,5 @@
-package com.example.profilefeatures
+package com.example.profilefeatures.profile
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable

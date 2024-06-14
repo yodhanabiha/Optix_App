@@ -21,12 +21,7 @@ sealed class BottomBarNav(
         icon = R.drawable.love_icn,
         iconNs = R.drawable.love_icn_ns
     )
-    object Virtual :BottomBarNav(
-        route = "virtual",
-        title = "Try-On",
-        icon = R.drawable.scan_icn,
-        iconNs = R.drawable.scan_icn
-    )
+
     object Cart: BottomBarNav(
         route = NavRoute.CartScreenRoute,
         title = "Cart",

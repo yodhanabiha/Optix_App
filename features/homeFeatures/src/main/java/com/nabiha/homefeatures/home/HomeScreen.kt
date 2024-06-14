@@ -128,7 +128,8 @@ private fun HomeScreen(
                     Text(
                         text = "Hi, ${user.name}!",
                         style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                     BadgedBox(badge = {
                         Badge(
@@ -142,8 +143,8 @@ private fun HomeScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.notification),
                             contentDescription = "Bell icon",
-                            modifier = Modifier
-                                .size(24.dp)
+                            modifier = Modifier.size(24.dp),
+                            tint = MaterialTheme.colorScheme.onSurface
                         )
 
                     }
@@ -175,8 +176,8 @@ private fun HomeScreen(
                         .height(36.dp)
                         .fillMaxWidth(),
                     fontSize = 10.sp,
-                    borderColor = Color.Black.copy(0.2f),
-                    focusedBorderColor = Color.Black,
+                    borderColor = MaterialTheme.colorScheme.onSurface.copy(0.2f),
+                    focusedBorderColor = MaterialTheme.colorScheme.onSurface,
                     placeholderText = "Search"
                 )
 
@@ -198,7 +199,8 @@ private fun HomeScreen(
                 Text(
                     text = "Best Collection",
                     style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 HorizontalPager(state = pagerState, pageSpacing = 12.dp) { page ->

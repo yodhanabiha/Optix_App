@@ -44,100 +44,39 @@ fun RowScope.BottomNavigationBar(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .weight(1f)
-            .padding(top = if (route == "virtual") 0.dp else 18.dp)
             .clickable { navController.navigate(route) }
             .background(
-                color = if (route == "virtual") Color.Transparent else MaterialTheme.colorScheme.primary,
+                MaterialTheme.colorScheme.primary,
             )) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
             modifier = Modifier.fillMaxSize()
         ) {
-//
-//            if (selected && route != "virtual") {
-//                Divider(
-//                    color = MaterialTheme.colorScheme.surface,
-//                    thickness = 3.dp,
-//                    modifier = Modifier
-//                        .width(48.dp)
-//                        .align(Alignment.CenterHorizontally)
-//                )
-//            }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable { navController.navigate(route) }
+            ) {
+                Icon(
+                    painter = painterResource(id = if (selected) iconSelected else iconUnselected),
+                    contentDescription = "",
+                    modifier = Modifier.size(24.dp),
+                    tint = Color.White
+                )
 
-            if (route != "virtual") {
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clickable { navController.navigate(route) }
-                ) {
-                    Icon(
-                        painter = painterResource(id = if (selected) iconSelected else iconUnselected),
-                        contentDescription = "",
-                        modifier = Modifier.size(24.dp),
-                        tint = MaterialTheme.colorScheme.surface
-                    )
-
-                    Text(
-                        text = title,
-                        fontSize = 8.sp,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 2.dp),
-                        color = MaterialTheme.colorScheme.surface
-                    )
-                }
-            } else {
-
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(top = 18.dp)
-                            .background(MaterialTheme.colorScheme.primary),
-                    ) {
-
-                    }
-
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Top,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clickable { navController.navigate(route) }
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .height(44.dp)
-                                .width(50.dp)
-                                .background(MaterialTheme.colorScheme.primary, CircleShape)
-                        ) {
-                            Icon(
-                                painter = painterResource(id = if (selected) iconSelected else iconUnselected),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(10.dp),
-                                tint = MaterialTheme.colorScheme.surface
-                            )
-                        }
-
-                        Text(
-                            text = title,
-                            fontSize = 8.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(top = 2.dp),
-                            color = MaterialTheme.colorScheme.surface
-                        )
-                    }
-
-                }
+                Text(
+                    text = title,
+                    fontSize = 8.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 2.dp),
+                    color = Color.White
+                )
             }
-
-
         }
-    }
 
+    }
 }
+

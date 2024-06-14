@@ -1,4 +1,4 @@
-package com.example.profilefeatures
+package com.example.profilefeatures.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,6 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.navigateToAppInfoScreen
+import com.nabiha.common.utils.navigateToEditProfileScreen
 import com.nabiha.common.utils.navigateToLoginScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
@@ -50,7 +51,10 @@ internal fun ProfileScreenRoute(
     when (profileState) {
         is ProfileState.Error -> {}
         ProfileState.Loading -> {}
-        is ProfileState.Success -> ProfileScreen(navController, (profileState as ProfileState.Success).data)
+        is ProfileState.Success -> ProfileScreen(
+            navController,
+            (profileState as ProfileState.Success).data
+        )
     }
 }
 
@@ -67,7 +71,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                 text = "My Profile",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
 
@@ -79,13 +84,13 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
 
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter(UrlApiService.default+profileState.imageurl),
+                    painter = rememberAsyncImagePainter(UrlApiService.default + profileState.imageurl),
                     contentDescription = "Gambar Product",
                     modifier = Modifier
                         .size(115.dp)
                         .clip(CircleShape)
                         .border(1.dp, MaterialTheme.colorScheme.secondary, CircleShape),
-                    contentScale = ContentScale.FillBounds,
+                    contentScale = ContentScale.Crop,
 
                     )
                 Text(
@@ -112,7 +117,10 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
+                    .clickable {
+                        navController.navigateToEditProfileScreen(profileState)
+                    },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
@@ -120,7 +128,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(16.dp)
+                        .size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = "Edit Profile",
@@ -134,7 +143,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(18.dp)
+                        .size(18.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             Divider(
@@ -153,7 +163,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(16.dp)
+                        .size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = "Change Password",
@@ -167,7 +178,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(18.dp)
+                        .size(18.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             Divider(
@@ -186,7 +198,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(16.dp)
+                        .size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = "My Orders",
@@ -200,7 +213,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(18.dp)
+                        .size(18.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             Divider(
@@ -219,7 +233,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(16.dp)
+                        .size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = "Help",
@@ -233,7 +248,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(18.dp)
+                        .size(18.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             Divider(
@@ -253,7 +269,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     contentDescription = "profile",
                     modifier = Modifier
                         .padding(end = 16.dp)
-                        .size(16.dp)
+                        .size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
 
                 )
                 Text(
@@ -269,6 +286,7 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .size(18.dp),
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
             }
             Divider(

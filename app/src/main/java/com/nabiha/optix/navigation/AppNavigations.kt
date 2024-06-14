@@ -20,16 +20,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.appinfofeatures.appInfoScreen
 import com.example.cartfeatures.cartScreen.cartScreen
+import com.example.profilefeatures.edit.editProfileScreen
+import com.example.profilefeatures.profile.profileScreen
 import com.example.wishlistfeatures.wishlistScreen.wishlistScreen
+import com.nabiha.authfeatures.login.loginScreen
+import com.nabiha.authfeatures.register.registerScreen
 import com.nabiha.common.utils.NavRoute
 import com.nabiha.designsystem.ui.BottomNavigationBar
 import com.nabiha.homefeatures.detail.detailScreen
 import com.nabiha.homefeatures.home.homeScreen
-import com.example.appinfofeatures.appInfoScreen
-import com.example.profilefeatures.profileScreen
-import com.nabiha.authfeatures.login.loginScreen
-import com.nabiha.authfeatures.register.registerScreen
 
 @Composable
 fun AppNavigation(
@@ -51,6 +52,7 @@ fun AppNavigation(
             cartScreen(navController)
             appInfoScreen(navController, navController::popBackStack)
             profileScreen(navController)
+            editProfileScreen(navController)
         }
     }
 }
@@ -60,7 +62,6 @@ fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarNav.Home,
         BottomBarNav.Wishlist,
-        BottomBarNav.Virtual,
         BottomBarNav.Cart,
         BottomBarNav.Profile
     )
@@ -73,7 +74,7 @@ fun BottomBar(navController: NavHostController) {
 
     AnimatedVisibility(visible = routes.any { it == currentDestination?.route }) {
         NavigationBar(
-            modifier = Modifier.fillMaxWidth().height(90.dp),
+            modifier = Modifier.fillMaxWidth().height(72.dp),
             containerColor = Color.Transparent
         ) {
             Row(

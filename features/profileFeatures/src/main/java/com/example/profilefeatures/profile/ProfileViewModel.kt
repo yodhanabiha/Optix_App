@@ -1,14 +1,12 @@
-package com.example.profilefeatures
+package com.example.profilefeatures.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nabiha.data.datastore.PreferenceDatastore
-import com.nabiha.entity.ProductEntity
 import com.nabiha.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
