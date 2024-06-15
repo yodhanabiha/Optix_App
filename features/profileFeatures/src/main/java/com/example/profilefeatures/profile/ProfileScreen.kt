@@ -41,6 +41,7 @@ import com.nabiha.common.utils.navigateToLoginScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
 import com.nabiha.entity.UserEntity
+import timber.log.Timber
 
 @Composable
 internal fun ProfileScreenRoute(
@@ -60,6 +61,7 @@ internal fun ProfileScreenRoute(
 
 @Composable
 private fun ProfileScreen(navController: NavHostController, profileState: UserEntity) {
+    Timber.e(profileState.toString())
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()

@@ -127,6 +127,9 @@ private fun DetailScreen(
                     ))
                 }
                 navController.navigateToCartScreen()
+            },
+            onTryOnBtn = {
+                //TODO()
             }
         ) }
     ) {

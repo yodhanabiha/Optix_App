@@ -9,7 +9,6 @@ import com.nabiha.domain.usecase.cart.CartUseCase
 import com.nabiha.domain.usecase.wishlist.WishListUseCase
 import com.nabiha.domain.utils.Result
 import com.nabiha.entity.LikeEntity
-import com.nabiha.entity.ProductEntity
 import com.nabiha.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Environment
+import android.util.Base64
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,13 +43,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.rememberAsyncImagePainter
 import com.nabiha.designsystem.R
 import com.example.profilefeatures.components.EditComponent
 import com.example.profilefeatures.components.ProfileImageWithCameraIcon
+import com.nabiha.apiresponse.users.UserApiUpdateRequest
 import com.nabiha.common.utils.DateTransformation
 import com.nabiha.common.utils.UrlApiService
+import com.nabiha.common.utils.navigateToProfileScreen
 import com.nabiha.designsystem.component.ScaffoldTopAppbar
 import com.nabiha.entity.UserEntity
 import timber.log.Timber
@@ -59,17 +66,39 @@ import java.util.Locale
 internal fun EditProfileScreenRoute(
     navController: NavHostController,
     dataUser: UserEntity,
+    viewModel: EditProfileViewModel = hiltViewModel()
 ) {
-    EditProfileScreen(navController = navController, dataUser)
+    val update by viewModel.eprofileState.collectAsStateWithLifecycle()
+    EditProfileScreen(navController = navController, dataUser, viewModel)
+    val context = LocalContext.current
+    LaunchedEffect(update) {
+        when(update){
+            is EProfileState.Error -> {
+                Toast.makeText(context, (update as EProfileState.Error).message, Toast.LENGTH_LONG).show()
+                viewModel.resetEProfileState()
+            }
+            EProfileState.Idle -> {}
+            EProfileState.Loading -> {}
+            is EProfileState.Success -> {
+                Toast.makeText(context, "Update Success!", Toast.LENGTH_LONG).show()
+                navController.navigateToProfileScreen()
+                viewModel.resetEProfileState()
+            }
+        }
+    }
+
 }
 
 @Composable
-fun EditProfileScreen(navController: NavHostController, dataUser: UserEntity) {
+fun EditProfileScreen(
+    navController: NavHostController,
+    dataUser: UserEntity,
+    viewModel: EditProfileViewModel
+) {
     var name by remember { mutableStateOf(dataUser.name) }
-    var email by remember { mutableStateOf(dataUser.email) }
     var phone by remember { mutableStateOf(dataUser.phone) }
-    var date by remember { mutableStateOf("") }
-    var gender by remember { mutableStateOf("") }
+    var date by remember { mutableStateOf(dataUser.date_birth) }
+    var gender by remember { mutableStateOf(dataUser.gender) }
     var imageUrl by remember { mutableStateOf(UrlApiService.default + dataUser.imageurl) }
     var showImagePickerDialog by remember { mutableStateOf(false) }
 
@@ -102,7 +131,15 @@ fun EditProfileScreen(navController: NavHostController, dataUser: UserEntity) {
         ActivityResultContracts.RequestPermission()
     ) { granted ->
         if (granted) {
-            val tmpUri = createImageUri(context)
+            val file = createImageUri(context)
+
+            val tmpUri = file?.let {
+                FileProvider.getUriForFile(
+                    context,
+                    "com.nabiha.optix.provider",
+                    it
+                )
+            }
             cameraUri.value = tmpUri
             cameraLauncher.launch(cameraUri.value)
         } else {
@@ -145,12 +182,7 @@ fun EditProfileScreen(navController: NavHostController, dataUser: UserEntity) {
                         onValueChange = { name = it },
                         modifier = Modifier.padding(top = 16.dp)
                     )
-                    EditComponent(
-                        label = "Email",
-                        value = email,
-                        onValueChange = { email = it },
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
+
                     EditComponent(
                         label = "Phone",
                         value = phone,
@@ -173,7 +205,17 @@ fun EditProfileScreen(navController: NavHostController, dataUser: UserEntity) {
                 }
                 item {
                     Button(
-                        onClick = { /* TODO: Save changes */ },
+                        onClick = {
+                            val dateFormat = "${date.substring(0, 2)}/${date.substring(2, 4)}/${date.substring(4)}"
+                            val dataRequest = UserApiUpdateRequest(
+                                name = name,
+                                phone = phone,
+                                gender = gender,
+                                date_birth = dateFormat,
+                                image = imageUrl.toUri()
+                            )
+                            viewModel.updateProfile(dataUser.id,dataRequest, context)
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),
@@ -209,7 +251,14 @@ fun EditProfileScreen(navController: NavHostController, dataUser: UserEntity) {
                     Manifest.permission.CAMERA
                 )
                 if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    val tmpUri = createImageUri(context)
+                    val file = createImageUri(context)
+                    val tmpUri = file?.let {
+                        FileProvider.getUriForFile(
+                            context,
+                            "com.nabiha.optix.provider",
+                            it
+                        )
+                    }
                     cameraUri.value = tmpUri
                     cameraLauncher.launch(cameraUri.value)
                 } else {
@@ -244,7 +293,7 @@ fun ImagePickerDialog(
                     Icon(
                         painter = painterResource(id = R.drawable.image_plus),
                         contentDescription = "",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier
                             .size(32.dp)
                             .padding(end = 8.dp)
@@ -263,7 +312,7 @@ fun ImagePickerDialog(
                     Icon(
                         painter = painterResource(id = R.drawable.camera),
                         contentDescription = "",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier
                             .size(32.dp)
                             .padding(end = 8.dp)
@@ -285,23 +334,19 @@ fun ImagePickerDialog(
     )
 }
 
-fun createImageUri(context: Context): Uri? {
+fun createImageUri(context: Context): File? {
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
     val storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     storageDir?.let {
         it.mkdirs()
-        val imageFile = File.createTempFile(
+        return File.createTempFile(
             "JPG_${timeStamp}_",
             ".jpg",
             it
         )
-        return FileProvider.getUriForFile(
-            context,
-            "com.nabiha.optix.provider",
-            imageFile
-        )
     }
     return null
 }
+
 
 

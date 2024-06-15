@@ -1,5 +1,6 @@
 package com.nabiha.domain.usecase.user
 
+import android.content.Context
 import com.nabiha.apiresponse.users.UserApiLoginRequest
 import com.nabiha.apiresponse.users.UserApiRegisterRequest
 import com.nabiha.apiresponse.users.UserApiUpdateRequest
@@ -18,8 +19,8 @@ class UsersUseCase @Inject constructor(
         return repository.fetchUserProfile()
     }
 
-    override suspend fun update(params: Long, data: UserApiUpdateRequest): Flow<Result<UserEntity>> {
-        return repository.fetchUpdaterUser(params, data)
+    override suspend fun update(params: Long,context: Context, data: UserApiUpdateRequest): Flow<Result<UserEntity>> {
+        return repository.fetchUpdaterUser(params,context ,data)
     }
 
     override suspend fun login(params: UserApiLoginRequest): Flow<Result<UserEntityLogin>> {

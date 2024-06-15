@@ -16,6 +16,7 @@ dependencies {
     domain()
     apiresponse()
     entity()
+    common()
     di()
     datastore()
 }

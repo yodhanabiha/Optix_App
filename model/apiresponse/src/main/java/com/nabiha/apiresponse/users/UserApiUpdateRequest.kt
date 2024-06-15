@@ -1,8 +1,11 @@
 package com.nabiha.apiresponse.users
 
+import android.net.Uri
+
 data class UserApiUpdateRequest(
-    val email: String,
     val name: String,
     val phone: String,
-    val role: String
+    val gender: String,
+    val date_birth: String,
+    val image: Uri
 )

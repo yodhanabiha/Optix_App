@@ -1,5 +1,6 @@
 package com.nabiha.domain.repository
 
+import android.content.Context
 import com.nabiha.apiresponse.users.UserApiLoginRequest
 import com.nabiha.apiresponse.users.UserApiRegisterRequest
 import com.nabiha.apiresponse.users.UserApiUpdateRequest
@@ -12,5 +13,5 @@ interface UserRepository {
     suspend fun fetchUserProfile(): Flow<Result<UserEntity>>
     suspend fun fetchRegisterUser(params: UserApiRegisterRequest): Flow<Result<UserEntity>>
     suspend fun fetchLoginUser(params: UserApiLoginRequest): Flow<Result<UserEntityLogin>>
-    suspend fun fetchUpdaterUser(params: Long, data: UserApiUpdateRequest): Flow<Result<UserEntity>>
+    suspend fun fetchUpdaterUser(params: Long, context: Context, data: UserApiUpdateRequest): Flow<Result<UserEntity>>
 }

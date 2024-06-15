@@ -1,8 +1,13 @@
 package com.nabiha.data.repoiml
 
+import android.content.Context
+import android.net.Uri
 import com.nabiha.apiresponse.users.UserApiLoginRequest
 import com.nabiha.apiresponse.users.UserApiRegisterRequest
 import com.nabiha.apiresponse.users.UserApiUpdateRequest
+import com.nabiha.common.utils.UrlApiService
+import com.nabiha.common.utils.createImagePart
+import com.nabiha.common.utils.createPartFromString
 import com.nabiha.data.apiservice.ApiService
 import com.nabiha.data.datastore.PreferenceDatastore
 import com.nabiha.data.mapper.user.UserLoginMapper
@@ -55,15 +60,29 @@ class UserRepoImpl @Inject constructor(
 
     override suspend fun fetchUpdaterUser(
         params: Long,
+        context: Context,
         data: UserApiUpdateRequest
     ): Flow<Result<UserEntity>> {
         val token = preferenceDatastore.getToken().first()
+
+        // Convert string fields to RequestBody
+        val namePart = createPartFromString(data.name)
+        val phonePart = createPartFromString(data.phone)
+        val genderPart = createPartFromString(data.gender)
+        val dateBirthPart = createPartFromString(data.date_birth)
+
+        val imagePart = createImagePart(data.image, context)
+
         return mapFromApiResponse(
             result = networkBoundResources.downloadData {
                 apiService.fetchUpdaterUser(
                     headers = mapOf("Authorization" to "Bearer $token"),
-                    data = data,
-                    id = params
+                    id = params,
+                    name = namePart,
+                    phone = phonePart,
+                    gender= genderPart,
+                    dateBirth = dateBirthPart,
+                    image = imagePart
                 )
             }, userMapper
         )

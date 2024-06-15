@@ -15,14 +15,18 @@ import com.nabiha.apiresponse.users.UserApiLoginResponse
 import com.nabiha.apiresponse.users.UserApiRegisterRequest
 import com.nabiha.apiresponse.users.UserApiResponse
 import com.nabiha.apiresponse.users.UserApiUpdateRequest
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
@@ -45,11 +49,15 @@ interface ApiService {
     ):Response<UserApiLoginResponse>
 
     @PUT("/users/{id}")
-    @Headers("Accept: application/json")
+    @Multipart
     suspend fun fetchUpdaterUser(
         @HeaderMap headers : Map<String, String>,
         @Path("id") id: Long,
-        @Body data: UserApiUpdateRequest
+        @Part("name") name: RequestBody,
+        @Part("phone") phone: RequestBody,
+        @Part("gender") gender: RequestBody,
+        @Part("date_birth") dateBirth: RequestBody,
+        @Part image: MultipartBody.Part
     ):Response<UserApiResponse>
 
 

@@ -1,9 +1,18 @@
 package com.nabiha.common.utils
 
+import android.content.Context
+import android.net.Uri
+import android.webkit.MimeTypeMap
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.IOException
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -45,3 +54,47 @@ fun dateFilter(text: AnnotatedString): TransformedText {
 
     return TransformedText(AnnotatedString(out), numberOffsetTranslator)
 }
+
+fun formatDateOfBirth(dateOfBirth: String?): String {
+    if (dateOfBirth.isNullOrEmpty()) return ""
+
+    // Format yang diharapkan: yyyy-MM-dd'T'HH:mm:ss
+    val regexPattern = Regex("""^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$""")
+    if (regexPattern.matches(dateOfBirth)) {
+        // Ambil bagian tanggal saja (YYYY-MM-DD)
+        val datePart = dateOfBirth.substring(8, 10) + dateOfBirth.substring(5, 7) + dateOfBirth.substring(0, 4)
+        return datePart
+    }
+
+    // Default jika tidak sesuai format yang diharapkan
+    return ""
+}
+
+fun createPartFromString(value: String): RequestBody {
+    return RequestBody.create("multipart/form-data".toMediaTypeOrNull(), value)
+}
+
+fun createImagePart(uri: Uri, context: Context): MultipartBody.Part {
+    val contentResolver = context.contentResolver
+    val type = contentResolver.getType(uri)
+    val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(type)
+
+    // Create temporary file with correct extension
+    val file = File.createTempFile("temp", ".$extension", context.cacheDir)
+
+    // Copy input stream to temporary file
+    val inputStream = contentResolver.openInputStream(uri)
+    inputStream.use { input ->
+        file.outputStream().use { output ->
+            input?.copyTo(output)
+        }
+    }
+
+    // Create request body from file
+    val requestFile = file.asRequestBody(type?.toMediaTypeOrNull())
+
+    // Create MultipartBody.Part from request file
+    return MultipartBody.Part.createFormData("image", file.name, requestFile)
+}
+
+
