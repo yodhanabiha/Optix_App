@@ -4,18 +4,28 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
+<<<<<<< HEAD
         <DropdownSelection timestamp="2024-06-16T05:54:00.148810Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\yodha\.android\avd\Pixel_2_API_30.avd" />
+=======
+        <DropdownSelection timestamp="2024-06-14T13:03:59.863142300Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\yodha\.android\avd\Pixel_2_API_25.avd" />
+>>>>>>> 6ec5d4f5d7f5bd3af2924b554dfb51d77dff398d
             </handle>
           </Target>
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
+<<<<<<< HEAD
       <SelectionState runConfigName="launcher">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+=======
+>>>>>>> 6ec5d4f5d7f5bd3af2924b554dfb51d77dff398d
     </selectionStates>
   </component>
 </project>

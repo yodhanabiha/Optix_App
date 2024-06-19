@@ -36,7 +36,9 @@ fun  NetworkErrorMessage(
             .padding(16.dp)
     ) {
 
+
         Text(text = message, style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurface)
+
         Spacer(modifier = modifier.height(32.dp))
         Button(
             modifier = modifier

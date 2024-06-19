@@ -14,6 +14,7 @@ import com.nabiha.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -30,11 +31,14 @@ class DetailViewModel @Inject constructor(
     private var _detailUiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
     private var _user = MutableStateFlow<UserEntity>(UserEntity())
     private var _token = MutableStateFlow<String>("")
+
     private var _productsRecommended = MutableStateFlow<RecommendedState>(RecommendedState.Loading)
     val detailUiState get() = _detailUiState.asStateFlow()
     val recommendedState get() = _productsRecommended.asStateFlow()
     val user get() = _user.asStateFlow()
+
     val token get() = _token.asStateFlow()
+
 
     init {
         fetchUser()
@@ -63,11 +67,13 @@ class DetailViewModel @Inject constructor(
         }
     }
 
+
     private fun fetchtoken() {
         viewModelScope.launch {
             _token.value = preferenceDatastore.getToken().first()
         }
     }
+
 
     fun fetchDetailProduct(id: Long) {
         viewModelScope.launch {
