@@ -5,7 +5,8 @@
 <h2>2. Import Module</h2>
 <p>File -> new -> import module. than chose unityLibrary</p>
 
-![image](https://github.com/yodhanabiha/Optix_App/assets/106397891/b47d29a3-57ae-4302-b376-c3a6a1d782ab)
+![image](https://github.com/yodhanabiha/Optix_App/assets/106397891/2e5c9584-82dd-426d-9dd8-84d7136143cf)
+
 
 ![image](https://github.com/yodhanabiha/Optix_App/assets/106397891/e33bbca7-ba15-4f9e-9547-d0006370c5f8)
 
