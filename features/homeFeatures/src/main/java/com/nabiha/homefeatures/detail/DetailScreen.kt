@@ -164,7 +164,7 @@ private fun DetailScreen(
             item {
                 Column {
                     Image(
-                        painter = rememberAsyncImagePainter(model = "http://100.97.75.94:8080${detailUiState.imageurl}"),
+                        painter = rememberAsyncImagePainter(model = "${UrlApiService.default}${detailUiState.imageurl}"),
                         contentDescription = "",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -389,7 +389,7 @@ private fun DetailScreen(
                         CardProductHome(
                             title = product.title,
                             price = "Rp. ${formatPrice(product.price)}",
-                            imageUrl = "http://100.97.75.94:8080${product.imageurl}",
+                            imageUrl = "${UrlApiService.default}${product.imageurl}",
                             modifier = Modifier
                                 .padding(top = 16.dp)
                                 .height(205.dp)
