@@ -33,9 +33,7 @@ fun NavController.navigateToDetailScreen(idProduct: Long) {
 }
 
 fun NavController.navigateToCartScreen() {
-    navigate(cartRoute) {
-        popUpTo(cartRoute) { inclusive = true }
-    }
+    navigate(cartRoute)
 }
 
 fun NavController.navigateToHomeScreen() {

@@ -11,6 +11,7 @@ import com.nabiha.entity.ProductEntity
 import com.nabiha.entity.UserEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -27,12 +28,37 @@ class HomeViewModel @Inject constructor(
 
     private var _homeUiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     private var _user = MutableStateFlow<UserEntity>(UserEntity())
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery
     val homeUiState get() = _homeUiState.asStateFlow()
     val user get() = _user.asStateFlow()
+    private var originalProductList: List<ProductEntity> = emptyList()
 
     init {
         fetchName()
         fetchContent()
+    }
+
+    fun onSearchQueryChanged(query: String) {
+        _searchQuery.value = query
+        filterProducts(query)
+    }
+
+    private fun filterProducts(query: String) {
+        if (query.isEmpty()) {
+            _homeUiState.value = HomeUiState.Success(originalProductList)
+        } else {
+            val currentState = _homeUiState.value
+            if (currentState is HomeUiState.Success) {
+                val filteredData = currentState.data.filter {
+                    it.title.contains(query, ignoreCase = true) || it.description.contains(
+                        query,
+                        ignoreCase = true
+                    )
+                }
+                _homeUiState.value = HomeUiState.Success(filteredData)
+            }
+        }
     }
 
     suspend fun checkToken(): Boolean {
@@ -55,6 +81,7 @@ class HomeViewModel @Inject constructor(
                         Timber.e(response.errorMessage)
                         onResult(null)
                     }
+
                     is Result.Loading -> {}
                     is Result.Success -> {
                         onResult(response.data.id)
@@ -76,7 +103,10 @@ class HomeViewModel @Inject constructor(
                 when (response) {
                     is Result.Error -> _homeUiState.value = HomeUiState.Error(response.errorMessage)
                     is Result.Loading -> _homeUiState.value = HomeUiState.Loading
-                    is Result.Success -> _homeUiState.value = HomeUiState.Success(response.data)
+                    is Result.Success -> {
+                        originalProductList = response.data
+                        _homeUiState.value = HomeUiState.Success(response.data)
+                    }
                 }
             }
         }

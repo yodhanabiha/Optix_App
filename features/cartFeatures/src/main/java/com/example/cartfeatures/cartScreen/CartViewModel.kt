@@ -23,6 +23,25 @@ class CartViewModel @Inject constructor(
     val cartUiState get() = _cartUiState.asStateFlow()
 
     init {
+        viewModelScope.launch {
+            fetchCarts()
+        }
+
+    }
+
+    fun deleteCarts(id: Long){
+        viewModelScope.launch {
+            cartUseCase.deleteCart(id).collect{ response->
+                when(response){
+                    is Result.Error -> Timber.e(response.errorMessage)
+                    is Result.Loading -> {}
+                    is Result.Success -> Timber.e(response.data)
+                }
+            }
+        }
+    }
+
+    fun refreshCartList() {
         fetchCarts()
     }
 

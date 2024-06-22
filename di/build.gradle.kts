@@ -13,4 +13,5 @@ dependencies {
     room()
     retrofit()
     hilt()
+    common()
 }

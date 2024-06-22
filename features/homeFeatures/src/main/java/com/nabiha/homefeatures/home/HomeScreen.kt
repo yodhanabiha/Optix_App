@@ -76,6 +76,7 @@ internal fun HomeScreenRoute(
 
     val homeUiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     val user by viewModel.user.collectAsStateWithLifecycle()
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
 
     when (homeUiState) {
         is HomeUiState.Error -> NetworkErrorMessage(message = (homeUiState as HomeUiState.Error).message) {
@@ -88,7 +89,8 @@ internal fun HomeScreenRoute(
             HomeScreen(
                 navController, user,
                 homeUiState as HomeUiState.Success,
-                viewModel
+                viewModel,
+                searchQuery
             )
         }
     }
@@ -96,20 +98,17 @@ internal fun HomeScreenRoute(
 }
 
 
-@OptIn(
-    ExperimentalFoundationApi::class
-)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun HomeScreen(
     navController: NavHostController,
     user: UserEntity,
     homeUiState: HomeUiState.Success,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    searchQuery: String
 ) {
 
-    var search by remember {
-        mutableStateOf("")
-    }
+    var search by remember { mutableStateOf(searchQuery) }
 
     LazyColumn(
         modifier = Modifier
@@ -153,7 +152,10 @@ private fun HomeScreen(
 
                 COutlinedTextField(
                     value = search,
-                    onValueChange = { search = it },
+                    onValueChange = {
+                        search = it
+                        viewModel.onSearchQueryChanged(it)
+                    },
                     leadingIcon = {
                         Icon(
                             painter = painterResource(id = R.drawable.search),
@@ -184,78 +186,81 @@ private fun HomeScreen(
             }
 
         }
-        item {
-            val count = 3
-            val pagerState = rememberPagerState(initialPage = 1, pageCount = { count })
 
-            LaunchedEffect(Unit) {
-                while (true) {
-                    delay(5000)
-                    pagerState.animateScrollToPage((pagerState.currentPage + 1) % 3)
-                }
-            }
+        if (search.isEmpty()){
+            item {
+                val count = 3
+                val pagerState = rememberPagerState(initialPage = 1, pageCount = { count })
 
-            Column(modifier = Modifier.padding(top = 16.dp)) {
-                Text(
-                    text = "Best Collection",
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                HorizontalPager(state = pagerState, pageSpacing = 12.dp) { page ->
-                    val drawableId = when (page) {
-                        0 -> R.drawable.carr_1
-                        1 -> R.drawable.carr_2
-                        2 -> R.drawable.carr_3
-                        else -> throw IllegalArgumentException("Invalid page: $page")
+                LaunchedEffect(Unit) {
+                    while (true) {
+                        delay(5000)
+                        pagerState.animateScrollToPage((pagerState.currentPage + 1) % 3)
                     }
-
-                    Image(
-                        painter = painterResource(id = drawableId),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-                            .height(200.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                            .shadow(12.dp, RoundedCornerShape(12.dp))
-                    )
                 }
 
-                Canvas(
-                    modifier = Modifier
-                        .width(width = 60.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 16.dp)
-                ) {
-                    val spacing = 8.dp.toPx()
-                    val dotWidth = 8.dp.toPx()
-                    val dotHeight = 8.dp.toPx()
+                Column(modifier = Modifier.padding(top = 16.dp)) {
+                    Text(
+                        text = "Best Collection",
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
 
-                    val activeDotWidth = 28.dp.toPx()
-                    var x = 0f
-                    val y = center.y
-
-                    repeat(3) { i ->
-                        val posOffset = pagerState.pageOffset
-                        val dotOffset = posOffset % 1
-                        val current = posOffset.toInt()
-
-                        val factor = (dotOffset * (activeDotWidth - dotWidth))
-
-                        val calculatedWidth = when {
-                            i == current -> activeDotWidth - factor
-                            i - 1 == current || (i == 0 && posOffset > count - 1) -> dotWidth + factor
-                            else -> dotWidth
+                    HorizontalPager(state = pagerState, pageSpacing = 12.dp) { page ->
+                        val drawableId = when (page) {
+                            0 -> R.drawable.carr_1
+                            1 -> R.drawable.carr_2
+                            2 -> R.drawable.carr_3
+                            else -> throw IllegalArgumentException("Invalid page: $page")
                         }
 
-                        drawIndicator(x, y, calculatedWidth, dotHeight, CornerRadius(16f))
-                        x += calculatedWidth + spacing
+                        Image(
+                            painter = painterResource(id = drawableId),
+                            contentDescription = null,
+                            contentScale = ContentScale.FillBounds,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 8.dp)
+                                .height(200.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .shadow(12.dp, RoundedCornerShape(12.dp))
+                        )
                     }
-                }
 
+                    Canvas(
+                        modifier = Modifier
+                            .width(width = 60.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 16.dp)
+                    ) {
+                        val spacing = 8.dp.toPx()
+                        val dotWidth = 8.dp.toPx()
+                        val dotHeight = 8.dp.toPx()
+
+                        val activeDotWidth = 28.dp.toPx()
+                        var x = 0f
+                        val y = center.y
+
+                        repeat(3) { i ->
+                            val posOffset = pagerState.pageOffset
+                            val dotOffset = posOffset % 1
+                            val current = posOffset.toInt()
+
+                            val factor = (dotOffset * (activeDotWidth - dotWidth))
+
+                            val calculatedWidth = when {
+                                i == current -> activeDotWidth - factor
+                                i - 1 == current || (i == 0 && posOffset > count - 1) -> dotWidth + factor
+                                else -> dotWidth
+                            }
+
+                            drawIndicator(x, y, calculatedWidth, dotHeight, CornerRadius(16f))
+                            x += calculatedWidth + spacing
+                        }
+                    }
+
+                }
             }
         }
 
