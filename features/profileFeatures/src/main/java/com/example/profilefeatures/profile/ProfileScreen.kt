@@ -36,6 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.navigateToAppInfoScreen
+import com.nabiha.common.utils.navigateToCartScreen
 import com.nabiha.common.utils.navigateToEditProfileScreen
 import com.nabiha.common.utils.navigateToLoginScreen
 import com.nabiha.designsystem.R
@@ -192,7 +193,8 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
+                    .clickable { navController.navigateToCartScreen() },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(

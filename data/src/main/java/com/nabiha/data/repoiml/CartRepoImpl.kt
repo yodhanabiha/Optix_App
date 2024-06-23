@@ -83,4 +83,16 @@ class CartRepoImpl @Inject constructor(
             }, cartDelMapper
         )
     }
+
+    override suspend fun deleteAllCart(): Flow<Result<String>> {
+        val token = preferenceDatastore.getToken().first()
+        return mapFromApiResponse(
+            result = networkBoundResources.downloadData {
+                apiService.deleteAllCart(
+                    headers = mapOf("Authorization" to "Bearer $token")
+                )
+
+            }, cartDelMapper
+        )
+    }
 }

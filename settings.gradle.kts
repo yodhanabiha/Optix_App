@@ -31,3 +31,4 @@ include(":features:appInfoFeatures")
 include(":features:profileFeatures")
 include(":unityLibrary")
 
+include(":features:historyFeatures")

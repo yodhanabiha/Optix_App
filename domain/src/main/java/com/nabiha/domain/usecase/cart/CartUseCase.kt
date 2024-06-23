@@ -29,4 +29,8 @@ class CartUseCase @Inject constructor(
     override suspend fun deleteCart(id: Long): Flow<Result<String>> {
         return repository.deleteCart(id)
     }
+
+    override suspend fun deleteAllCart(): Flow<Result<String>> {
+        return repository.deleteAllCart()
+    }
 }

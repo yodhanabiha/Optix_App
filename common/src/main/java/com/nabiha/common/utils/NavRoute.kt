@@ -9,5 +9,7 @@ object NavRoute {
     const val CartScreenRoute = "cartScreenRoute"
     const val AppInfoScreenRoute = "appInfoScreenRoute"
     const val ProfileScreenRoute = "ProfileScreenRoute"
-    const val EditProfileScreenRoute= "editProfileScreenRoute"
+    const val EditProfileScreenRoute = "editProfileScreenRoute"
+    const val HistoryScreenRute = "historyScreenRoute"
+    const val HistoryDetailScreenRute = "historyDetailScreenRoute/{id_history}"
 }

@@ -170,6 +170,7 @@ fun DependencyHandler.features() {
     implementation(project(":features:cartFeatures"))
     implementation(project(":features:profileFeatures"))
     implementation(project(":features:appInfoFeatures"))
+    implementation(project(":features:historyFeatures"))
 }
 
 

@@ -29,6 +29,8 @@ import com.nabiha.authfeatures.login.loginScreen
 import com.nabiha.authfeatures.register.registerScreen
 import com.nabiha.common.utils.NavRoute
 import com.nabiha.designsystem.ui.BottomNavigationBar
+import com.nabiha.historyfeatures.historyDetailScreen.historyDetailScreen
+import com.nabiha.historyfeatures.historyScreen.historyListScreen
 import com.nabiha.homefeatures.detail.detailScreen
 import com.nabiha.homefeatures.home.homeScreen
 
@@ -53,6 +55,8 @@ fun AppNavigation(
             appInfoScreen(navController, navController::popBackStack)
             profileScreen(navController)
             editProfileScreen(navController)
+            historyListScreen(navController)
+            historyDetailScreen(navController)
         }
     }
 }

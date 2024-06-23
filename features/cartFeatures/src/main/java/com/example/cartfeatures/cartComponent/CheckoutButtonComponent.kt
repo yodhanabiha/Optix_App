@@ -20,7 +20,8 @@ import com.nabiha.designsystem.theme.OptixTheme
 fun CheckoutButton(
     items: String,
     discount: String,
-    total: String
+    total: String,
+    onClick: () -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -100,7 +101,7 @@ fun CheckoutButton(
                 Spacer(modifier = Modifier.weight(1f))
                 Button(
                     onClick = {
-
+                        onClick.invoke()
                     },
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier
@@ -130,7 +131,8 @@ fun PreviewCheckoutButton() {
         CheckoutButton(
             items = "Rp.465.000",
             discount = "-Rp.65.000",
-            total = "Rp.400.000"
+            total = "Rp.400.000",
+            onClick = {}
         )
     }
 }

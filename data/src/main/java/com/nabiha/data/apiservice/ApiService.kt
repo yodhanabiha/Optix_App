@@ -4,6 +4,10 @@ import com.nabiha.apiresponse.carts.CartApiDelResponse
 import com.nabiha.apiresponse.carts.CartApiRequest
 import com.nabiha.apiresponse.carts.CartApiResponse
 import com.nabiha.apiresponse.carts.CartsApiResponse
+import com.nabiha.apiresponse.histories.HistoriesApiRequest
+import com.nabiha.apiresponse.histories.HistoriesApiResponse
+import com.nabiha.apiresponse.histories.HistoryApiRequest
+import com.nabiha.apiresponse.histories.HistoryApiResponse
 import com.nabiha.apiresponse.likes.LikeApiRequest
 import com.nabiha.apiresponse.likes.LikeApiResponse
 import com.nabiha.apiresponse.likes.LikesApiResponse
@@ -30,7 +34,7 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
-    //user endpoint
+
     @GET("/users/account/profile")
     suspend fun fetchProfile(
         @HeaderMap headers : Map<String, String>
@@ -108,6 +112,11 @@ interface ApiService {
         @Path("id") id: Long
     ): Response<CartApiDelResponse>
 
+    @DELETE("carts")
+    suspend fun deleteAllCart(
+        @HeaderMap headers: Map<String, String>
+    ): Response<CartApiDelResponse>
+
     @GET("carts")
     suspend fun fetchCarts(
         @HeaderMap headers: Map<String, String>
@@ -118,5 +127,22 @@ interface ApiService {
         @HeaderMap headers: Map<String, String>,
         @Body request: CartApiRequest
     ): Response<CartApiResponse>
+
+    @POST("histories")
+    suspend fun createHistories(
+        @HeaderMap headers: Map<String, String>,
+        @Body request: HistoriesApiRequest
+    ): Response<HistoriesApiResponse>
+
+    @GET("histories")
+    suspend fun fetchHistories(
+        @HeaderMap headers: Map<String, String>,
+    ): Response<HistoriesApiResponse>
+
+    @GET("histories/{id}")
+    suspend fun fetchHistory(
+        @HeaderMap headers: Map<String, String>,
+        @Path("id") id: Long
+    ): Response<HistoryApiResponse>
 
 }

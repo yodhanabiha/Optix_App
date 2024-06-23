@@ -14,11 +14,19 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.IOException
 import java.text.NumberFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 fun formatPrice(price: Int): String {
     val formatter = NumberFormat.getNumberInstance(Locale("in", "ID"))
     return formatter.format(price)
+}
+
+fun formatDateTime(dateString: String): String {
+    val formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy HH:mm")
+    val date = LocalDateTime.parse(dateString) // Parse string to LocalDateTime
+    return date.format(formatter)
 }
 
 class DateTransformation() : VisualTransformation {

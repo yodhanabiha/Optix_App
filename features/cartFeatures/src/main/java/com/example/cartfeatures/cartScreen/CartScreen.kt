@@ -1,5 +1,6 @@
 package com.example.cartfeatures.cartScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,9 +40,13 @@ import com.example.cartfeatures.cartComponent.CardCart
 import com.example.cartfeatures.cartComponent.CartEmptyLayout
 import com.example.cartfeatures.cartComponent.CheckoutButton
 import com.nabiha.apiresponse.carts.CartApiRequest
+import com.nabiha.apiresponse.histories.HistoriesApiRequest
+import com.nabiha.apiresponse.histories.HistoryApiRequest
 import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.formatPrice
 import com.nabiha.common.utils.navigateToDetailScreen
+import com.nabiha.common.utils.navigateToHistoryScreen
+import com.nabiha.designsystem.component.ScaffoldTopAppbar
 import com.nabiha.entity.CartEntity
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -77,106 +83,100 @@ private fun CartScreen(
         mutableIntStateOf(0)
     }
 
-    Column {
-        Text(
-            text = "My Cart",
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(16.dp),
-            color = MaterialTheme.colorScheme.onSurface
-        )
+    val context = LocalContext.current
 
-        if (cartList.isEmpty()){
-            CartEmptyLayout()
+    val historyCreatedState by viewModel.historyCreated.collectAsStateWithLifecycle()
+    LaunchedEffect(historyCreatedState) {
+        when(historyCreatedState){
+            is HistoryCreatedState.Error -> Timber.e((historyCreatedState as HistoryCreatedState.Error).message)
+            HistoryCreatedState.Loading -> {}
+            is HistoryCreatedState.Success ->{
+                Toast.makeText(context, "The products were successfully purchased", Toast.LENGTH_LONG).show()
+                viewModel.deleteAllCarts()
+                viewModel.refreshCartList()
+                navController.navigateToHistoryScreen()
+            }
         }
+    }
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
-            contentPadding = PaddingValues(16.dp)
-        ) {
+    ScaffoldTopAppbar(title = "My Cart", onNavigationIconClick = { navController.popBackStack() }) { topAppBar->
+        Column(modifier = Modifier.padding(topAppBar)) {
+            if (cartList.isEmpty()) {
+                CartEmptyLayout()
+            }
 
-            totalItems = cartList.sumOf { it.total * it.product.price }
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+                contentPadding = PaddingValues(16.dp)
+            ) {
 
-            item {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .width(240.dp)
-                            .padding(bottom = 16.dp)
-                            .background(
-                                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f),
-                                shape = RoundedCornerShape(16.dp)
-                            )
+                totalItems = cartList.sumOf { it.total * it.product.price }
+
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Row(
+                        Column(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(16.dp))
-                                .padding(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
+                                .width(240.dp)
+                                .padding(bottom = 16.dp)
+                                .background(
+                                    color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f),
+                                    shape = RoundedCornerShape(16.dp)
+                                )
                         ) {
-                            Icon(
-                                painter = painterResource(id = com.nabiha.designsystem.R.drawable.bag_fill),
-                                contentDescription = "Bag Icon",
-                                tint = MaterialTheme.colorScheme.secondary,
+                            Row(
                                 modifier = Modifier
-                                    .height(15.dp)
-                                    .width(14.dp)
-                            )
-                            Text(
-                                text = "You have ${cartList.size} items in your cart",
-                                style = MaterialTheme.typography.bodySmall,
-                                modifier = Modifier.padding(start = 8.dp),
-                                color = MaterialTheme.colorScheme.secondary
-                            )
+                                    .fillMaxWidth()
+                                    .clip(RoundedCornerShape(16.dp))
+                                    .padding(top = 8.dp, bottom = 8.dp, start = 16.dp, end = 16.dp),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = com.nabiha.designsystem.R.drawable.bag_fill),
+                                    contentDescription = "Bag Icon",
+                                    tint = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier
+                                        .height(15.dp)
+                                        .width(14.dp)
+                                )
+                                Text(
+                                    text = "You have ${cartList.size} items in your cart",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    modifier = Modifier.padding(start = 8.dp),
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                            }
                         }
                     }
                 }
-            }
 
-            items(cartList) { cart ->
+                items(cartList) { cart ->
 
-                var totalCart by remember {
-                    mutableIntStateOf(cart.total)
-                }
-                var previousTotalCart by remember { mutableIntStateOf(cart.total) }
+                    var totalCart by remember {
+                        mutableIntStateOf(cart.total)
+                    }
+                    var previousTotalCart by remember { mutableIntStateOf(cart.total) }
 
-                LaunchedEffect(totalCart) {
-                    val difference = totalCart - previousTotalCart
-                    totalItems += difference * cart.product.price
-                    previousTotalCart = totalCart
-                }
+                    LaunchedEffect(totalCart) {
+                        val difference = totalCart - previousTotalCart
+                        totalItems += difference * cart.product.price
+                        previousTotalCart = totalCart
+                    }
 
-                CardCart(
-                    title = cart.product.title,
-                    price = "Rp" + formatPrice(cart.product.price),
-                    imageUrl = UrlApiService.default + cart.product.imageurl,
-                    quantity = totalCart,
-                    onClick = { navController.navigateToDetailScreen(cart.product.id) },
-                    onIncrease = {
-                        viewModel.viewModelScope.launch {
-                            totalCart++
-                            viewModel.updateCarts(
-                                cart.id,
-                                CartApiRequest(
-                                    cart.product.id,
-                                    cart.userId,
-                                    totalCart,
-                                    cart.selected
-                                )
-                            )
-                        }
-                    },
-                    onDecrease = {
-                        if (totalCart > 1) {
+                    CardCart(
+                        title = cart.product.title,
+                        price = "Rp" + formatPrice(cart.product.price),
+                        imageUrl = UrlApiService.default + cart.product.imageurl,
+                        quantity = totalCart,
+                        onClick = { navController.navigateToDetailScreen(cart.product.id) },
+                        onIncrease = {
                             viewModel.viewModelScope.launch {
-                                totalCart--
+                                totalCart++
                                 viewModel.updateCarts(
                                     cart.id,
                                     CartApiRequest(
@@ -187,28 +187,66 @@ private fun CartScreen(
                                     )
                                 )
                             }
-                        }else{
-                            viewModel.viewModelScope.launch {
-                                totalCart--
-                                viewModel.deleteCarts(cart.id)
-                                viewModel.refreshCartList()
+                        },
+                        onDecrease = {
+                            if (totalCart > 1) {
+                                viewModel.viewModelScope.launch {
+                                    totalCart--
+                                    viewModel.updateCarts(
+                                        cart.id,
+                                        CartApiRequest(
+                                            cart.product.id,
+                                            cart.userId,
+                                            totalCart,
+                                            cart.selected
+                                        )
+                                    )
+                                }
+                            } else {
+                                viewModel.viewModelScope.launch {
+                                    totalCart--
+                                    viewModel.deleteCarts(cart.id)
+                                    viewModel.refreshCartList()
+                                }
                             }
                         }
-                    }
-                )
-            }
+                    )
+                }
 
-            item {
-                CheckoutButton(
-                    items = "Rp. ${formatPrice(totalItems)}",
-                    discount = "-Rp. ${formatPrice(discount)}",
-                    total = "Rp. ${formatPrice(totalItems - discount)}"
-                )
-            }
+                item {
+                    CheckoutButton(
+                        items = "Rp. ${formatPrice(totalItems)}",
+                        discount = "-Rp. ${formatPrice(discount)}",
+                        total = "Rp. ${formatPrice(totalItems - discount)}",
+                        onClick = {
+                            val shipping = "JNE"
+                            val address = "Jl. Melati No. 123, RT 01/RW 02, Kelurahan Menteng, Kecamatan Tebet, Jakarta Selatan, DKI Jakarta 12870, Indonesia"
+                            val historyRequests = cartList.map { cart ->
+                                cartToHistoryRequest(cart, shipping, address)
+                            }
+                            val request = HistoriesApiRequest(histories = historyRequests)
+                            viewModel.createHistories(request)
+                        }
+                    )
+                }
 
+            }
         }
     }
 }
+
+private fun cartToHistoryRequest(cart: CartEntity, shipping: String, address: String): HistoryApiRequest {
+    return HistoryApiRequest(
+        price_item = cart.product.price,
+        total_item = cart.total,
+        total_price = cart.product.price * cart.total,
+        shipping = shipping,
+        address = address,
+        product_id = cart.product.id,
+        user_id = cart.userId
+    )
+}
+
 
 
 

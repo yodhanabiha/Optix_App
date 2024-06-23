@@ -26,7 +26,7 @@ fun CartEmptyLayout(){
                 contentDescription = "",
             )
             Text(
-                text = "Your Wishlist is Empty",
+                text = "Your Cart Feels a Bit Light!",
                 style = MaterialTheme.typography.labelMedium,
                 fontSize = 16.sp,
                 modifier = Modifier.padding(vertical = 8.dp)

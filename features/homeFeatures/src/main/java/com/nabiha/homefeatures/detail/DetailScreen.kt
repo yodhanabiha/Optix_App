@@ -135,8 +135,8 @@ private fun DetailScreen(
                                 selected = false
                             )
                         )
+                        navController.navigateToCartScreen()
                     }
-                    navController.navigateToCartScreen()
                 },
                 onTryOnBtn = {
                     val unityIntent = Intent(context, UnityPlayerActivity::class.java).apply {

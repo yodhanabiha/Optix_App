@@ -96,7 +96,7 @@ fun CardWishlist(
                         text = "Add to Cart",
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.surface
+                        color = Color.White
                     )
                 }
             }

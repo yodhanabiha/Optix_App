@@ -11,4 +11,5 @@ interface CartRepository {
     suspend fun updateCart(id: Long, request: CartApiRequest): Flow<Result<CartEntity>>
     suspend fun createCart(request: CartApiRequest): Flow<Result<CartEntity>>
     suspend fun deleteCart(id: Long): Flow<Result<String>>
+    suspend fun deleteAllCart(): Flow<Result<String>>
 }

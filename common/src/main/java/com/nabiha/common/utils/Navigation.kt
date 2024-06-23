@@ -11,6 +11,8 @@ const val registerRoute = NavRoute.RegisterScreenRoute
 const val appInfoRoute = NavRoute.AppInfoScreenRoute
 const val cartRoute = NavRoute.CartScreenRoute
 const val detailRoute = NavRoute.DetailScreenRoute
+const val detailHistoryRoute = NavRoute.HistoryDetailScreenRute
+const val historyRoute = NavRoute.HistoryScreenRute
 const val profileRoute = NavRoute.ProfileScreenRoute
 const val WishlistRoute = NavRoute.WishlistScreenRoute
 const val editProfileRoute = NavRoute.EditProfileScreenRoute
@@ -30,6 +32,14 @@ fun NavController.navigateToEditProfileScreen(user: UserEntity) {
 
 fun NavController.navigateToDetailScreen(idProduct: Long) {
     navigate("detailScreenRoute/$idProduct")
+}
+
+fun NavController.navigateToDetailHistoryScreen(idHistory: Long) {
+    navigate("historyDetailScreenRoute/$idHistory")
+}
+
+fun NavController.navigateToHistoryScreen() {
+    navigate(historyRoute)
 }
 
 fun NavController.navigateToCartScreen() {

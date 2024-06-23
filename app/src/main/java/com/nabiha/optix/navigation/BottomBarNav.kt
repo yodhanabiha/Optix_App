@@ -23,10 +23,10 @@ sealed class BottomBarNav(
     )
 
     object Cart: BottomBarNav(
-        route = NavRoute.CartScreenRoute,
-        title = "Cart",
-        icon = R.drawable.cart_fill,
-        iconNs = R.drawable.cart_ns
+        route = NavRoute.HistoryScreenRute,
+        title = "History",
+        icon = com.nabiha.designsystem.R.drawable.file_text_fill,
+        iconNs = com.nabiha.designsystem.R.drawable.file_text
     )
 
     object Profile: BottomBarNav(
