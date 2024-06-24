@@ -39,6 +39,21 @@ class EditProfileViewModel @Inject constructor(
            }
         }
     }
+    fun updateProfile(data: UserApiUpdateRequest){
+        viewModelScope.launch {
+            usersUseCase.fetchUpdateUser(data).collect{result->
+                when(result){
+                    is Result.Error -> _eprofileState.value = EProfileState.Error(result.errorMessage)
+                    is Result.Loading -> _eprofileState.value = EProfileState.Loading
+                    is Result.Success -> {
+                        _eprofileState.value = EProfileState.Success(result.data)
+                        datastore.setProfile(result.data)
+                    }
+                }
+            }
+        }
+    }
+
 
     fun resetEProfileState() {
         _eprofileState.value = EProfileState.Idle

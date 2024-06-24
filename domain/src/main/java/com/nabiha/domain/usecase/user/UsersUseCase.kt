@@ -19,6 +19,18 @@ class UsersUseCase @Inject constructor(
         return repository.fetchUserProfile()
     }
 
+    override suspend fun loginGoogle(idToken: String): Flow<Result<UserEntityLogin>> {
+        return repository.fetchLoginGoogleUser(idToken)
+    }
+
+    override suspend fun fetchUpdateUser(data: UserApiUpdateRequest): Flow<Result<UserEntity>> {
+        return repository.fetchUpdateUser(data)
+    }
+
+    override suspend fun fetchUpdatePassword(newPassword: String): Flow<Result<UserEntity>> {
+        return repository.fetchUpdatePassword(newPassword)
+    }
+
     override suspend fun update(params: Long,context: Context, data: UserApiUpdateRequest): Flow<Result<UserEntity>> {
         return repository.fetchUpdaterUser(params,context ,data)
     }

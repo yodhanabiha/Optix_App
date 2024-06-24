@@ -39,6 +39,7 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -130,23 +131,23 @@ private fun HomeScreen(
                         modifier = Modifier.weight(1f),
                         color = MaterialTheme.colorScheme.onSurface
                     )
-                    BadgedBox(badge = {
-                        Badge(
-                            containerColor = Color(0xFFFB0101),
-                            contentColor = Color.White
-                        ) {
-                            Text(text = "8", style = MaterialTheme.typography.labelSmall)
-                        }
-                    }) {
-
-                        Icon(
-                            painter = painterResource(id = R.drawable.notification),
-                            contentDescription = "Bell icon",
-                            modifier = Modifier.size(24.dp),
-                            tint = MaterialTheme.colorScheme.onSurface
-                        )
-
-                    }
+//                    BadgedBox(badge = {
+//                        Badge(
+//                            containerColor = Color(0xFFFB0101),
+//                            contentColor = Color.White
+//                        ) {
+//                            Text(text = "8", style = MaterialTheme.typography.labelSmall)
+//                        }
+//                    }) {
+//
+//                        Icon(
+//                            painter = painterResource(id = R.drawable.notification),
+//                            contentDescription = "Bell icon",
+//                            modifier = Modifier.size(24.dp),
+//                            tint = MaterialTheme.colorScheme.onSurface
+//                        )
+//
+//                    }
 
                 }
 
@@ -170,6 +171,7 @@ private fun HomeScreen(
                         )
                     },
                     trailingIcon = null,
+                    cursorBrush = SolidColor(MaterialTheme.colorScheme.onSurface),
                     modifier = Modifier
                         .background(
                             MaterialTheme.colorScheme.background,

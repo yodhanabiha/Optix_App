@@ -31,17 +31,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.nabiha.common.utils.UrlApiService
 import com.nabiha.common.utils.navigateToAppInfoScreen
 import com.nabiha.common.utils.navigateToCartScreen
+import com.nabiha.common.utils.navigateToEditPasswordScreen
 import com.nabiha.common.utils.navigateToEditProfileScreen
 import com.nabiha.common.utils.navigateToLoginScreen
 import com.nabiha.designsystem.R
 import com.nabiha.designsystem.theme.OptixTheme
 import com.nabiha.entity.UserEntity
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @Composable
@@ -55,13 +58,18 @@ internal fun ProfileScreenRoute(
         ProfileState.Loading -> {}
         is ProfileState.Success -> ProfileScreen(
             navController,
-            (profileState as ProfileState.Success).data
+            (profileState as ProfileState.Success).data,
+            viewModel
         )
     }
 }
 
 @Composable
-private fun ProfileScreen(navController: NavHostController, profileState: UserEntity) {
+private fun ProfileScreen(
+    navController: NavHostController,
+    profileState: UserEntity,
+    viewModel: ProfileViewModel
+) {
     Timber.e(profileState.toString())
     LazyColumn(
         modifier = Modifier
@@ -87,7 +95,9 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
 
             ) {
                 Image(
-                    painter = rememberAsyncImagePainter(UrlApiService.default + profileState.imageurl),
+                    painter =
+                    if (profileState.imageurl.isNotEmpty()) rememberAsyncImagePainter(UrlApiService.default + profileState.imageurl)
+                    else painterResource(id = R.drawable.person_icn_ns),
                     contentDescription = "Gambar Product",
                     modifier = Modifier
                         .size(115.dp)
@@ -104,14 +114,17 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.surfaceVariant
                 )
-                Text(
-                    text = profileState.phone,
-                    style = MaterialTheme.typography.labelMedium,
-                    fontSize = 16.sp,
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.surfaceVariant
-                )
+                if (profileState.phone.isNotEmpty() && profileState.phone != "0") {
+                    Text(
+                        text = profileState.phone,
+                        style = MaterialTheme.typography.labelMedium,
+                        fontSize = 16.sp,
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.surfaceVariant
+                    )
+                }
+
             }
         }
 
@@ -158,7 +171,10 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(8.dp)
+                    .clickable {
+                        navController.navigateToEditPasswordScreen()
+                    },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
@@ -226,40 +242,40 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                     .padding(top = 4.dp, bottom = 16.dp)
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.question_circle),
-                    contentDescription = "profile",
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .size(16.dp),
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-                Text(
-                    text = "Help",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.surfaceVariant,
-                    modifier = Modifier
-                        .weight(1f)
-                )
-                Icon(
-                    painter = painterResource(id = R.drawable.arrow),
-                    contentDescription = "profile",
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .size(18.dp),
-                    tint = MaterialTheme.colorScheme.onSurface
-                )
-            }
-            Divider(
-                modifier = Modifier
-                    .padding(top = 4.dp, bottom = 16.dp)
-            )
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(8.dp),
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.question_circle),
+//                    contentDescription = "profile",
+//                    modifier = Modifier
+//                        .padding(end = 16.dp)
+//                        .size(16.dp),
+//                    tint = MaterialTheme.colorScheme.onSurface
+//                )
+//                Text(
+//                    text = "Help",
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    color = MaterialTheme.colorScheme.surfaceVariant,
+//                    modifier = Modifier
+//                        .weight(1f)
+//                )
+//                Icon(
+//                    painter = painterResource(id = R.drawable.arrow),
+//                    contentDescription = "profile",
+//                    modifier = Modifier
+//                        .padding(end = 16.dp)
+//                        .size(18.dp),
+//                    tint = MaterialTheme.colorScheme.onSurface
+//                )
+//            }
+//            Divider(
+//                modifier = Modifier
+//                    .padding(top = 4.dp, bottom = 16.dp)
+//            )
 
             Row(
                 modifier = Modifier
@@ -302,7 +318,12 @@ private fun ProfileScreen(navController: NavHostController, profileState: UserEn
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp)
-                    .clickable { navController.navigateToLoginScreen() },
+                    .clickable {
+                        viewModel.viewModelScope.launch {
+                            viewModel.logout()
+                            navController.navigateToLoginScreen()
+                        }
+                    },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(

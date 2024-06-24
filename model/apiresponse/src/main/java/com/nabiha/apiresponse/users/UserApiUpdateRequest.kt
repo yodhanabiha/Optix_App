@@ -9,3 +9,4 @@ data class UserApiUpdateRequest(
     val date_birth: String,
     val image: Uri
 )
+

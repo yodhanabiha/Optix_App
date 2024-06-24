@@ -207,14 +207,26 @@ fun EditProfileScreen(
                     Button(
                         onClick = {
                             val dateFormat = "${date.substring(0, 2)}/${date.substring(2, 4)}/${date.substring(4)}"
-                            val dataRequest = UserApiUpdateRequest(
-                                name = name,
-                                phone = phone,
-                                gender = gender,
-                                date_birth = dateFormat,
-                                image = imageUrl.toUri()
-                            )
-                            viewModel.updateProfile(dataUser.id,dataRequest, context)
+                            if (imageUrl == UrlApiService.default + dataUser.imageurl){
+                                val dataRequest = UserApiUpdateRequest(
+                                    name = name,
+                                    phone = phone,
+                                    gender = gender,
+                                    date_birth = dateFormat,
+                                    image = imageUrl.toUri()
+                                )
+                                viewModel.updateProfile(dataRequest)
+                            }else{
+                                val dataRequest = UserApiUpdateRequest(
+                                    name = name,
+                                    phone = phone,
+                                    gender = gender,
+                                    date_birth = dateFormat,
+                                    image = imageUrl.toUri()
+                                )
+                                viewModel.updateProfile(dataUser.id,dataRequest, context)
+                            }
+
                         },
                         modifier = Modifier
                             .fillMaxWidth()

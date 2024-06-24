@@ -25,6 +25,10 @@ fun NavController.navigateToProfileScreen() {
     navigate(profileRoute)
 }
 
+fun NavController.navigateToEditPasswordScreen() {
+    navigate(NavRoute.EditPasswordScreenRute)
+}
+
 fun NavController.navigateToEditProfileScreen(user: UserEntity) {
     val route = editProfileRoute + "?user=${Uri.encode(Gson().toJson(user))}"
     navigate(route)

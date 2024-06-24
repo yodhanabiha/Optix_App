@@ -23,6 +23,7 @@ dependencies {
     compose()
     androidLifeCycle()
     androidTests()
+    implementation ("com.google.android.gms:play-services-auth:20.2.0")
 
     designsystem()
     common()

@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,9 +45,13 @@ fun AuthTextField(
         trailingIcon = trailingIcon,
         borderWidth = 1.dp,
         focusedBorderColor = Color.Black,
+        textStyle = LocalTextStyle.current.copy(
+            color = Color.Black,
+            fontSize = 14.sp
+        ),
         modifier = modifier
             .background(
-                Color(0xFFF1F1F1),
+                Color.White,
                 RoundedCornerShape(12)
             )
             .height(42.dp)

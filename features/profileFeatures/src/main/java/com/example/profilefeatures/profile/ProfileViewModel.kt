@@ -34,6 +34,13 @@ class ProfileViewModel  @Inject constructor(
         }
     }
 
+    suspend fun logout() {
+        viewModelScope.launch {
+            preferenceDatastore.setProfile(UserEntity())
+            preferenceDatastore.setToken("")
+        }
+    }
+
 }
 
 sealed interface ProfileState {

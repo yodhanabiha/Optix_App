@@ -12,4 +12,5 @@ object NavRoute {
     const val EditProfileScreenRoute = "editProfileScreenRoute"
     const val HistoryScreenRute = "historyScreenRoute"
     const val HistoryDetailScreenRute = "historyDetailScreenRoute/{id_history}"
+    const val EditPasswordScreenRute = "editPasswordScreenRute"
 }

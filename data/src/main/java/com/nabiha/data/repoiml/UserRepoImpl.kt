@@ -27,7 +27,7 @@ class UserRepoImpl @Inject constructor(
     private val networkBoundResources: NetworkBoundResource,
     private val userMapper: UserMapper,
     private val userLoginMapper: UserLoginMapper,
-    private val preferenceDatastore: PreferenceDatastore
+    private val preferenceDatastore: PreferenceDatastore,
 ) : UserRepository {
 
     override suspend fun fetchUserProfile(): Flow<Result<UserEntity>> {
@@ -58,6 +58,14 @@ class UserRepoImpl @Inject constructor(
 
     }
 
+    override suspend fun fetchLoginGoogleUser(idToken: String): Flow<Result<UserEntityLogin>> {
+        return mapFromApiResponse(
+            result = networkBoundResources.downloadData {
+                apiService.fetchLoginGoogleUser(idToken)
+            }, userLoginMapper
+        )
+    }
+
     override suspend fun fetchUpdaterUser(
         params: Long,
         context: Context,
@@ -83,6 +91,30 @@ class UserRepoImpl @Inject constructor(
                     gender= genderPart,
                     dateBirth = dateBirthPart,
                     image = imagePart
+                )
+            }, userMapper
+        )
+    }
+
+    override suspend fun fetchUpdateUser(data: UserApiUpdateRequest): Flow<Result<UserEntity>> {
+        val token = preferenceDatastore.getToken().first()
+        return mapFromApiResponse(
+            result = networkBoundResources.downloadData {
+                apiService.fetchUpdateUser(
+                    mapOf("Authorization" to "Bearer $token"),
+                    data
+                )
+            }, userMapper
+        )
+    }
+
+    override suspend fun fetchUpdatePassword(newPassword: String): Flow<Result<UserEntity>> {
+        val token = preferenceDatastore.getToken().first()
+        return mapFromApiResponse(
+            result = networkBoundResources.downloadData {
+                apiService.fetchUpdatePassword(
+                    mapOf("Authorization" to "Bearer $token"),
+                    newPassword
                 )
             }, userMapper
         )

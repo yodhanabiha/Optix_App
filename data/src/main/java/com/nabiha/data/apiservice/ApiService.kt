@@ -32,6 +32,7 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -52,6 +53,11 @@ interface ApiService {
         @Body data: UserApiLoginRequest
     ):Response<UserApiLoginResponse>
 
+    @POST("/users/account/google-login")
+    suspend fun fetchLoginGoogleUser(
+        @Query("idToken") idToken: String
+    ):Response<UserApiLoginResponse>
+
     @PUT("/users/{id}")
     @Multipart
     suspend fun fetchUpdaterUser(
@@ -63,6 +69,18 @@ interface ApiService {
         @Part("date_birth") dateBirth: RequestBody,
         @Part image: MultipartBody.Part
     ):Response<UserApiResponse>
+
+    @PUT("/users/update")
+    suspend fun fetchUpdateUser(
+        @HeaderMap headers: Map<String, String>,
+        @Body request: UserApiUpdateRequest
+    ): Response<UserApiResponse>
+
+    @PUT("/users/update-password")
+    suspend fun fetchUpdatePassword(
+        @HeaderMap headers: Map<String, String>,
+        @Body newPassword: String
+    ): Response<UserApiResponse>
 
 
     @GET("/products")

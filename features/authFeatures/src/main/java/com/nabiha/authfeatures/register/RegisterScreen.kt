@@ -149,7 +149,7 @@ private fun RegisterScreen(
                             fontSize = 20.sp,
                             modifier = Modifier.padding(16.dp),
                             textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.surface
+                            color = Color.White
                         )
                         AuthTextField(
                             value = userName,
@@ -201,7 +201,7 @@ private fun RegisterScreen(
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = if (showPassword) painterResource(id = R.drawable.eye_slash) else painterResource(
+                                    painter = if (showPassword) painterResource(id = R.drawable.eye) else painterResource(
                                         id = R.drawable.eye_slash
                                     ),
                                     contentDescription = "End Icon",
@@ -232,7 +232,7 @@ private fun RegisterScreen(
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = if (showConfirmPassword) painterResource(id = R.drawable.eye_slash) else painterResource(
+                                    painter = if (showConfirmPassword) painterResource(id = R.drawable.eye) else painterResource(
                                         id = R.drawable.eye_slash
                                     ),
                                     contentDescription = "End Icon",
@@ -241,7 +241,7 @@ private fun RegisterScreen(
                                         .padding(horizontal = 12.dp)
                                         .size(18.dp)
                                         .clickable {
-                                            showConfirmPassword = !showPassword
+                                            showConfirmPassword = !showConfirmPassword
                                         }
                                 )
                             })
@@ -276,13 +276,13 @@ private fun RegisterScreen(
                             Text(
                                 text = "Sign Up",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.surface
+                                color = Color.White
                             )
                             if (isLoading) {
                                 CircularProgressIndicator(
                                     modifier = Modifier.padding(start = 12.dp).size(16.dp),
                                     color = MaterialTheme.colorScheme.secondary,
-                                    trackColor = MaterialTheme.colorScheme.surfaceVariant
+                                    trackColor = Color.White
                                 )
                             }
                         }
@@ -300,14 +300,14 @@ private fun RegisterScreen(
                                         .weight(1f)
                                         .padding(bottom = 4.dp, end = 8.dp)
                                         .height(1.dp)
-                                        .background(color = MaterialTheme.colorScheme.surface)
+                                        .background(color = Color.White)
                                 )
 
                                 Text(
                                     text = "Or",
                                     style = MaterialTheme.typography.bodyMedium,
                                     modifier = Modifier.padding(bottom = 8.dp),
-                                    color = MaterialTheme.colorScheme.surface
+                                    color = Color.White
                                 )
 
                                 Box(
@@ -315,21 +315,21 @@ private fun RegisterScreen(
                                         .weight(1f)
                                         .padding(bottom = 4.dp, start = 8.dp)
                                         .height(1.dp)
-                                        .background(color = MaterialTheme.colorScheme.surface)
+                                        .background(color = Color.White)
                                 )
                             }
                         }
 
                         Button(
                             onClick = {
-                                navController.navigate("destination_route")
+                                //TODO
                             },
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp)
                                 .height(37.dp),
-                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface)
+                            colors = ButtonDefaults.buttonColors(Color.White)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Image(
@@ -343,7 +343,7 @@ private fun RegisterScreen(
                                 Text(
                                     text = "Continue with Google",
                                     style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.surfaceVariant,
+                                    color = Color.Black,
                                 )
                             }
                         }
@@ -357,7 +357,7 @@ private fun RegisterScreen(
                                 Text(
                                     text = "Already have an account? ",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.surface,
+                                    color = Color.White,
                                 )
                                 ClickableText(
                                     text = AnnotatedString("Sign in"),
@@ -379,4 +379,6 @@ private fun RegisterScreen(
         }
     }
 }
+
+
 

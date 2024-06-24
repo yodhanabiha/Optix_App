@@ -63,6 +63,7 @@ dependencies {
     implementation(project(":features:appInfoFeatures"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
+    implementation ("com.google.android.gms:play-services-auth:20.2.0")
 
     room()
     retrofit()

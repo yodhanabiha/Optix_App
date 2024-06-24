@@ -23,6 +23,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.appinfofeatures.appInfoScreen
 import com.example.cartfeatures.cartScreen.cartScreen
 import com.example.profilefeatures.edit.editProfileScreen
+import com.example.profilefeatures.editpassword.editPasswordScreen
 import com.example.profilefeatures.profile.profileScreen
 import com.example.wishlistfeatures.wishlistScreen.wishlistScreen
 import com.nabiha.authfeatures.login.loginScreen
@@ -55,6 +56,7 @@ fun AppNavigation(
             appInfoScreen(navController, navController::popBackStack)
             profileScreen(navController)
             editProfileScreen(navController)
+            editPasswordScreen(navController)
             historyListScreen(navController)
             historyDetailScreen(navController)
         }

@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -48,6 +49,10 @@ fun COutlinedTextField(
     borderColor: Color = Color(0xFF838383),
     focusedBorderColor: Color = MaterialTheme.colorScheme.primary,
     borderWidth: Dp = 1.dp,
+    textStyle: TextStyle = LocalTextStyle.current.copy(
+        color = MaterialTheme.colorScheme.onSurface,
+        fontSize = fontSize
+    ),
     cursorBrush: Brush = SolidColor(MaterialTheme.colorScheme.primary)
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -58,10 +63,6 @@ fun COutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier
-            .background(
-                MaterialTheme.colorScheme.background,
-                shape,
-            )
             .border(width = borderWidth, color = currentBorderColor, shape = shape)
             .fillMaxWidth(),
         singleLine = true,
@@ -69,10 +70,7 @@ fun COutlinedTextField(
         keyboardActions = keyboardActions,
         visualTransformation = visualTransformation,
         cursorBrush = cursorBrush,
-        textStyle = LocalTextStyle.current.copy(
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = fontSize
-        ),
+        textStyle = textStyle,
         interactionSource = interactionSource,
         decorationBox = { innerTextField ->
             Row(
@@ -83,7 +81,7 @@ fun COutlinedTextField(
                     if (value.isEmpty()) Text(
                         placeholderText,
                         style = LocalTextStyle.current.copy(
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                            color = textStyle.color.copy(alpha = 0.3f),
                             fontSize = fontSize
                         )
                     )

@@ -1,6 +1,9 @@
 package com.nabiha.authfeatures.login
 
+import android.content.Context
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -52,12 +55,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.nabiha.apiresponse.users.UserApiLoginRequest
 import com.nabiha.authfeatures.components.AuthTextField
 import com.nabiha.common.utils.navigateToHomeScreen
 import com.nabiha.common.utils.navigateToRegisterScreen
 import com.nabiha.designsystem.component.COutlinedTextField
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @Composable
 internal fun LoginScreenRoute(
@@ -93,6 +102,20 @@ private fun LoginScreen(
     }
 
     val context = LocalContext.current
+    val googleSignInClient = viewModel.googleSignInClient
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)!!
+            val idToken = account.idToken
+            viewModel.fetchLoginGoogle(idToken!!)
+        } catch (e: ApiException) {
+            Timber.e("signInResult:failed code=" + e.statusCode)
+        }
+    }
 
     LaunchedEffect(loginUiState) {
         when (loginUiState) {
@@ -131,20 +154,20 @@ private fun LoginScreen(
                             text = "Welcome to",
                             style = MaterialTheme.typography.titleLarge,
                             textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.surface
+                            color = Color.White
                         )
                         Text(
                             text = " OPTIX ! ",
                             style = MaterialTheme.typography.titleLarge,
                             textAlign = TextAlign.Center,
-                            color = MaterialTheme.colorScheme.surface
+                            color = Color.White
                         )
                     }
                     Text(
                         text = "Your Personal Virtual Try-On Glasses",
                         style = MaterialTheme.typography.bodyLarge,
                         textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.surface
+                        color = Color.White
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Image(
@@ -189,7 +212,7 @@ private fun LoginScreen(
                             },
                             trailingIcon = {
                                 Icon(
-                                    painter = if (showPassword) painterResource(id = com.nabiha.designsystem.R.drawable.eye_slash) else painterResource(
+                                    painter = if (showPassword) painterResource(id = com.nabiha.designsystem.R.drawable.eye) else painterResource(
                                         id = com.nabiha.designsystem.R.drawable.eye_slash
                                     ),
                                     contentDescription = "End Icon",
@@ -210,7 +233,7 @@ private fun LoginScreen(
                             Spacer(modifier = Modifier.weight(1f))
                             Checkbox(
                                 colors = CheckboxDefaults.colors(
-                                    uncheckedColor = MaterialTheme.colorScheme.surface,
+                                    uncheckedColor = Color.White,
                                     checkedColor = MaterialTheme.colorScheme.secondary
                                 ),
                                 checked = rememberMe,
@@ -222,7 +245,7 @@ private fun LoginScreen(
                             Text(
                                 "Remember Me",
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.surface,
+                                color = Color.White,
                                 modifier = Modifier.padding(start = 12.dp)
                             )
 
@@ -250,7 +273,7 @@ private fun LoginScreen(
                             Text(
                                 text = "Sign In",
                                 style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.surface
+                                color = Color.White
                             )
                             if (isLoading) {
                                 CircularProgressIndicator(
@@ -258,7 +281,7 @@ private fun LoginScreen(
                                         .padding(start = 12.dp)
                                         .size(16.dp),
                                     color = MaterialTheme.colorScheme.secondary,
-                                    trackColor = MaterialTheme.colorScheme.surfaceVariant
+                                    trackColor = Color.White
                                 )
                             }
                         }
@@ -276,14 +299,14 @@ private fun LoginScreen(
                                         .weight(1f)
                                         .padding(bottom = 4.dp, end = 8.dp)
                                         .height(1.dp)
-                                        .background(color = MaterialTheme.colorScheme.surface)
+                                        .background(color = Color.White)
                                 )
 
                                 Text(
                                     text = "Or",
                                     style = MaterialTheme.typography.bodyMedium,
                                     modifier = Modifier.padding(bottom = 8.dp),
-                                    color = MaterialTheme.colorScheme.surface
+                                    color = Color.White
                                 )
 
                                 Box(
@@ -291,21 +314,23 @@ private fun LoginScreen(
                                         .weight(1f)
                                         .padding(bottom = 4.dp, start = 8.dp)
                                         .height(1.dp)
-                                        .background(color = MaterialTheme.colorScheme.surface)
+                                        .background(color = Color.White)
                                 )
                             }
                         }
 
                         Button(
                             onClick = {
-//                                navController.navigate("destination_route")
+                                viewModel.viewModelScope.launch {
+                                    launcher.launch(googleSignInClient.signInIntent)
+                                }
                             },
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp)
                                 .height(37.dp),
-                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface)
+                            colors = ButtonDefaults.buttonColors(Color.White)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Image(
@@ -319,7 +344,7 @@ private fun LoginScreen(
                                 Text(
                                     text = "Sign In with Google",
                                     style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.surfaceVariant,
+                                    color = Color.Black,
                                 )
                             }
                         }
@@ -333,7 +358,7 @@ private fun LoginScreen(
                                 Text(
                                     text = "New to OPTIX? ",
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.surface,
+                                    color = Color.White,
                                 )
                                 ClickableText(
                                     text = AnnotatedString("Create Account"),
@@ -353,3 +378,4 @@ private fun LoginScreen(
         }
     }
 }
+
